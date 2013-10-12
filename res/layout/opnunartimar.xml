@@ -1,0 +1,115 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="793dp" 
+    >    
+
+    <Button
+        android:id="@+id/nes_opnun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/hfj_opnun"
+        android:layout_below="@+id/hfj_opnun"
+        android:layout_marginTop="20dp"
+        android:text="@string/nes" />
+
+    <Button
+        android:id="@+id/mosfells_opnun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nes_opnun"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/mosfells" />
+
+    <Button
+        android:id="@+id/ogur_opnun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/laugar_opnun"
+        android:layout_below="@+id/mosfells_opnun"
+        android:layout_marginTop="20dp"
+        android:text="@string/ogurkvarf" />
+
+    <Button
+        android:id="@+id/hr_opnun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/kop_opnun"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/hr" />
+
+    <Button
+        android:id="@+id/egils_opnun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/laugar_opnun"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/egils" />
+
+    <Button
+        android:id="@+id/hfj_opnun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/egils_opnun"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/hfj" />
+
+    <Button
+        android:id="@+id/spong_opnun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="96dp"
+        android:text="@string/spong" />
+
+    <Button
+        android:id="@+id/kringlan_opnun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spong_opnun"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/kringlan" />
+
+    <Button
+        android:id="@+id/laugar_opnun"
+        android:layout_width="95dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/kringlan_opnun"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:scrollHorizontally="true"
+        android:text="@string/laugar"
+        android:textColor="@android:color/background_dark" />
+
+    <Button
+        android:id="@+id/kop_opnun"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ogur_opnun"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="@string/kpv" />
+
+    <TextView
+        android:id="@+id/spong_opnun_texti"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/kringlan_opnun"
+        android:layout_below="@+id/spong_opnun"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="200dp"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+</RelativeLayout>
+
+</ScrollView>

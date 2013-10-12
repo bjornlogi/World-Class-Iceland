@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">World Class</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Þetta virkaði! Byrjum á appinu</string>
+    <string name="sonsie">hi sonsie</string>
+    <string name="laugar">Laugar</string>
+    <string name="kringlan">Kringlan</string>
+    <string name="hfj">Hafnarfjörður</string>
+    <string name="ogurkvarf">Ögurkvarf</string>
+    <string name="egils">Egilshöll</string>
+    <string name="hr">Háskólinn í Reykjavík</string>
+    <string name="kpv">Kópavogur</string>
+    <string name="mosfells">Mosfellsbær</string>
+    <string name="nes">Seltjarnarnes</string>
+    <string name="spong">Spöng</string>
+    <string name="opnunartimar">Opnunartímar</string>
+    
+    <string name="netfang">Netfang</string>
+    <string name="lykilord">Lykilorð</string>
+    <string name="skraInn">Skrá Inn</string>
+    <string name="bakgrunnur">Bakgrunnur</string>
+
+</resources>

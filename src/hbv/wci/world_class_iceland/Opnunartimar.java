@@ -46,6 +46,87 @@ public class Opnunartimar extends Activity{
 				startActivity(j);
 			}
 		});
+		
+		laugar_takki.setOnClickListener(new OnClickListener()
+		{
+			public void onClick(View v) 
+			{ 
+				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
+				j.putExtra("stod","Laugar");
+				startActivity(j);
+			}
+		});
+		
+		egils_takki.setOnClickListener(new OnClickListener()
+		{
+			public void onClick(View v) 
+			{ 
+				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
+				j.putExtra("stod","Egilshöll");
+				startActivity(j);
+			}
+		});
+		
+		hfj_takki.setOnClickListener(new OnClickListener()
+		{
+			public void onClick(View v) 
+			{ 
+				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
+				j.putExtra("stod","Hafnarfjörður");
+				startActivity(j);
+			}
+		});
+		
+		nes_takki.setOnClickListener(new OnClickListener()
+		{
+			public void onClick(View v) 
+			{ 
+				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
+				j.putExtra("stod","Seltjarnarnes");
+				startActivity(j);
+			}
+		});
+		
+		mosfells_takki.setOnClickListener(new OnClickListener()
+		{
+			public void onClick(View v) 
+			{ 
+				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
+				j.putExtra("stod","Mosfellsbær");
+				startActivity(j);
+			}
+		});
+		
+		ogur_takki.setOnClickListener(new OnClickListener()
+		{
+			public void onClick(View v) 
+			{ 
+				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
+				j.putExtra("stod","Ögurhvarf");
+				startActivity(j);
+			}
+		});
+		
+		kpv_takki.setOnClickListener(new OnClickListener()
+		{
+			public void onClick(View v) 
+			{ 
+				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
+				j.putExtra("stod","Kópavogur");
+				startActivity(j);
+			}
+		});
+		
+		hr_takki.setOnClickListener(new OnClickListener()
+		{
+			public void onClick(View v) 
+			{ 
+				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
+				j.putExtra("stod","Háskólinn í Reykjavík");
+				startActivity(j);
+			}
+		});
+		
 	}
 
 }

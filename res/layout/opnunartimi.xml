@@ -7,7 +7,7 @@
     <ImageView
         android:id="@+id/stod_mynd"
         android:layout_width="212dp"
-        android:layout_height="212dp"
+        android:layout_height="230dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:contentDescription="@string/stod_description"
@@ -65,14 +65,14 @@
          android:textAppearance="?android:attr/textAppearanceMedium" />
 
      <TextView
-         android:id="@+id/taekjasalur"
+         android:id="@+id/skilabod"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:layout_alignLeft="@+id/opnun_dagar1"
+         android:layout_below="@+id/opnun_dagar1"
+         android:layout_centerInParent="true"
          android:layout_centerVertical="true"
          android:text="Small Text"
-         android:layout_below="@+id/opnun_dagar1"
-		 android:layout_centerInParent="true"
          android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

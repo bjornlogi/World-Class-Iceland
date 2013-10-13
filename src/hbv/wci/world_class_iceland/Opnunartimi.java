@@ -99,12 +99,10 @@ public class Opnunartimi extends Activity {
 		int start = Integer.parseInt(timar.OpnunFyrirDag("hvar á að byrja"));
 		String opnunardagar = timar.OpnunFyrirDag("margir eins") + "\n";
 		String opnunartimar = opntimar[0];
-		TextView ts = (TextView)findViewById(R.id.taekjasalur);
-		if (timar.Taekjasalur()){
-			ts.setText("* Húsinu lokað - tækjasalur lokar 30.mín fyrr");
+		TextView ts = (TextView)findViewById(R.id.skilabod);
+		if (timar.Taekjasalur())
 			opnunartimar += "*";
-		}
-		else ts.setText("");
+		ts.setText(timar.Skilabod());
 		opnunartimar += "\n";
 		
 		for (int i = start; i<7; i++){
@@ -141,6 +139,7 @@ public class Opnunartimi extends Activity {
 		s = s.replaceAll("ú","u");
 		s = s.replaceAll("þ","t");
 		s = s.replaceAll("ó","o");
+		s = s.replaceAll(" ", "");
 		
 		return s;
 	}

@@ -56,11 +56,12 @@ public final class R {
         public static final int opid=0x7f090015;
         public static final int opnun_dagar1=0x7f090017;
         public static final int opnun_header=0x7f090018;
+        public static final int opnun_menu=0x7f09001b;
         public static final int opnun_timar1=0x7f090016;
-        public static final int opnunartimar=0x7f09001b;
         public static final int otimi_titill=0x7f090014;
         public static final int spong_opnun=0x7f09000f;
         public static final int stod_mynd=0x7f090013;
+        public static final int stundatafla_menu=0x7f09001c;
         public static final int taekjasalur=0x7f090019;
         public static final int textView1=0x7f090001;
         public static final int textView2=0x7f090003;

@@ -24,10 +24,14 @@ public class Innskraning extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-			case R.id.opnunartimar:
+			case R.id.opnun_menu:
 				Intent j = new Intent(Innskraning.this, Opnunartimar.class);
 				startActivity(j);
-				break; 
+				break;
+			case R.id.stundatafla_menu:
+				Intent i = new Intent(Innskraning.this, Stundatafla.class);
+				startActivity(i);
+				break;
 		}
 		
 		return true; 

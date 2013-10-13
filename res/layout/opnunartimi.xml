@@ -4,13 +4,75 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
 
-    <TextView
-        android:id="@+id/otimi_titill"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageView
+        android:id="@+id/stod_mynd"
+        android:layout_width="212dp"
+        android:layout_height="212dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="34dp"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:contentDescription="@string/stod_description"
+        android:src="@drawable/sponginmynd" />
+
+     <TextView
+         android:id="@+id/otimi_titill"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignParentTop="true"
+         android:layout_centerHorizontal="true"
+         android:layout_marginTop="22dp"
+         android:text="@string/sonsie"
+         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+     <TextView
+         android:id="@+id/opid"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_below="@+id/otimi_titill"
+         android:layout_centerHorizontal="true"
+         android:text="Small Text"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/opnun_timar1"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignBaseline="@+id/opnun_dagar1"
+         android:layout_alignBottom="@+id/opnun_dagar1"
+         android:layout_marginLeft="20dp"
+         android:layout_toRightOf="@+id/opnun_dagar1"
+         android:text="Small Text"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/opnun_dagar1"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/opnun_header"
+         android:layout_alignTop="@+id/opnun_header"
+         android:layout_marginTop="30dp"
+         android:text="Small Text"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+     <TextView
+         android:id="@+id/opnun_header"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignBottom="@+id/stod_mynd"
+         android:layout_alignParentLeft="true"
+         android:layout_marginLeft="10dp"
+         android:layout_marginBottom="29dp"
+         android:text="@string/opnunartimar"
+         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+     <TextView
+         android:id="@+id/taekjasalur"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/opnun_dagar1"
+         android:layout_centerVertical="true"
+         android:text="Small Text"
+         android:layout_below="@+id/opnun_dagar1"
+		 android:layout_centerInParent="true"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

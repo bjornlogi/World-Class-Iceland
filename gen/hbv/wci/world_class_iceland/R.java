@@ -28,9 +28,12 @@ public final class R {
     public static final class drawable {
         public static final int background=0x7f020000;
         public static final int ic_launcher=0x7f020001;
-        public static final int red=0x7f020002;
-        public static final int rounded_edittext=0x7f020003;
-        public static final int rounded_red_border=0x7f020004;
+        public static final int kringlanmynd=0x7f020002;
+        public static final int laugarmynd=0x7f020003;
+        public static final int red=0x7f020004;
+        public static final int rounded_edittext=0x7f020005;
+        public static final int rounded_red_border=0x7f020006;
+        public static final int sponginmynd=0x7f020007;
     }
     public static final class id {
         public static final int RelativeLayout1=0x7f090012;
@@ -46,12 +49,19 @@ public final class R {
         public static final int kop_opnun=0x7f09000a;
         public static final int kringlan_opnun=0x7f09000b;
         public static final int laugar_opnun=0x7f09000c;
+        public static final int mainListView=0x7f09001a;
         public static final int mosfells_opnun=0x7f09000d;
         public static final int nes_opnun=0x7f09000e;
         public static final int ogur_opnun=0x7f090010;
-        public static final int opnunartimar=0x7f090014;
-        public static final int otimi_titill=0x7f090013;
+        public static final int opid=0x7f090015;
+        public static final int opnun_dagar1=0x7f090017;
+        public static final int opnun_header=0x7f090018;
+        public static final int opnun_timar1=0x7f090016;
+        public static final int opnunartimar=0x7f09001b;
+        public static final int otimi_titill=0x7f090014;
         public static final int spong_opnun=0x7f09000f;
+        public static final int stod_mynd=0x7f090013;
+        public static final int taekjasalur=0x7f090019;
         public static final int textView1=0x7f090001;
         public static final int textView2=0x7f090003;
     }
@@ -60,6 +70,7 @@ public final class R {
         public static final int activity_main_screen=0x7f030001;
         public static final int opnunartimar=0x7f030002;
         public static final int opnunartimi=0x7f030003;
+        public static final int stundatafla=0x7f030004;
     }
     public static final class menu {
         public static final int innskraning=0x7f080000;
@@ -68,7 +79,7 @@ public final class R {
         public static final int action_settings=0x7f060001;
         public static final int app_name=0x7f060000;
         public static final int bakgrunnur=0x7f060012;
-        public static final int dummy=0x7f060013;
+        public static final int dummy=0x7f060016;
         public static final int egils=0x7f060008;
         public static final int hello_world=0x7f060002;
         public static final int hfj=0x7f060006;
@@ -85,6 +96,9 @@ public final class R {
         public static final int skraInn=0x7f060011;
         public static final int sonsie=0x7f060003;
         public static final int spong=0x7f06000d;
+        public static final int stod_description=0x7f060013;
+        public static final int stodvar=0x7f060014;
+        public static final int stundatafla=0x7f060015;
     }
     public static final class style {
         /** 

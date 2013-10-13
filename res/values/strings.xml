@@ -21,5 +21,9 @@
     <string name="lykilord">Lykilorð</string>
     <string name="skraInn">Skrá Inn</string>
     <string name="bakgrunnur">Bakgrunnur</string>
+    
+   	<string name="stod_description">Mynd af stöð</string>
+    <string name="stodvar">Um stöðvar</string>
+    <string name="stundatafla">Stundatafla</string>
 
 </resources>

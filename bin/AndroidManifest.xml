@@ -3,7 +3,8 @@
     package="hbv.wci.world_class_iceland"
     android:versionCode="1"
     android:versionName="1.0" >
-
+    
+	<uses-permission android:name="android.permission.INTERNET"></uses-permission>
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="17" />

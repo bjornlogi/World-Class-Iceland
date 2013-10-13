@@ -32,7 +32,7 @@ public class Opnunartimar extends Activity{
 			public void onClick(View v) 
 			{ 
 				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
-				j.putExtra("stod","Spöng");
+				j.putExtra("stod","SpÃ¶ngin");
 				startActivity(j);
 			}
 		});
@@ -62,7 +62,7 @@ public class Opnunartimar extends Activity{
 			public void onClick(View v) 
 			{ 
 				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
-				j.putExtra("stod","Egilshöll");
+				j.putExtra("stod","EgilshÃ¶ll");
 				startActivity(j);
 			}
 		});
@@ -72,7 +72,7 @@ public class Opnunartimar extends Activity{
 			public void onClick(View v) 
 			{ 
 				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
-				j.putExtra("stod","Hafnarfjörður");
+				j.putExtra("stod","HafnarfjÃ¶rÃ°ur");
 				startActivity(j);
 			}
 		});
@@ -92,7 +92,7 @@ public class Opnunartimar extends Activity{
 			public void onClick(View v) 
 			{ 
 				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
-				j.putExtra("stod","Mosfellsbær");
+				j.putExtra("stod","MosfellsbÃ¦r");
 				startActivity(j);
 			}
 		});
@@ -102,7 +102,7 @@ public class Opnunartimar extends Activity{
 			public void onClick(View v) 
 			{ 
 				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
-				j.putExtra("stod","Ögurhvarf");
+				j.putExtra("stod","Ã–gurhvarf");
 				startActivity(j);
 			}
 		});
@@ -112,7 +112,7 @@ public class Opnunartimar extends Activity{
 			public void onClick(View v) 
 			{ 
 				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
-				j.putExtra("stod","Kópavogur");
+				j.putExtra("stod","KÃ³pavogur");
 				startActivity(j);
 			}
 		});
@@ -122,7 +122,7 @@ public class Opnunartimar extends Activity{
 			public void onClick(View v) 
 			{ 
 				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
-				j.putExtra("stod","Háskólinn í Reykjavík");
+				j.putExtra("stod","HÃ¡skÃ³linn Ã­ ReykjavÃ­k");
 				startActivity(j);
 			}
 		});

@@ -24,9 +24,12 @@
             </intent-filter>
         </activity>
         
-        <activity android:name=".Opnunartimar"></activity>
+        <activity android:name=".Opnunartimar"
+            android:label="@string/opnunartimar"></activity>
         
-        <activity android:name=".Opnunartimi"></activity>
+        <activity android:name=".Opnunartimi"
+            android:label="@string/opnunartimar"></activity>
+        <activity android:name=".Stundatafla"></activity>
     </application>
 
 </manifest>

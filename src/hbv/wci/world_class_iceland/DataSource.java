@@ -76,25 +76,25 @@ public class DataSource {
 	private Users cursorToUser(Cursor cursor) {
 		Users user = new Users(); 
 		user.setmId(cursor.getLong(0));
-		System.out.println("cursortoUser: " + cursor.getLong(0));
+		//System.out.println("cursortoUser: " + cursor.getLong(0));
 		user.setNafn(cursor.getString(1));
-		System.out.println("cursortoUser: " + cursor.getString(1));
+		//System.out.println("cursortoUser: " + cursor.getString(1));
 		user.setStod(cursor.getString(2));
-		System.out.println("cursortoUser: " + cursor.getString(2));
+		//System.out.println("cursortoUser: " + cursor.getString(2));
 		user.setSalur(cursor.getString(3));
-		System.out.println("cursortoUser: " + cursor.getString(3));
+		//System.out.println("cursortoUser: " + cursor.getString(3));
 		user.setTjalfari(cursor.getString(4));
-		System.out.println("cursortoUser: " + cursor.getString(4));
+		//System.out.println("cursortoUser: " + cursor.getString(4));
 		user.setTegund(cursor.getString(5));
-		System.out.println("cursortoUser: " + cursor.getString(5));
+		//System.out.println("cursortoUser: " + cursor.getString(5));
 		user.setKlukkan(cursor.getString(6));
-		System.out.println("cursortoUser: " + cursor.getString(6));
+		//System.out.println("cursortoUser: " + cursor.getString(6));
 		user.setTimi(cursor.getString(7));
-		System.out.println("cursortoUser: " + cursor.getString(7));
+		//System.out.println("cursortoUser: " + cursor.getString(7));
 		user.setDagur(cursor.getString(8));
-		System.out.println("cursortoUser: " + cursor.getString(8));
+		//System.out.println("cursortoUser: " + cursor.getString(8));
 		user.setLokad(cursor.getString(9));
-		System.out.println("cursortoUser: " + cursor.getString(9));
+		//System.out.println("cursortoUser: " + cursor.getString(9));
 		return user;
 	}
 

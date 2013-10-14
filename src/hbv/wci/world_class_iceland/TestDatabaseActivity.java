@@ -25,15 +25,15 @@ public class TestDatabaseActivity extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
-		
-		new AsyncExecution().execute("http://www.worldclass.is/heilsuraekt/stundaskra");
-		
 		mContext = this;
 		mDataSource = new DataSource(this);
 		mDataSource.open();
 		
-		mAdapter = new ArrayAdapter( this,android.R.layout.simple_list_item_1, mDataSource.getAllUsers()); 
-		setListAdapter(mAdapter);		
+		mAdapter = new ArrayAdapter( this,android.R.layout.simple_list_item_1, mDataSource.getAllUsers());
+		if (mDataSource.getAllUsers().isEmpty())
+			new AsyncExecution().execute("http://www.worldclass.is/heilsuraekt/stundaskra");
+		else
+			setListAdapter(mAdapter);		
 	}
 	
 	public class AsyncExecution extends AsyncTask<String, Integer, String>{
@@ -44,7 +44,6 @@ public class TestDatabaseActivity extends ListActivity {
 		 
 		   @Override
 		   protected String doInBackground(String... params) {
-			   if(mAdapter == null){
 				   System.out.println("NULLLLLLLLLLL");
 				   String url=params[0];
 					 
@@ -85,6 +84,7 @@ public class TestDatabaseActivity extends ListActivity {
 				            			hopTimi[8] = " ";
 				            		
 									mDataSource.addUser(hopTimi);
+									
 				            	}
 				            }
 			            }
@@ -92,11 +92,13 @@ public class TestDatabaseActivity extends ListActivity {
 				         System.out.println("til hamingju");
 					} 
 					catch ( Exception e ) {
+						 System.out.println("error: " + e);
 			    	}
+					
 					System.out.println(mAdapter);
-			   }
-				        		      
-		      return "All Done!";
+			  // }
+					     		      
+					return "All Done!";
 		   }
 		 
 		   @Override
@@ -106,8 +108,14 @@ public class TestDatabaseActivity extends ListActivity {
 		 
 		   @Override
 		   protected void onPostExecute(String result) {
+			  showList();
 		      super.onPostExecute(result);
+		      
 		   }
+	}
+	
+	void showList(){
+		setListAdapter(new ArrayAdapter( this,android.R.layout.simple_list_item_1, mDataSource.getAllUsers()));
 	}
 
 	@Override

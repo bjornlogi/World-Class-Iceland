@@ -31,6 +31,7 @@
         <activity android:name=".Opnunartimi"
             android:label="@string/opnunartimar"></activity>
         <activity android:name=".Stundatafla"></activity>
+        <activity android:name=".TestDatabaseActivity"></activity>
     </application>
 
 </manifest>

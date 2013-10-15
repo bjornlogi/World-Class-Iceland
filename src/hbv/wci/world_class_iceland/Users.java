@@ -1,5 +1,10 @@
 package hbv.wci.world_class_iceland;
 
+/**
+ * 
+ * bla
+ *
+ */
 public class Users {
 	
 	private long mId;

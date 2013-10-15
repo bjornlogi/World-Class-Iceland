@@ -4,6 +4,13 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/**
+ * 
+ * bla
+ * 
+ * @see SQLiteOpenHelper
+ *
+ */
 public class MySQLiteHelper extends SQLiteOpenHelper {
 	
 	public static final String TABLE_HOPTIMAR = "users";

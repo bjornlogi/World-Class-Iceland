@@ -16,6 +16,11 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
+/**
+ * bla
+ * 
+ * @see ListActivity
+ */
 public class TestDatabaseActivity extends ListActivity {
 	Spinner sp;
 	private DataSource mDataSource;

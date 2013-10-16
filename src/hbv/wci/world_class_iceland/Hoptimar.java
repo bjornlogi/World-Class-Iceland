@@ -129,7 +129,7 @@ public class Hoptimar {
 	 * @param klukkan
 	 */
 	public void setKlukkan(String klukkan) {
-		this.salur = klukkan;
+		this.klukkan = klukkan;
 	}
 
 	/**
@@ -185,8 +185,6 @@ public class Hoptimar {
 	 */
 	@Override
 	public String toString(){
-		return nafn+" "+stod+" "+ salur + " "+tjalfari+" "+tegund+" "+klukkan+" "+timi+" "+dagur+" "+lokad;
-		
+		return nafn+"\n"+ stod + "\n" + salur + "\n"+tjalfari+"\n"+klukkan;
 	}
-
 }

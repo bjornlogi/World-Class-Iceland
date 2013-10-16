@@ -68,38 +68,33 @@ public class DataSource {
 			//viljum ekki fa tofluheaderinn
 			if(cursor.getLong(0) != 0){
 				Hoptimar hoptimi = cursorToUser(cursor);
-				hoptimar.add(hoptimi);
+				System.out.println(hoptimi);
+				if(hoptimi !=null){
+					System.out.println("not null");
+					hoptimar.add(hoptimi);}
 				cursor.moveToNext();
 			}		
 		}
 		cursor.close();
-		System.out.println("getAllUsers" + hoptimar);
 		return hoptimar;
 	}
 
 	private Hoptimar cursorToUser(Cursor cursor) {
-		Hoptimar hoptimi = new Hoptimar(); 
-		hoptimi.setmId(cursor.getLong(0));
-		//System.out.println("cursortoUser: " + cursor.getLong(0));
-		hoptimi.setNafn(cursor.getString(1));
-		//System.out.println("cursortoUser: " + cursor.getString(1));
-		hoptimi.setStod(cursor.getString(2));
-		//System.out.println("cursortoUser: " + cursor.getString(2));
-		hoptimi.setSalur(cursor.getString(3));
-		//System.out.println("cursortoUser: " + cursor.getString(3));
-		hoptimi.setTjalfari(cursor.getString(4));
-		//System.out.println("cursortoUser: " + cursor.getString(4));
-		hoptimi.setTegund(cursor.getString(5));
-		//System.out.println("cursortoUser: " + cursor.getString(5));
-		hoptimi.setKlukkan(cursor.getString(6));
-		//System.out.println("cursortoUser: " + cursor.getString(6));
-		hoptimi.setTimi(cursor.getString(7));
-		//System.out.println("cursortoUser: " + cursor.getString(7));
-		hoptimi.setDagur(cursor.getString(8));
-		//System.out.println("cursortoUser: " + cursor.getString(8));
-		hoptimi.setLokad(cursor.getString(9));
-		//System.out.println("cursortoUser: " + cursor.getString(9));
-		return hoptimi;
+		Hoptimar hoptimi = new Hoptimar();
+		if (cursor.getString(2).equals("Laugar") && cursor.getString(8).equals("Fim")){			 
+			hoptimi.setmId(cursor.getLong(0));		
+			hoptimi.setNafn(cursor.getString(1));
+			hoptimi.setStod(cursor.getString(2));
+			hoptimi.setSalur(cursor.getString(3));
+			hoptimi.setTjalfari(cursor.getString(4));
+			hoptimi.setTegund(cursor.getString(5));
+			hoptimi.setKlukkan(cursor.getString(6));
+			hoptimi.setTimi(cursor.getString(7));
+			hoptimi.setDagur(cursor.getString(8));
+			hoptimi.setLokad(cursor.getString(9));
+			return hoptimi;
+		}	
+		return null;
 	}
 
 }

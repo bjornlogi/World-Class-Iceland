@@ -41,11 +41,10 @@ public class TestDatabaseActivity extends ListActivity {
 		mDataSource = new DataSource(this);
 		mDataSource.open();
 		
-		mAdapter = new ArrayAdapter( this,android.R.layout.simple_list_item_1, mDataSource.getAllHoptimar());
 		if (mDataSource.getAllHoptimar().isEmpty())
 			new AsyncExecution().execute("http://www.worldclass.is/heilsuraekt/stundaskra");
 		else
-			setListAdapter(mAdapter);		
+			showList();		
 	}
 	
 	/**

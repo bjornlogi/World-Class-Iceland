@@ -1,7 +1,10 @@
 package hbv.wci.world_class_iceland;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -57,6 +60,31 @@ public class DataSource {
 		mSQLiteDatabase.insert(MySQLiteHelper.TABLE_HOPTIMAR, null, values);		
 	}
 	
+	public List<Map<String, String>> getAllHoptimarr(){
+		
+		List<Map<String, String>> hoptimar = new ArrayList<Map<String, String>>();
+		
+		Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_HOPTIMAR,
+				mAllColumns, null, null, null, null, null);
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()){
+			//viljum ekki fa tofluheaderinn
+			if(cursor.getLong(0) != 0){
+				Hoptimar hoptimi = cursorToUser(cursor);
+				if(hoptimi !=null)
+				{
+					Map<String, String> map = new HashMap<String, String>(2);
+			    	map.put("timi", cursor.getString(1));
+			    	map.put("klukkan", hoptimi.toString());
+			    	hoptimar.add(map);
+				}
+				cursor.moveToNext();
+			}		
+		}
+		cursor.close();
+		return hoptimar;
+	}
+	
 	public List<Hoptimar> getAllHoptimar(){
 		
 		List <Hoptimar> hoptimar = new ArrayList<Hoptimar>();
@@ -68,10 +96,8 @@ public class DataSource {
 			//viljum ekki fa tofluheaderinn
 			if(cursor.getLong(0) != 0){
 				Hoptimar hoptimi = cursorToUser(cursor);
-				System.out.println(hoptimi);
-				if(hoptimi !=null){
-					System.out.println("not null");
-					hoptimar.add(hoptimi);}
+				if(hoptimi !=null)
+					hoptimar.add(hoptimi);
 				cursor.moveToNext();
 			}		
 		}

@@ -1,19 +1,17 @@
 package hbv.wci.world_class_iceland;
 
-import java.util.ArrayList;
-import java.util.List;
+
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import android.app.ListActivity;
-import android.app.ProgressDialog;
-import android.content.ContentValues;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Spinner;
 
 /**
@@ -25,10 +23,12 @@ public class TestDatabaseActivity extends ListActivity {
 	Spinner sp;
 	private DataSource mDataSource;
 	private Context mContext;
-	private ArrayAdapter<Hoptimar> mAdapter;
+	//private ArrayAdapter<Hoptimar> mAdapter;
+	private ArrayAdapter<String> mAdapter ;
+	private ListView mainListView ;
 	
 	/**
-	 * Gerir eitthvað
+	 * Gerir eitthva��
 	 * 
 	 * @param savedInstanceState
 	 * 
@@ -37,6 +37,7 @@ public class TestDatabaseActivity extends ListActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);
+		mainListView = (ListView) findViewById( R.id.mainListView );
 		mContext = this;
 		mDataSource = new DataSource(this);
 		mDataSource.open();
@@ -48,7 +49,7 @@ public class TestDatabaseActivity extends ListActivity {
 	}
 	
 	/**
-	 * Gerir eitthvað
+	 * Gerir eitthva��
 	 * 
 	 * @see AsyncTask
 	 */
@@ -146,6 +147,12 @@ public class TestDatabaseActivity extends ListActivity {
 	 */
 	void showList(){
 		setListAdapter(new ArrayAdapter( this,android.R.layout.simple_list_item_1, mDataSource.getAllHoptimar()));
+		//ListView 
+//		setListAdapter( new SimpleAdapter(this, mDataSource.getAllHoptimarr(),
+//				android.R.layout.simple_list_item_1,
+//                new String[] {"timi", "klukkan", "salur", "tjalfari"},
+//                new int[] {android.R.id.text1,
+//                           android.R.id.text2}));
 	}
 
 	/**

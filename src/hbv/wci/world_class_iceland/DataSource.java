@@ -42,9 +42,8 @@ public class DataSource {
 		mSQLiteHelper.close();
 	}
 	
-	public void addUser(String []hoptimi){
+	public void addHoptimi(String []hoptimi){
 		ContentValues values = new ContentValues();
-		System.out.println("addUser: " + hoptimi);
 		
 		values.put(MySQLiteHelper.NAFN, hoptimi[0]);
 		values.put(MySQLiteHelper.STOD, hoptimi[1]);
@@ -58,9 +57,9 @@ public class DataSource {
 		mSQLiteDatabase.insert(MySQLiteHelper.TABLE_HOPTIMAR, null, values);		
 	}
 	
-	public List<Users> getAllUsers(){
+	public List<Hoptimar> getAllHoptimar(){
 		
-		List <Users> users = new ArrayList<Users>();
+		List <Hoptimar> hoptimar = new ArrayList<Hoptimar>();
 		
 		Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_HOPTIMAR,
 				mAllColumns, null, null, null, null, null);
@@ -68,39 +67,39 @@ public class DataSource {
 		while (!cursor.isAfterLast()){
 			//viljum ekki fa tofluheaderinn
 			if(cursor.getLong(0) != 0){
-				Users user = cursorToUser(cursor);
-				users.add(user);
+				Hoptimar hoptimi = cursorToUser(cursor);
+				hoptimar.add(hoptimi);
 				cursor.moveToNext();
 			}		
 		}
 		cursor.close();
-		System.out.println("getAllUsers" + users);
-		return users;
+		System.out.println("getAllUsers" + hoptimar);
+		return hoptimar;
 	}
 
-	private Users cursorToUser(Cursor cursor) {
-		Users user = new Users(); 
-		user.setmId(cursor.getLong(0));
+	private Hoptimar cursorToUser(Cursor cursor) {
+		Hoptimar hoptimi = new Hoptimar(); 
+		hoptimi.setmId(cursor.getLong(0));
 		//System.out.println("cursortoUser: " + cursor.getLong(0));
-		user.setNafn(cursor.getString(1));
+		hoptimi.setNafn(cursor.getString(1));
 		//System.out.println("cursortoUser: " + cursor.getString(1));
-		user.setStod(cursor.getString(2));
+		hoptimi.setStod(cursor.getString(2));
 		//System.out.println("cursortoUser: " + cursor.getString(2));
-		user.setSalur(cursor.getString(3));
+		hoptimi.setSalur(cursor.getString(3));
 		//System.out.println("cursortoUser: " + cursor.getString(3));
-		user.setTjalfari(cursor.getString(4));
+		hoptimi.setTjalfari(cursor.getString(4));
 		//System.out.println("cursortoUser: " + cursor.getString(4));
-		user.setTegund(cursor.getString(5));
+		hoptimi.setTegund(cursor.getString(5));
 		//System.out.println("cursortoUser: " + cursor.getString(5));
-		user.setKlukkan(cursor.getString(6));
+		hoptimi.setKlukkan(cursor.getString(6));
 		//System.out.println("cursortoUser: " + cursor.getString(6));
-		user.setTimi(cursor.getString(7));
+		hoptimi.setTimi(cursor.getString(7));
 		//System.out.println("cursortoUser: " + cursor.getString(7));
-		user.setDagur(cursor.getString(8));
+		hoptimi.setDagur(cursor.getString(8));
 		//System.out.println("cursortoUser: " + cursor.getString(8));
-		user.setLokad(cursor.getString(9));
+		hoptimi.setLokad(cursor.getString(9));
 		//System.out.println("cursortoUser: " + cursor.getString(9));
-		return user;
+		return hoptimi;
 	}
 
 }

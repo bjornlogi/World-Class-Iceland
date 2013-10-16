@@ -25,7 +25,7 @@ public class TestDatabaseActivity extends ListActivity {
 	Spinner sp;
 	private DataSource mDataSource;
 	private Context mContext;
-	private ArrayAdapter<Users> mAdapter;
+	private ArrayAdapter<Hoptimar> mAdapter;
 	
 	/**
 	 * Gerir eitthvað
@@ -41,8 +41,8 @@ public class TestDatabaseActivity extends ListActivity {
 		mDataSource = new DataSource(this);
 		mDataSource.open();
 		
-		mAdapter = new ArrayAdapter( this,android.R.layout.simple_list_item_1, mDataSource.getAllUsers());
-		if (mDataSource.getAllUsers().isEmpty())
+		mAdapter = new ArrayAdapter( this,android.R.layout.simple_list_item_1, mDataSource.getAllHoptimar());
+		if (mDataSource.getAllHoptimar().isEmpty())
 			new AsyncExecution().execute("http://www.worldclass.is/heilsuraekt/stundaskra");
 		else
 			setListAdapter(mAdapter);		
@@ -68,7 +68,6 @@ public class TestDatabaseActivity extends ListActivity {
 		 */
 		@Override
 		protected String doInBackground(String... params) {
-			System.out.println("NULLLLLLLLLLL");
 			String url=params[0];
 				 
 				try { 
@@ -107,7 +106,7 @@ public class TestDatabaseActivity extends ListActivity {
 								else
 									hopTimi[8] = " ";
 								
-								mDataSource.addUser(hopTimi);
+								mDataSource.addHoptimi(hopTimi);
 								
 							}
 						}
@@ -147,7 +146,7 @@ public class TestDatabaseActivity extends ListActivity {
 	 * 
 	 */
 	void showList(){
-		setListAdapter(new ArrayAdapter( this,android.R.layout.simple_list_item_1, mDataSource.getAllUsers()));
+		setListAdapter(new ArrayAdapter( this,android.R.layout.simple_list_item_1, mDataSource.getAllHoptimar()));
 	}
 
 	/**

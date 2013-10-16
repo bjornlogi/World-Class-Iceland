@@ -5,7 +5,7 @@ package hbv.wci.world_class_iceland;
  * 
  * 
  */
-public class Users {
+public class Hoptimar {
 	
 	private long mId;
 	private String nafn;

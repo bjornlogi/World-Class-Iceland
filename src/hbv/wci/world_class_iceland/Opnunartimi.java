@@ -17,8 +17,18 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+/**
+ * Sýnir opnunartíma einnar stöðvar.
+ * 
+ * @see Activity
+ */
 public class Opnunartimi extends Activity {
 	
+	/**
+	 * bla
+	 * 
+	 * @param savedInstanceState
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -56,6 +66,13 @@ public class Opnunartimi extends Activity {
 		
 	}
 	
+	/**
+	 * 
+	 * 
+	 * @param date 
+	 * @param OpnunEdaLokun
+	 * @return String
+	 */
 	public String SplittIOpnunOgLokun (String date, int OpnunEdaLokun){
 		//splittum i opnun og lokun
 		String[] parts = date.split("-");
@@ -63,6 +80,11 @@ public class Opnunartimi extends Activity {
 		return timaStrengur;
 	}
 	
+	/**
+	 * 
+	 * @param opnunIDag
+	 * @param klukkanNuna
+	 */
 	public void birtaErOpid (String opnunIDag, String klukkanNuna){
 		TextView opidTV = (TextView)findViewById(R.id.opid);
 		Boolean opid;
@@ -86,6 +108,10 @@ public class Opnunartimi extends Activity {
 		opidTV.setTypeface(null, Typeface.BOLD);
 	}
 	
+	/**
+	 * 
+	 * @param timar
+	 */
 	public void birtaOpnunartima (OpnunObj timar){
 		TextView opnunardagar1 = (TextView)findViewById(R.id.opnun_dagar1);
 		TextView opnunartimar1 = (TextView)findViewById(R.id.opnun_timar1);
@@ -119,6 +145,10 @@ public class Opnunartimi extends Activity {
 		
 	}
 	
+	/**
+	 * 
+	 * @param stod
+	 */
 	public void birtaMynd (String stod){
 		Drawable mynd;
 		ImageView image;
@@ -130,6 +160,11 @@ public class Opnunartimi extends Activity {
 	    image.setImageResource(resID);
 	}
 	
+	/**
+	 * 
+	 * @param s
+	 * @return
+	 */
 	public String deUTFfy(String s){
 		s = s.toLowerCase();
 		s = s.replaceAll("ö","o");
@@ -144,6 +179,13 @@ public class Opnunartimi extends Activity {
 		return s;
 	}
 	
+	/**
+	 * 
+	 * @param first
+	 * @param second
+	 * @param third
+	 * @return
+	 */
 	public Boolean isBetween(String first, String second, String third){
 		String []firstParts = first.split(":");
 		String []secondParts = second.split(":");

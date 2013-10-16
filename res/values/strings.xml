@@ -8,7 +8,7 @@
     <string name="laugar">Laugar</string>
     <string name="kringlan">Kringlan</string>
     <string name="hfj">Hafnarfjörður</string>
-    <string name="ogurkvarf">Ögurkvarf</string>
+    <string name="ogurkvarf">Ögurhvarf</string>
     <string name="egils">Egilshöll</string>
     <string name="hr">HR</string>
     <string name="kpv">Kópavogur</string>
@@ -25,5 +25,6 @@
    	<string name="stod_description">Mynd af stöð</string>
     <string name="stodvar">Um stöðvar</string>
     <string name="stundatafla">Stundatafla</string>
+    <string name="testdb">Test database</string>
 
 </resources>

@@ -4,6 +4,13 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+/**
+ * 
+ * bla
+ * 
+ * @see SQLiteOpenHelper
+ *
+ */
 public class MySQLiteHelper extends SQLiteOpenHelper {
 	
 	public static final String TABLE_HOPTIMAR = "users";
@@ -19,7 +26,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	public static final String LOKAD = "lokad";
 	
 	private static final String DATABASE_NAME = "worldclass.db";
-	private static final int DATABASE_VERSION = 33;
+	private static final int DATABASE_VERSION = 38;
 	
 	public MySQLiteHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);

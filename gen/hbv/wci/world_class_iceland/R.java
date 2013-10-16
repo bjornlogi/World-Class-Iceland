@@ -73,6 +73,7 @@ public final class R {
         public static final int spong_opnun=0x7f090012;
         public static final int stod_mynd=0x7f090016;
         public static final int stundatafla_menu=0x7f09001f;
+        public static final int testdb_menu=0x7f090020;
         public static final int textView1=0x7f090001;
         public static final int textView2=0x7f090003;
     }
@@ -91,7 +92,7 @@ public final class R {
         public static final int action_settings=0x7f060001;
         public static final int app_name=0x7f060000;
         public static final int bakgrunnur=0x7f060012;
-        public static final int dummy=0x7f060016;
+        public static final int dummy=0x7f060017;
         public static final int egils=0x7f060008;
         public static final int hello_world=0x7f060002;
         public static final int hfj=0x7f060006;
@@ -111,6 +112,7 @@ public final class R {
         public static final int stod_description=0x7f060013;
         public static final int stodvar=0x7f060014;
         public static final int stundatafla=0x7f060015;
+        public static final int testdb=0x7f060016;
     }
     public static final class style {
         /** 

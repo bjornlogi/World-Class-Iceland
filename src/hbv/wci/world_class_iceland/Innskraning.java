@@ -6,14 +6,31 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 
+/** Activity sem sýnir innskráningar val og menu fyrir navigation
+ * 
+ * @see         Activity
+ */
 public class Innskraning extends Activity {
 
+	/** Býr til skjáinn, bindur layout úr activity_innskraning.xml við skjáinn
+	 *
+	 * @param savedInstanceState a Bundle which does something
+	 * @return none
+	 * @see Bundle
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_innskraning);
 	}
 
+	/**
+	 * Býr til valmynd fyrir skjáinn, hann kemur úr innskraning.xml
+	 * 
+	 * @param menu 
+	 * @return boolean gildi sem segir manni eitthvað
+	 * @see Menu
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -21,6 +38,13 @@ public class Innskraning extends Activity {
 		return true;
 	}
 	
+	/**
+	 * Stýrir í hvaða Activity verður kallað fyrir hvern af valmöguleikunum
+	 * 
+	 * @param item 
+	 * @return boolean gildi sem segir manni eitthvað
+	 * @see MenuItem
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -31,6 +55,10 @@ public class Innskraning extends Activity {
 			case R.id.stundatafla_menu:
 				Intent i = new Intent(Innskraning.this, Stundatafla.class);
 				startActivity(i);
+				break;
+			case R.id.testdb_menu:
+				Intent k = new Intent(Innskraning.this, TestDatabaseActivity.class);
+				startActivity(k);
 				break;
 		}
 		

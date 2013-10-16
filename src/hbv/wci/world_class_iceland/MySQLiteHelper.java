@@ -5,11 +5,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
+ * Gerir okkur kleyft ad gera SQLite skipanir i Android forritinu.
  * 
- * bla
- * 
+ * @author Maria og Sonja
  * @see SQLiteOpenHelper
- *
  */
 public class MySQLiteHelper extends SQLiteOpenHelper {
 	
@@ -28,10 +27,21 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	private static final String DATABASE_NAME = "worldclass.db";
 	private static final int DATABASE_VERSION = 46;
 	
+	/**
+	 * 
+	 * 
+	 * @param context
+	 * @see Context
+	 */
 	public MySQLiteHelper(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
 	
+	/**
+	 * 
+	 * 
+	 * @param db
+	 */
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// Database creation sql statement
@@ -49,6 +59,13 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 		db.execSQL(CREATE_TABLE);	
 	}
 
+	/**
+	 * 
+	 * 
+	 * @param db
+	 * @param oldVersion
+	 * @param newVersion
+	 */
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		db.execSQL("DROP TABLE IF EXISTS "+TABLE_HOPTIMAR);

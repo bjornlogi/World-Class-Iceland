@@ -3,7 +3,7 @@
   android:orientation="vertical"
   android:layout_width="fill_parent"
   android:layout_height="fill_parent"
-  android:background="@color/wcRed" >
+  android:background="@color/white" >
 
     <TextView
         android:id="@+id/opnun_header"
@@ -21,11 +21,14 @@
         android:text="Laugar"
         android:textAppearance="?android:attr/textAppearanceMedium" />
   
-	<ListView
+    
+	<ListView 
+	    style="@style/CodeFont"
 	    android:id="@+id/mainListView"
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent"
 	    android:layout_gravity="center" >
+	    
 
 	</ListView>
 	

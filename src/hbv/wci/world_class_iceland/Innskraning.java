@@ -58,10 +58,6 @@ public class Innskraning extends Activity {
 				Intent i = new Intent(Innskraning.this, Stundatafla.class);
 				startActivity(i);
 				break;
-			case R.id.testdb_menu:
-				Intent k = new Intent(Innskraning.this, TestDatabaseActivity.class);
-				startActivity(k);
-				break;
 		}
 		
 		return true; 

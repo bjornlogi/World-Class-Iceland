@@ -56,6 +56,7 @@ public class Stundatafla extends Activity{
 	    
 	  }// loka onCreate
 	  void synaLista(){
+		  
 		  	List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		    
 		    list = mDataSource.getAllHoptimarr();

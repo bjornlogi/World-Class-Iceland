@@ -185,7 +185,12 @@ public class Hoptimar {
 	 */
 	@Override
 	public String toString(){
-		String upplysingar = "";
-		return nafn+"\n"+ stod + "\n" + salur + "\n"+tjalfari+"\n"+klukkan;
+		String upplysingar = nafn;
+		upplysingar += "\n" + stod + "\n" + klukkan;
+		if (!salur.equals(""))
+			upplysingar += "\n" + salur;
+		if (!tjalfari.equals(""))
+			upplysingar += "\n" + tjalfari;
+		return upplysingar;
 	}
 }

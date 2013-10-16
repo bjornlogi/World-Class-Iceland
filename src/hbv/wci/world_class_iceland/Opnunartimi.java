@@ -20,6 +20,7 @@ import android.widget.TextView;
 /**
  * Synir opnunartima einnar stodvar.
  * 
+ * @author Bjorn
  * @see Activity
  */
 public class Opnunartimi extends Activity {

@@ -25,7 +25,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
 /**
+ * Activity sem birtir stundartoflu fyrir daginn i dag.
  * 
+ * @author Bjorn
  */
 public class Stundatafla extends Activity{
 	  private ListView mainListView ;

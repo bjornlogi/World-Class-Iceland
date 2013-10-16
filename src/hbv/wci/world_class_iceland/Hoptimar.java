@@ -1,9 +1,9 @@
 package hbv.wci.world_class_iceland;
 
 /**
- * Geymir eitthvad
+ * Geymir einn hoptima
  * 
- * 
+ * @author Maria og Sonja 
  */
 public class Hoptimar {
 	

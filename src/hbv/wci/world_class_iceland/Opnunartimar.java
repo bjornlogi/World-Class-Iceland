@@ -8,8 +8,9 @@ import android.widget.Button;
 import android.view.View.OnClickListener;
 
 /**
- * Activity sem synir valmynd til tess að sja opnunartima stodva. 
+ * Activity sem synir valmynd til tess ad sja opnunartima stodva. 
  * 
+ * @author Bjorn
  * @see Activity
  */
 public class Opnunartimar extends Activity {

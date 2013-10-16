@@ -1,7 +1,9 @@
 package hbv.wci.world_class_iceland;
 
 /**
+ * Heldur utan um opnunartimana og er library til ad vinna med opnunartimana.
  * 
+ * @author Bjorn
  */
 public class OpnunObj {
 	public String stod;

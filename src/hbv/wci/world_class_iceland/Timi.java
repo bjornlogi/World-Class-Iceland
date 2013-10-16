@@ -3,6 +3,7 @@ package hbv.wci.world_class_iceland;
 /**
  * Geymslu klasi til ad geyma tima i stundartoflu
  * 
+ * @author Bjorn
  */
 public class Timi {
 	public String nafn;

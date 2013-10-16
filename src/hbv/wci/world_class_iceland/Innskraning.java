@@ -6,8 +6,10 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 
-/** Activity sem synir innskraningar val og menu fyrir navigation
+/** 
+ * Activity sem synir innskraningar val og menu fyrir navigation
  * 
+ * @author Karl
  * @see Activity
  */
 public class Innskraning extends Activity {

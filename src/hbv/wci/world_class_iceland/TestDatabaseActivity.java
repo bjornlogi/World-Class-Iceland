@@ -15,8 +15,10 @@ import android.widget.ListView;
 import android.widget.Spinner;
 
 /**
- * bla
+ * Activity sem birtir gogn ur gagnagrunni sem geymir upplysingar um stundartoflu.
+ * Gogn eru birt a lista formi.
  * 
+ * @author Maria og Sonja
  * @see ListActivity
  */
 public class TestDatabaseActivity extends ListActivity {
@@ -28,14 +30,9 @@ public class TestDatabaseActivity extends ListActivity {
 	private ListView mainListView ;
 	
 	/**
-<<<<<<< HEAD
-	 * Gerir eitthva��
-=======
-	 * Gerir eitthvad
->>>>>>> branch 'master' of https://github.com/hangikjet/World-Class-Iceland.git
+	 * Byr til skjainn og birtir upplysingar a honum.
 	 * 
 	 * @param savedInstanceState
-	 * 
 	 * @see Bundle
 	 */
 	public void onCreate(Bundle savedInstanceState) {
@@ -53,12 +50,9 @@ public class TestDatabaseActivity extends ListActivity {
 	}
 	
 	/**
-<<<<<<< HEAD
-	 * Gerir eitthva��
-=======
-	 * Gerir eitthvad
->>>>>>> branch 'master' of https://github.com/hangikjet/World-Class-Iceland.git
+	 * Skrapar gogn af vef og setur inn i gagnagrunn ef hann er ekki til stadar.
 	 * 
+	 * @author Maria og Sonja
 	 * @see AsyncTask
 	 */
 	public class AsyncExecution extends AsyncTask<String, Integer, String>{
@@ -72,7 +66,9 @@ public class TestDatabaseActivity extends ListActivity {
 		}
 		
 		/**
-		 * @param params
+		 * Skrapar gogn af vef og setur inn i gagnagrunn i bakgrunns traedi.
+		 * 
+		 * @param params URL a sidunni sem sott er gogn af. 
 		 */
 		@Override
 		protected String doInBackground(String... params) {
@@ -151,7 +147,7 @@ public class TestDatabaseActivity extends ListActivity {
 	}
 	
 	/**
-	 * 
+	 * Birtir gogn ur gagnagrunni a skja a listaformi.
 	 */
 	void showList(){
 		setListAdapter(new ArrayAdapter( this,android.R.layout.simple_list_item_1, mDataSource.getAllHoptimar()));

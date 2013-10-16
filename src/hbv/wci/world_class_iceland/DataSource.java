@@ -12,9 +12,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
 /**
- * bla
+ * Les ur gagnagrunni.
  * 
- * 
+ * @author Maria og Sonja
  */
 public class DataSource {
 	
@@ -33,10 +33,19 @@ public class DataSource {
 			MySQLiteHelper.DAGUR,
 			MySQLiteHelper.LOKAD};
 	
+	/**
+	 * 
+	 * 
+	 * @param context
+	 */
 	public DataSource (Context context){
 		mSQLiteHelper = new MySQLiteHelper(context);
 	}
 	
+	/**
+	 * 
+	 * @throws SQLiteException
+	 */
 	public void open() throws SQLiteException {
 		mSQLiteDatabase = mSQLiteHelper.getWritableDatabase();
 	}
@@ -45,6 +54,10 @@ public class DataSource {
 		mSQLiteHelper.close();
 	}
 	
+	/**
+	 * 
+	 * @param hoptimi
+	 */
 	public void addHoptimi(String []hoptimi){
 		ContentValues values = new ContentValues();
 		
@@ -60,6 +73,11 @@ public class DataSource {
 		mSQLiteDatabase.insert(MySQLiteHelper.TABLE_HOPTIMAR, null, values);		
 	}
 	
+	/**
+	 * Naer i alla timana ur gagnagrunninum
+	 * 
+	 * @return List
+	 */
 	public List<Map<String, String>> getAllHoptimarr(){
 		
 		List<Map<String, String>> hoptimar = new ArrayList<Map<String, String>>();
@@ -70,7 +88,7 @@ public class DataSource {
 		while (!cursor.isAfterLast()){
 			//viljum ekki fa tofluheaderinn
 			if(cursor.getLong(0) != 0){
-				Hoptimar hoptimi = cursorToUser(cursor);
+				Hoptimar hoptimi = cursorToHoptimar(cursor);
 				if(hoptimi !=null)
 				{
 					Map<String, String> map = new HashMap<String, String>(2);
@@ -85,6 +103,11 @@ public class DataSource {
 		return hoptimar;
 	}
 	
+	/**
+	 * Naer i alla timana ur gagnagrunninum
+	 * 
+	 * @return List
+	 */
 	public List<Hoptimar> getAllHoptimar(){
 		
 		List <Hoptimar> hoptimar = new ArrayList<Hoptimar>();
@@ -95,7 +118,7 @@ public class DataSource {
 		while (!cursor.isAfterLast()){
 			//viljum ekki fa tofluheaderinn
 			if(cursor.getLong(0) != 0){
-				Hoptimar hoptimi = cursorToUser(cursor);
+				Hoptimar hoptimi = cursorToHoptimar(cursor);
 				if(hoptimi !=null)
 					hoptimar.add(hoptimi);
 				cursor.moveToNext();
@@ -105,7 +128,13 @@ public class DataSource {
 		return hoptimar;
 	}
 
-	private Hoptimar cursorToUser(Cursor cursor) {
+	/**
+	 * Lesin er ein rod i gagnagrunninum.
+	 * 
+	 * @param cursor
+	 * @return Hoptimar geymir eina rod ur gagnagrunninum
+	 */
+	private Hoptimar cursorToHoptimar(Cursor cursor) {
 		Hoptimar hoptimi = new Hoptimar();
 		if (cursor.getString(2).equals("Laugar") && cursor.getString(8).equals("Fim")){			 
 			hoptimi.setmId(cursor.getLong(0));		

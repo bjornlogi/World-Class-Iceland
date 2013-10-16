@@ -1,7 +1,7 @@
 package hbv.wci.world_class_iceland;
 
 /**
- * Geymir eitthvað
+ * Geymir eitthva��
  * 
  * 
  */
@@ -185,6 +185,7 @@ public class Hoptimar {
 	 */
 	@Override
 	public String toString(){
+		String upplysingar = "";
 		return nafn+"\n"+ stod + "\n" + salur + "\n"+tjalfari+"\n"+klukkan;
 	}
 }

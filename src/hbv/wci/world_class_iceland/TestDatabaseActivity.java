@@ -28,7 +28,7 @@ public class TestDatabaseActivity extends ListActivity {
 	private ArrayAdapter<Hoptimar> mAdapter;
 	
 	/**
-	 * Gerir eitthvað
+	 * Gerir eitthvad
 	 * 
 	 * @param savedInstanceState
 	 * 
@@ -48,7 +48,7 @@ public class TestDatabaseActivity extends ListActivity {
 	}
 	
 	/**
-	 * Gerir eitthvað
+	 * Gerir eitthvad
 	 * 
 	 * @see AsyncTask
 	 */
@@ -123,7 +123,7 @@ public class TestDatabaseActivity extends ListActivity {
 		}
 		
 		/**
-		 * param values
+		 * @param values
 		 */
 		@Override
 		protected void onProgressUpdate(Integer... values) {
@@ -131,7 +131,7 @@ public class TestDatabaseActivity extends ListActivity {
 		}
 	
 		/**
-		 * param result
+		 * @param result
 		 */
 		@Override
 		protected void onPostExecute(String result) {

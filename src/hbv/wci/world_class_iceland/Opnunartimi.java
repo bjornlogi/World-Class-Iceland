@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * Sýnir opnunartíma einnar stöðvar.
+ * Synir opnunartima einnar stodvar.
  * 
  * @see Activity
  */
@@ -73,7 +73,7 @@ public class Opnunartimi extends Activity {
 	 * @param OpnunEdaLokun
 	 * @return String
 	 */
-	public String SplittIOpnunOgLokun (String date, int OpnunEdaLokun){
+	public String SplittIOpnunOgLokun (String date, int OpnunEdaLokun) {
 		//splittum i opnun og lokun
 		String[] parts = date.split("-");
 		String timaStrengur = parts[OpnunEdaLokun];
@@ -85,23 +85,22 @@ public class Opnunartimi extends Activity {
 	 * @param opnunIDag
 	 * @param klukkanNuna
 	 */
-	public void birtaErOpid (String opnunIDag, String klukkanNuna){
+	public void birtaErOpid (String opnunIDag, String klukkanNuna) {
 		TextView opidTV = (TextView)findViewById(R.id.opid);
 		Boolean opid;
 		
-		if (opnunIDag.equals("Lokað"))
+		if (opnunIDag.equals("Lokað")) {
 			opid = false;
-		else{
-		String opnun = SplittIOpnunOgLokun(opnunIDag,0);
-		String lokun = SplittIOpnunOgLokun(opnunIDag,1);
-		opid = isBetween(opnun,klukkanNuna, lokun);
+		} else {
+			String opnun = SplittIOpnunOgLokun(opnunIDag,0);
+			String lokun = SplittIOpnunOgLokun(opnunIDag,1);
+			opid = isBetween(opnun,klukkanNuna, lokun);
 		}
 		
-		if (opid){
+		if (opid) {
 			opidTV.setText("Opið");
 			opidTV.setTextColor(Color.parseColor("#105420"));		
-			}
-		else{
+		} else {
 			opidTV.setText("Lokað");
 			opidTV.setTextColor(Color.RED);
 		}
@@ -112,13 +111,11 @@ public class Opnunartimi extends Activity {
 	 * 
 	 * @param timar
 	 */
-	public void birtaOpnunartima (OpnunObj timar){
+	public void birtaOpnunartima (OpnunObj timar) {
 		TextView opnunardagar1 = (TextView)findViewById(R.id.opnun_dagar1);
 		TextView opnunartimar1 = (TextView)findViewById(R.id.opnun_timar1);
 		
-		String[] opntimar = new String[] {timar.OpnunFyrirDag("Mon"), timar.OpnunFyrirDag("Tue"),
-				timar.OpnunFyrirDag("Wed"),timar.OpnunFyrirDag("Thu"), timar.OpnunFyrirDag("Fri"),
-				timar.OpnunFyrirDag("Sat"), timar.OpnunFyrirDag("Sun")};
+		String[] opntimar = new String[] {timar.OpnunFyrirDag("Mon"), timar.OpnunFyrirDag("Tue"), timar.OpnunFyrirDag("Wed"), timar.OpnunFyrirDag("Thu"), timar.OpnunFyrirDag("Fri"), timar.OpnunFyrirDag("Sat"), timar.OpnunFyrirDag("Sun")};
 		String[] vikudagar = new String[] {"Mán","Þri", "Mið", "Fim", "Fös", "Lau", "Sun"};
 		
 		
@@ -126,8 +123,9 @@ public class Opnunartimi extends Activity {
 		String opnunardagar = timar.OpnunFyrirDag("margir eins") + "\n";
 		String opnunartimar = opntimar[0];
 		TextView ts = (TextView)findViewById(R.id.skilabod);
-		if (timar.Taekjasalur())
+		if (timar.Taekjasalur()) {
 			opnunartimar += "*";
+		}
 		ts.setText(timar.Skilabod());
 		opnunartimar += "\n";
 		
@@ -135,8 +133,9 @@ public class Opnunartimi extends Activity {
 			String substring = vikudagar[i] + ":\n";
 			opnunardagar += substring;
 			String substring2 = opntimar[i];
-			if (timar.Taekjasalur())
+			if (timar.Taekjasalur()) {
 				substring2 += "*";
+			}
 			substring2 += "\n";
 			opnunartimar += substring2;
 		}
@@ -149,7 +148,7 @@ public class Opnunartimi extends Activity {
 	 * 
 	 * @param stod
 	 */
-	public void birtaMynd (String stod){
+	public void birtaMynd (String stod) {
 		Drawable mynd;
 		ImageView image;
 		String icon = deUTFfy(stod) + "mynd";
@@ -165,7 +164,7 @@ public class Opnunartimi extends Activity {
 	 * @param s
 	 * @return
 	 */
-	public String deUTFfy(String s){
+	public String deUTFfy(String s) {
 		s = s.toLowerCase();
 		s = s.replaceAll("ö","o");
 		s = s.replaceAll("í","i");
@@ -186,7 +185,7 @@ public class Opnunartimi extends Activity {
 	 * @param third
 	 * @return
 	 */
-	public Boolean isBetween(String first, String second, String third){
+	public Boolean isBetween(String first, String second, String third) {
 		String []firstParts = first.split(":");
 		String []secondParts = second.split(":");
 		String []thirdParts = third.split(":");
@@ -198,19 +197,22 @@ public class Opnunartimi extends Activity {
 		int thirdKlu = Integer.parseInt(thirdParts[0]);
 		int thirdMin = Integer.parseInt(thirdParts[1]);
 		
-		if (secondKlu > firstKlu && secondKlu < thirdKlu)
+		if (secondKlu > firstKlu && secondKlu < thirdKlu) {
 			return true;
-		else if (secondKlu == thirdKlu)
-			if (secondMin < thirdMin)
+		} else if (secondKlu == thirdKlu) {
+			if (secondMin < thirdMin) {
 				return true;
-			else
+			} else {
 				return false;
-		if (firstKlu == secondKlu)
-			if (secondMin > firstMin)
+			}
+		}
+		if (firstKlu == secondKlu) {
+			if (secondMin > firstMin) {
 				return true;
-			else
+			} else {
 				return false;
-		
+			}
+		}
 		return false;
 	}
 	

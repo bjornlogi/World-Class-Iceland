@@ -6,13 +6,13 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 
-/** Activity sem sýnir innskráningar val og menu fyrir navigation
+/** Activity sem synir innskraningar val og menu fyrir navigation
  * 
- * @see         Activity
+ * @see Activity
  */
 public class Innskraning extends Activity {
 
-	/** Býr til skjáinn, bindur layout úr activity_innskraning.xml við skjáinn
+	/** Byr til skjainn, bindur layout ur activity_innskraning.xml vid skjainn
 	 *
 	 * @param savedInstanceState a Bundle which does something
 	 * @return none
@@ -25,10 +25,10 @@ public class Innskraning extends Activity {
 	}
 
 	/**
-	 * Býr til valmynd fyrir skjáinn, hann kemur úr innskraning.xml
+	 * Byr til valmynd fyrir skjainn, hann kemur ur innskraning.xml
 	 * 
 	 * @param menu 
-	 * @return boolean gildi sem segir manni eitthvað
+	 * @return boolean gildi sem segir manni eitthvad
 	 * @see Menu
 	 */
 	@Override
@@ -39,10 +39,10 @@ public class Innskraning extends Activity {
 	}
 	
 	/**
-	 * Stýrir í hvaða Activity verður kallað fyrir hvern af valmöguleikunum
+	 * Styrir i hvada Activity verdur kallad fyrir hvern af valmoguleikunum
 	 * 
 	 * @param item 
-	 * @return boolean gildi sem segir manni eitthvað
+	 * @return boolean gildi sem segir manni eitthvad
 	 * @see MenuItem
 	 */
 	@Override

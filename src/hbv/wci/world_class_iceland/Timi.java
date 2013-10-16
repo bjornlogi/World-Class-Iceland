@@ -1,29 +1,27 @@
 package hbv.wci.world_class_iceland;
 
 /**
- * Geymslu klasi til ad geyma tíma í stundartöflu
+ * Geymslu klasi til ad geyma tima i stundartoflu
  * 
  */
 public class Timi {
-	
 	public String nafn;
 	public String klukkan;
 	public String salur;
 	public String tjalfari;
 	
-	
 	/**
-	 * Býr til nýjann tíma og geymir upplýsingarnar um hann.
+	 * Byr til nyjann tima og geymir upplysingarnar um hann.
 	 * 
 	 * @param nafni
 	 * @param klukkani
 	 * @param saluri
 	 * @param tjalfarii
 	 */
-	public Timi (String nafni, String klukkani, String saluri, String tjalfarii){
-		nafn = nafni;
-		klukkan = klukkani;
-		salur = saluri;
-		tjalfari = tjalfarii;
+	public Timi (String nafn, String klukkan, String salur, String tjalfari){
+		this.nafn = nafn;
+		this.klukkan = klukkan;
+		this.salur = salur;
+		this.tjalfari = tjalfari;
 	}
 }

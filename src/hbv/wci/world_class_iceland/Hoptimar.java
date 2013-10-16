@@ -1,7 +1,7 @@
 package hbv.wci.world_class_iceland;
 
 /**
- * Geymir eitthva��
+ * Geymir eitthvad
  * 
  * 
  */

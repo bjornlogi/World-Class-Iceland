@@ -8,14 +8,14 @@ import android.widget.Button;
 import android.view.View.OnClickListener;
 
 /**
- * Activity sem sýnir valmynd til þess að sjá opnunartíma stöðva. 
+ * Activity sem synir valmynd til tess að sja opnunartima stodva. 
  * 
  * @see Activity
  */
 public class Opnunartimar extends Activity {
 
 	/**
-	 * Býr til skjáinn, bindur layout úr opnunartimar.xml við skjáinn. Tengir virkni við takkana úr 
+	 * Byr til skjainn, bindur layout ur opnunartimar.xml við skjainn. Tengir virkni við takkana ur layout-i.
 	 *
 	 * @param savedInstanceState a Bundle which does something
 	 * @return none

@@ -16,13 +16,18 @@ import android.widget.SimpleAdapter;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
+/**
+ * 
+ */
 public class Stundatafla extends Activity{
 	  Timi [] timar = new Timi[10];
 	  private ListView mainListView ;
 	  private ArrayAdapter<String> listAdapter ;
 	  private DataSource mDataSource;
 	  
-	  /** Called when the activity is first created. */
+	  /**
+	   * Called when the activity is first created.
+	   */
 	  @Override
 	  public void onCreate(Bundle savedInstanceState) {
 	    super.onCreate(savedInstanceState);
@@ -63,11 +68,7 @@ public class Stundatafla extends Activity{
 	    		//new String[] { "Spinning", "Zumba", "Hot Yoga", "Kross Fit",
 	              //                        "Buttlift", "Quickspinning", "Þol", "Jóga"};  
 	    
-	    SimpleAdapter adapter = new SimpleAdapter(this, list,
-                android.R.layout.simple_list_item_2,
-                new String[] {"timi", "klukkan", "salur", "tjalfari"},
-                new int[] {android.R.id.text1,
-                           android.R.id.text2}) ;
+	    SimpleAdapter adapter = new SimpleAdapter(this, list, android.R.layout.simple_list_item_2, new String[] {"timi", "klukkan", "salur", "tjalfari"}, new int[] {android.R.id.text1, android.R.id.text2}) ;
 	    
 //	    listAdapter.add( "Ceres" );
 	    

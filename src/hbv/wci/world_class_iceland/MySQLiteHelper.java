@@ -25,7 +25,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	public static final String LOKAD = "lokad";
 	
 	private static final String DATABASE_NAME = "worldclass.db";
-	private static final int DATABASE_VERSION = 46;
+	private static final int DATABASE_VERSION = 48;
 	
 	/**
 	 * Tengir gagnagrunninn vid forritid

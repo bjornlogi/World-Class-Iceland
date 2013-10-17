@@ -16,26 +16,19 @@ public class OpnunObj {
 	public String Sun;
 	
 	/**
+	 * Upphafsstillir stod med stodi
 	 * 
 	 * @param stodi
 	 */
 	public OpnunObj(String stodi){
 		stod = stodi;
-		if (stod.equals("Spöngin")){
-			Mon="06:00-22:30";
-			Tue=Mon;
-			Wed=Mon;
-			Thu=Mon;
-			Fri="06:00-20:30";
-			Sat="08:00-16:30";
-			Sun="10:00-14:00";
-		}	
 	}
 	
 	/**
+	 * Finnur opnunartima fyrir daginn sem bedid er um.
 	 * 
-	 * @param dagur
-	 * @return
+	 * @param dagur dagurinn sem tarf upplysingar um
+	 * @return opnunartima fyrir daginn dagur
 	 */
 	public String OpnunFyrirDag (String dagur){
 		if (this.stod.equals("Spöngin"))
@@ -63,8 +56,9 @@ public class OpnunObj {
 	}
 	
 	/**
+	 * Skilar skilabodum ef torf er a teim fyrir vidkomandi stod
 	 * 
-	 * @return
+	 * @return skilabod fyrir tessa stod
 	 */
 	public String Skilabod(){
 		if (Taekjasalur())
@@ -78,25 +72,28 @@ public class OpnunObj {
 	}
 	
 	/**
+	 * Athugar hvort tad se taekjasalur i stodinni.
 	 * 
-	 * @return
+	 * @return true ef tad er taekjasalur i stodinni, annars false
 	 */
-	public Boolean Taekjasalur (){
+	public boolean Taekjasalur (){
 		return !(this.stod.equals("Kringlan") || this.stod.equals("Háskólinn í Reykjavík"));
 	}
 	
 	/**
+	 * Athugar hvort tad se alltaf opid i stodinni
 	 * 
-	 * @return
+	 * @return true ef tad er alltaf opid, false annars.
 	 */
-	public Boolean AlltafOpid (){
+	public boolean AlltafOpid (){
 		return this.stod.equals("Kringlan");
 	}
 	
 	/**
+	 * Finnur opnunartima fyrir Spong a deginum dagur
 	 * 
-	 * @param dagur
-	 * @return
+	 * @param dagur dagurinn sem a ad skoda
+	 * @return opnunartima fyrir Spong a deginum dagur
 	 */
 	public static String Spong(String dagur){
 		if (dagur.equals("margir eins"))
@@ -118,9 +115,10 @@ public class OpnunObj {
 	}
 	
 	/**
+	 * Finnur opnunartima fyrir Kringluna a deginum dagur
 	 * 
-	 * @param dagur
-	 * @return
+	 * @param dagur dagurinn sem a ad skoda
+	 * @return opnunartima fyrir Kringluna a deginum dagur
 	 */
 	public static String Kringlan(String dagur){
 		if (dagur.equals("margir eins"))
@@ -141,9 +139,10 @@ public class OpnunObj {
 	}
 	
 	/**
+	 * Finnur opnunartima fyrir Laugar a deginum dagur
 	 * 
-	 * @param dagur
-	 * @return
+	 * @param dagur dagurinn sem a ad skoda
+	 * @return opnunartima fyrir Laugar a deginum dagur
 	 */
 	public static String Laugar(String dagur){
 		if (dagur.equals("margir eins"))
@@ -162,9 +161,10 @@ public class OpnunObj {
 	}
 	
 	/**
+	 * Finnur opnunartima fyrir Egilsholl a deginum dagur
 	 * 
-	 * @param dagur
-	 * @return
+	 * @param dagur dagurinn sem a ad skoda
+	 * @return opnunartima fyrir Egilsholl a deginum dagur
 	 */
 	public static String Egilsholl(String dagur){
 		if (dagur.equals("margir eins"))
@@ -183,9 +183,10 @@ public class OpnunObj {
 	}
 	
 	/**
+	 * Finnur opnunartima fyrir Hafnarfjordur a deginum dagur
 	 * 
-	 * @param dagur
-	 * @return
+	 * @param dagur dagurinn sem a ad skoda
+	 * @return opnunartima fyrir Hafnarfjordur a deginum dagur
 	 */
 	public static String Hafnarfjordur(String dagur){
 		if (dagur.equals("margir eins"))
@@ -206,9 +207,10 @@ public class OpnunObj {
 	}
 	
 	/**
+	 * Finnur opnunartima fyrir HR a deginum dagur
 	 * 
-	 * @param dagur
-	 * @return
+	 * @param dagur dagurinn sem a ad skoda
+	 * @return opnunartima fyrir HR a deginum dagur
 	 */
 	public static String HR(String dagur){
 		if (dagur.equals("margir eins"))
@@ -227,9 +229,10 @@ public class OpnunObj {
 	}
 	
 	/**
+	 * Finnur opnunartima fyrir Kopavogur a deginum dagur
 	 * 
-	 * @param dagur
-	 * @return
+	 * @param dagur dagurinn sem a ad skoda
+	 * @return opnunartima fyrir Kopavogur a deginum dagur
 	 */
 	public static String Kopavogur(String dagur){
 		if (dagur.equals("margir eins"))
@@ -250,9 +253,10 @@ public class OpnunObj {
 	}
 	
 	/**
+	 * Finnur opnunartima fyrir Moso a deginum dagur
 	 * 
-	 * @param dagur
-	 * @return
+	 * @param dagur dagurinn sem a ad skoda
+	 * @return opnunartima fyrir Moso a deginum dagur
 	 */
 	public static String Moso(String dagur){
 		if (dagur.equals("margir eins"))
@@ -271,9 +275,10 @@ public class OpnunObj {
 	}
 	
 	/**
+	 * Finnur opnunartima fyrir Ogurhvarf a deginum dagur
 	 * 
-	 * @param dagur
-	 * @return
+	 * @param dagur dagurinn sem a ad skoda
+	 * @return opnunartima fyrir Ogurhvarf a deginum dagur
 	 */
 	public static String Ogurhvarf(String dagur){
 		if (dagur.equals("margir eins"))
@@ -294,9 +299,10 @@ public class OpnunObj {
 	}
 	
 	/**
+	 * Finnur opnunartima fyrir Nesid a deginum dagur
 	 * 
-	 * @param dagur
-	 * @return
+	 * @param dagur dagurinn sem a ad skoda
+	 * @return opnunartima fyrir Nesid a deginum dagur
 	 */
 	public static String Nesid(String dagur){
 		if (dagur.equals("margir eins"))

@@ -18,7 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * Synir opnunartima einnar stodvar.
+ * Activity sem synir opnunartima einnar stodvar.
  * 
  * @author Bjorn
  * @see Activity
@@ -26,7 +26,7 @@ import android.widget.TextView;
 public class Opnunartimi extends Activity {
 	
 	/**
-	 * bla
+	 * 
 	 * 
 	 * @param savedInstanceState
 	 */
@@ -68,11 +68,11 @@ public class Opnunartimi extends Activity {
 	}
 	
 	/**
+	 * Finnur annad hvort vinstri eda haegri hluta strengsins date
 	 * 
-	 * 
-	 * @param date 
-	 * @param OpnunEdaLokun
-	 * @return String
+	 * @param date strengur a forminu "hh:mm-hh:mm"
+	 * @param OpnunEdaLokun 0 fyrir opnun, 1 fyrir lokun
+	 * @return String opnunatima eda lokunartima
 	 */
 	public String SplittIOpnunOgLokun (String date, int OpnunEdaLokun) {
 		//splittum i opnun og lokun
@@ -82,6 +82,7 @@ public class Opnunartimi extends Activity {
 	}
 	
 	/**
+	 * Birtir "Opið" ef tad er opid nuna, annars "Lokað"
 	 * 
 	 * @param opnunIDag
 	 * @param klukkanNuna
@@ -109,8 +110,10 @@ public class Opnunartimi extends Activity {
 	}
 	
 	/**
+	 * Setur inn tilsvarandi strengi inn i id.opnun_dagar1, id.opnun_timar1 og id.skilabod
 	 * 
-	 * @param timar
+	 * @param timar stodin sem a ad birta
+	 * @see OpnunObj
 	 */
 	public void birtaOpnunartima (OpnunObj timar) {
 		TextView opnunardagar1 = (TextView)findViewById(R.id.opnun_dagar1);
@@ -146,8 +149,9 @@ public class Opnunartimi extends Activity {
 	}
 	
 	/**
+	 * Setur mynd af stodinni inn i ImageView med ID-id stod_mynd
 	 * 
-	 * @param stod
+	 * @param stod nafn a stod
 	 */
 	public void birtaMynd (String stod) {
 		Drawable mynd;
@@ -161,9 +165,10 @@ public class Opnunartimi extends Activity {
 	}
 	
 	/**
+	 * Skilar nyjum streng sem er byggdur a inntaki sem er ekki med ser islenskum stofum
 	 * 
-	 * @param s
-	 * @return
+	 * @param s hvada strengur sem er
+	 * @return s med ollum islenskum stofum breytt i sambaerilega ascii stafi
 	 */
 	public String deUTFfy(String s) {
 		s = s.toLowerCase();
@@ -174,19 +179,21 @@ public class Opnunartimi extends Activity {
 		s = s.replaceAll("ú","u");
 		s = s.replaceAll("þ","t");
 		s = s.replaceAll("ó","o");
+		s = s.replaceAll("ð","d");
 		s = s.replaceAll(" ", "");
 		
 		return s;
 	}
 	
 	/**
+	 * Kemst ad tvi hvort timinn second se a milli first og third.
 	 * 
-	 * @param first
-	 * @param second
-	 * @param third
-	 * @return
+	 * @param first strengur a forminu "hh:mm"
+	 * @param second strengur a forminu "hh:mm"
+	 * @param third strengur a forminu "hh:mm"
+	 * @return true ef first<second<third, false annars
 	 */
-	public Boolean isBetween(String first, String second, String third) {
+	public boolean isBetween(String first, String second, String third) {
 		String []firstParts = first.split(":");
 		String []secondParts = second.split(":");
 		String []thirdParts = third.split(":");

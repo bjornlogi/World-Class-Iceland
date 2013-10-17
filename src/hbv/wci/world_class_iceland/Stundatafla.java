@@ -1,9 +1,6 @@
 package hbv.wci.world_class_iceland;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,13 +10,14 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Toast;
 
 /**
@@ -31,6 +29,7 @@ public class Stundatafla extends Activity{
 	private ListView mainListView ;
 	private ArrayAdapter<String> listAdapter ;
 	private DataSource mDataSource;
+	public Context mcontext = this;
 	
 	/**
 	 * Called when the activity is first created.
@@ -90,12 +89,14 @@ public class Stundatafla extends Activity{
 	 * @see AsyncTask
 	 */
 	public class AsyncExecution extends AsyncTask<String, Integer, String>{
-		
+		ProgressDialog progressDialog;
 		/**
+		 * Fall sem er keyrt a undan Async verkinu.
 		 * 
 		 */
 		@Override
 		protected void onPreExecute() {
+			progressDialog= ProgressDialog.show(mcontext, "Hleðsla í gangi","Erum að sækja gögn, hinkraðu smá", true);
 			super.onPreExecute();
 		}
 		
@@ -160,7 +161,7 @@ public class Stundatafla extends Activity{
 		}
 			
 		/**
-		 * eitthvad
+		 * Kallad reglulega a tetta fall medan a keyrslunni stendur.
 		 * 
 		 * @param values
 		 */
@@ -168,14 +169,26 @@ public class Stundatafla extends Activity{
 		protected void onProgressUpdate(Integer... values) {
 			super.onProgressUpdate(values);
 		}
+		
+		/**
+		 * Ef haett er vid keyrsluna adur en hun er fullklarud, ta keyra tetta fall
+		 * 
+		 * @see android.os.AsyncTask#onCancelled()
+		 */
+		@Override
+		protected void onCancelled() {
+			super.onCancelled();
+		}
 	
 		/**
-		 * eitthvad
+		 * Tegar buid er ad hlada inn asynchronous verkinu, keyra tetta fall sem birtir
+		 * gognin i listanum.
 		 * 
 		 * @param result
 		 */
 		@Override
 		protected void onPostExecute(String result) {
+			progressDialog.dismiss();
 			synaLista();
 			super.onPostExecute(result);
 		}

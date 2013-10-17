@@ -83,7 +83,7 @@ public class DataSource {
 	 * 
 	 * @return List
 	 */
-	public List<Map<String, String>> getAllHoptimarr(){
+	public List<Map<String, String>> getAllHoptimar(){
 		
 		List<Map<String, String>> hoptimar = new ArrayList<Map<String, String>>();
 		
@@ -108,31 +108,6 @@ public class DataSource {
 		return hoptimar;
 	}
 	
-	/**
-	 * Naer i alla timana ur gagnagrunninum
-	 * 
-	 * @return List
-	 */
-	public List<Hoptimar> getAllHoptimar(){
-		
-		List <Hoptimar> hoptimar = new ArrayList<Hoptimar>();
-		
-		Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_HOPTIMAR,
-				mAllColumns, null, null, null, null, null);
-		cursor.moveToFirst();
-		while (!cursor.isAfterLast()){
-			//viljum ekki fa tofluheaderinn
-			if(cursor.getLong(0) != 0){
-				Hoptimar hoptimi = cursorToHoptimar(cursor);
-				if(hoptimi !=null)
-					hoptimar.add(hoptimi);
-				cursor.moveToNext();
-			}		
-		}
-		cursor.close();
-		return hoptimar;
-	}
-
 	/**
 	 * Lesin er ein rod i gagnagrunninum.
 	 * 

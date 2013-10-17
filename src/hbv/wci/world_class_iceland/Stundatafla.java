@@ -48,7 +48,7 @@ public class Stundatafla extends Activity{
 		mDataSource = new DataSource(this);
 		mDataSource.open();
 		
-		if (mDataSource.getAllHoptimarr().isEmpty())
+		if (mDataSource.getAllHoptimar().isEmpty())
 			new AsyncExecution().execute("http://www.worldclass.is/heilsuraekt/stundaskra");
 		else
 			synaLista();
@@ -62,7 +62,7 @@ public class Stundatafla extends Activity{
 	void synaLista(){
 		List<Map<String, String>> list = new ArrayList<Map<String, String>>();
 		
-		list = mDataSource.getAllHoptimarr();
+		list = mDataSource.getAllHoptimar();
 		
 		SimpleAdapter adapter = new SimpleAdapter(this, list, android.R.layout.simple_list_item_2, 
 				new String[] {"timi", "klukkan"}, 

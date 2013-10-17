@@ -5,7 +5,7 @@ package hbv.wci.world_class_iceland;
  * 
  * @author Bjorn
  */
-public class OpnunObj {
+public class Stod {
 	public String stod;
 	public String Mon;
 	public String Tue;
@@ -20,7 +20,7 @@ public class OpnunObj {
 	 * 
 	 * @param stodi
 	 */
-	public OpnunObj(String stodi){
+	public Stod(String stodi){
 		stod = stodi;
 	}
 	

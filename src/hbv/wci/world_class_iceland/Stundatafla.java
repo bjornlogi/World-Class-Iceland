@@ -1,7 +1,5 @@
 package hbv.wci.world_class_iceland;
 
-import hbv.wci.world_class_iceland.TestDatabaseActivity.AsyncExecution;
-
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,7 +41,7 @@ public class Stundatafla extends Activity{
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.stundatafla);
+		setContentView(R.layout.activity_stundatafla);
 		
 		// Find the ListView resource. 
 		mainListView = (ListView) findViewById( R.id.mainListView );

@@ -36,7 +36,7 @@ public class Opnunartimi extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.opnunartimi);
+		setContentView(R.layout.activity_opnunartimi);
 		
 		Intent myIntent= getIntent();
 		String stod = myIntent.getStringExtra("stod");
@@ -60,7 +60,7 @@ public class Opnunartimi extends Activity {
 		
 		
 		//naum i opnunartimana i dag fyrir stodina
-		OpnunObj timarObj = new OpnunObj(stod); 
+		Stod timarObj = new Stod(stod); 
 		String opnunIDag = timarObj.OpnunFyrirDag(dagur);	
 		birtaErOpid(opnunIDag, klukkanNuna);		
 		birtaMynd(stod);
@@ -83,7 +83,7 @@ public class Opnunartimi extends Activity {
 	}
 	
 	/**
-	 * Birtir "Opið" ef tad er opid nuna, annars "Lokað"
+	 * Birtir "Opid" ef tad er opid nuna, annars "Lokad"
 	 * 
 	 * @param opnunIDag
 	 * @param klukkanNuna
@@ -114,9 +114,9 @@ public class Opnunartimi extends Activity {
 	 * Setur inn tilsvarandi strengi inn i id.opnun_dagar1, id.opnun_timar1 og id.skilabod
 	 * 
 	 * @param timar stodin sem a ad birta
-	 * @see OpnunObj
+	 * @see Stod
 	 */
-	public void birtaOpnunartima (OpnunObj timar) {
+	public void birtaOpnunartima (Stod timar) {
 		TextView opnunardagar1 = (TextView)findViewById(R.id.opnun_dagar1);
 		TextView opnunartimar1 = (TextView)findViewById(R.id.opnun_timar1);
 		

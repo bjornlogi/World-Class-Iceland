@@ -26,7 +26,7 @@ public class Opnunartimar extends Activity {
 	protected void onCreate(Bundle savedInstanceState) 
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.opnunartimar);
+		setContentView(R.layout.activity_opnunartimar);
 
 		Button spong_takki = (Button) this.findViewById(R.id.spong_opnun);
 		Button kringlan_takki = (Button) this.findViewById(R.id.kringlan_opnun);

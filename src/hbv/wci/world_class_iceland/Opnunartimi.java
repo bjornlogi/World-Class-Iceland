@@ -26,9 +26,12 @@ import android.widget.TextView;
 public class Opnunartimi extends Activity {
 	
 	/**
-	 * ??
+	 * Birtir skja fyrir ta stod sem valin var.
+	 * Finnur ut hvada stod er valin med ad na i skilabod sent med Intent. Birtir allar upplysingar
+	 * byggdar a tvi.
 	 * 
 	 * @param savedInstanceState
+	 * @return none
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +44,8 @@ public class Opnunartimi extends Activity {
 		TextView titill = (TextView)findViewById(R.id.otimi_titill);
 		TextView opnunartimar = (TextView)findViewById(R.id.opnun_dagar1);
 		titill.setText(stod);
-
-		//DateFormat df = DateFormat.getDateInstance(DateFormat.LONG, Locale.ICELAND);
-		java.util.TimeZone T1 = TimeZone.getTimeZone("GMT");
+		
+		java.util.TimeZone T1 = TimeZone.getTimeZone("GMT"); 
 		SimpleDateFormat klukkan = new SimpleDateFormat ("HH:mm");
 		SimpleDateFormat DOW = new SimpleDateFormat ("EEE");
 		klukkan.setTimeZone(T1);
@@ -60,7 +62,6 @@ public class Opnunartimi extends Activity {
 		//naum i opnunartimana i dag fyrir stodina
 		OpnunObj timarObj = new OpnunObj(stod); 
 		String opnunIDag = timarObj.OpnunFyrirDag(dagur);	
-		System.out.println(klukkanNuna);
 		birtaErOpid(opnunIDag, klukkanNuna);		
 		birtaMynd(stod);
 		birtaOpnunartima(timarObj);
@@ -168,7 +169,7 @@ public class Opnunartimi extends Activity {
 	 * Skilar nyjum streng sem er byggdur a inntaki sem er ekki med ser islenskum stofum
 	 * 
 	 * @param s hvada strengur sem er
-	 * @return s med ollum islenskum stofum breytt i sambaerilega ascii stafi
+	 * @return s med ollum islenskum stofum breytt i sambaerilega ascii stafi, engin bil og allt i litlum stofum
 	 */
 	public String deUTFfy(String s) {
 		s = s.toLowerCase();

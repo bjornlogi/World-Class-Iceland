@@ -79,7 +79,7 @@ public class DataSource {
 	}
 	
 	/**
-	 * Naer i alla timana ur gagnagrunninum
+	 * Naer i alla timana ur gagnagrunninum og setur i lista af hakktoflum
 	 * 
 	 * @return List
 	 */

@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
 /**
- * Les ur gagnagrunni.
+ * Er notadur til tess ad lesa ur gagnagrunni.
  * 
  * @author Maria og Sonja
  */
@@ -34,7 +34,7 @@ public class DataSource {
 			MySQLiteHelper.LOKAD};
 	
 	/**
-	 * 
+	 * Upphafsstillir
 	 * 
 	 * @param context
 	 */
@@ -43,6 +43,7 @@ public class DataSource {
 	}
 	
 	/**
+	 * Opnar gagnagrunninn
 	 * 
 	 * @throws SQLiteException
 	 */
@@ -50,11 +51,15 @@ public class DataSource {
 		mSQLiteDatabase = mSQLiteHelper.getWritableDatabase();
 	}
 	
+	/**
+	 * Lokar gagnagrunninum
+	 */
 	public void close() {
 		mSQLiteHelper.close();
 	}
 	
 	/**
+	 * Baetir vid einum hoptima vid gagnagrunninn
 	 * 
 	 * @param hoptimi
 	 */

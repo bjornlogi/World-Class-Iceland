@@ -19,6 +19,7 @@ public class Hoptimar {
 	private String lokad;
 	
 	/**
+	 * Naer i ID
 	 * 
 	 * @return mId
 	 */
@@ -27,6 +28,7 @@ public class Hoptimar {
 	}
 
 	/**
+	 * Stillir ID sem mId
 	 * 
 	 * @param mId
 	 */
@@ -35,6 +37,7 @@ public class Hoptimar {
 	}
 	
 	/**
+	 * Naer i nafnid
 	 * 
 	 * @return nafn
 	 */
@@ -43,6 +46,7 @@ public class Hoptimar {
 	}
 	
 	/**
+	 * Stillir nafnid sem nafn
 	 * 
 	 * @param nafn
 	 */
@@ -51,6 +55,7 @@ public class Hoptimar {
 	}
 	
 	/**
+	 * Naer i stodina
 	 * 
 	 * @return stod
 	 */
@@ -59,6 +64,7 @@ public class Hoptimar {
 	}
 	
 	/**
+	 * Stillir stodina sem stod
 	 * 
 	 * @param stod
 	 */
@@ -67,6 +73,7 @@ public class Hoptimar {
 	}
 	
 	/**
+	 * Naer i sal
 	 * 
 	 * @return salur
 	 */
@@ -75,7 +82,7 @@ public class Hoptimar {
 	}
 	
 	/**
-	 * 
+	 * Stillir sal sem salur
 	 * 
 	 * @param salur
 	 */
@@ -84,6 +91,7 @@ public class Hoptimar {
 	}
 
 	/**
+	 * Naer i tjalafara
 	 * 
 	 * @return tjalfari
 	 */
@@ -92,6 +100,7 @@ public class Hoptimar {
 	}
 	
 	/**
+	 * Stillir tjalfara sem tjalfari
 	 * 
 	 * @param tjalfari
 	 */
@@ -100,7 +109,7 @@ public class Hoptimar {
 	}
 	
 	/**
-	 * 
+	 * Naer i tegundina
 	 * 
 	 * @return tegund
 	 */
@@ -109,6 +118,7 @@ public class Hoptimar {
 	}
 
 	/**
+	 * Stillir tegundina sem tegund
 	 * 
 	 * @param tegund
 	 */
@@ -117,6 +127,7 @@ public class Hoptimar {
 	}
 	
 	/**
+	 * Naer i klukkuna
 	 * 
 	 * @return klukkan
 	 */
@@ -125,6 +136,7 @@ public class Hoptimar {
 	}
 	
 	/**
+	 * Stillir klukkuna sem klukkan
 	 * 
 	 * @param klukkan
 	 */
@@ -133,6 +145,7 @@ public class Hoptimar {
 	}
 
 	/**
+	 * Naer i timann
 	 * 
 	 * @return timi
 	 */
@@ -141,6 +154,7 @@ public class Hoptimar {
 	}
 	
 	/**
+	 * Stillir timann sem timi
 	 * 
 	 * @param timi
 	 */
@@ -149,6 +163,7 @@ public class Hoptimar {
 	}
 	
 	/**
+	 * Naer i daginn
 	 * 
 	 * @return dagur
 	 */
@@ -157,6 +172,7 @@ public class Hoptimar {
 	}
 	
 	/**
+	 * Stillir daginnn sem dagur
 	 * 
 	 * @param dagur
 	 */
@@ -165,6 +181,7 @@ public class Hoptimar {
 	}
 	
 	/**
+	 * Naer i lokun
 	 * 
 	 * @return lokad
 	 */
@@ -173,6 +190,7 @@ public class Hoptimar {
 	}
 	
 	/**
+	 * Stillir lokun sem lokad
 	 * 
 	 * @param lokad
 	 */
@@ -181,7 +199,9 @@ public class Hoptimar {
 	}
 	
 	/**
-	 * @return String representation of the object
+	 * Naer i streng sem lysir hlutnum
+	 * 
+	 * @return strengur sem lysir innihaldi hlutsins.
 	 */
 	@Override
 	public String toString(){

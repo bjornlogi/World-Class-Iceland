@@ -28,7 +28,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	private static final int DATABASE_VERSION = 46;
 	
 	/**
-	 * 
+	 * Tengir gagnagrunninn vid forritid
 	 * 
 	 * @param context
 	 * @see Context
@@ -38,9 +38,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	}
 	
 	/**
+	 * Byr til toflu inni i db
 	 * 
-	 * 
-	 * @param db
+	 * @param db gagnagrunnur
 	 */
 	@Override
 	public void onCreate(SQLiteDatabase db) {
@@ -60,9 +60,9 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	}
 
 	/**
+	 * Uppfaerir toflu i db
 	 * 
-	 * 
-	 * @param db
+	 * @param db 
 	 * @param oldVersion
 	 * @param newVersion
 	 */
@@ -70,7 +70,6 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		db.execSQL("DROP TABLE IF EXISTS "+TABLE_HOPTIMAR);
 		onCreate(db);
-		
 	}
 	
 }

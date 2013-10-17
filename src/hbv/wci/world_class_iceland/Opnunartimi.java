@@ -26,7 +26,7 @@ import android.widget.TextView;
 public class Opnunartimi extends Activity {
 	
 	/**
-	 * 
+	 * ??
 	 * 
 	 * @param savedInstanceState
 	 */

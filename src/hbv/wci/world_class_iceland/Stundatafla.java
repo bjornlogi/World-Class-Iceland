@@ -15,7 +15,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
@@ -27,7 +26,6 @@ import android.widget.Toast;
  */
 public class Stundatafla extends Activity{
 	private ListView mainListView ;
-	private ArrayAdapter<String> listAdapter ;
 	private DataSource mDataSource;
 	public Context mcontext = this;
 	
@@ -42,7 +40,6 @@ public class Stundatafla extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_stundatafla);
 		
-		// Find the ListView resource. 
 		mainListView = (ListView) findViewById( R.id.mainListView );
 		
 		mDataSource = new DataSource(this);
@@ -68,7 +65,6 @@ public class Stundatafla extends Activity{
 				new String[] {"timi", "klukkan"}, 
 				new int[] {android.R.id.text1, android.R.id.text2}) ;
 		
-		// Set the ArrayAdapter as the ListView's adapter.
 		mainListView.setAdapter( adapter );
 		
 		mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -77,7 +73,7 @@ public class Stundatafla extends Activity{
 			public void onItemClick(AdapterView<?> parnet, android.view.View view,
 					int position, long id) {
 				String msg = "Svona muntu geta skráð þig í tima!";
-				Toast.makeText(Stundatafla.this, msg, 100000).show();
+				Toast.makeText(Stundatafla.this, msg, Toast.LENGTH_SHORT).show();
 			}
 		});//loka onclick
 	}
@@ -150,13 +146,10 @@ public class Stundatafla extends Activity{
 							}
 						}
 					}
-					
-					System.out.println("til hamingju");
 				}
 				catch ( Exception e ) {
 					System.out.println("error: " + e);
 				}
-				
 				return "All Done!";
 		}
 			
@@ -181,7 +174,7 @@ public class Stundatafla extends Activity{
 		}
 	
 		/**
-		 * Tegar buid er ad hlada inn asynchronous verkinu, keyra tetta fall sem birtir
+		 * Tegar buid er ad hlada inn asynchronous verkinu, keyrir tetta fall sem birtir
 		 * gognin i listanum.
 		 * 
 		 * @param result

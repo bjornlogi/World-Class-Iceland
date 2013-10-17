@@ -1,11 +1,7 @@
 package hbv.wci.world_class_iceland;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.Locale;
 import java.util.TimeZone;
 
 import android.app.Activity;
@@ -42,7 +38,6 @@ public class Opnunartimi extends Activity {
 		String stod = myIntent.getStringExtra("stod");
 	
 		TextView titill = (TextView)findViewById(R.id.otimi_titill);
-		TextView opnunartimar = (TextView)findViewById(R.id.opnun_dagar1);
 		titill.setText(stod);
 		
 		java.util.TimeZone T1 = TimeZone.getTimeZone("GMT"); 
@@ -154,8 +149,7 @@ public class Opnunartimi extends Activity {
 	 * 
 	 * @param stod nafn a stod
 	 */
-	public void birtaMynd (String stod) {
-		Drawable mynd;
+	public void birtaMynd (String stod) { 
 		ImageView image;
 		String icon = deUTFfy(stod) + "mynd";
 		

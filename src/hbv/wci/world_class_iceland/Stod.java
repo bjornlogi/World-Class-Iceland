@@ -7,13 +7,6 @@ package hbv.wci.world_class_iceland;
  */
 public class Stod {
 	public String stod;
-	public String Mon;
-	public String Tue;
-	public String Wed;
-	public String Thu;
-	public String Fri;
-	public String Sat;
-	public String Sun;
 	
 	/**
 	 * Upphafsstillir stod med stodi
@@ -85,7 +78,7 @@ public class Stod {
 	 * 
 	 * @return true ef tad er alltaf opid, false annars.
 	 */
-	public boolean AlltafOpid (){
+	private boolean AlltafOpid (){
 		return this.stod.equals("Kringlan");
 	}
 	
@@ -95,12 +88,12 @@ public class Stod {
 	 * @param dagur dagurinn sem a ad skoda
 	 * @return opnunartima fyrir Spong a deginum dagur
 	 */
-	public static String Spong(String dagur){
+	private static String Spong(String dagur){
 		if (dagur.equals("margir eins"))
 			return "Mán-Fim";
 
 		//fyrsti dagurinn sem er med annan opnunartima, 4 stendur fyrir fostudag
-		if (dagur.equals("hvar á að byrja")) 
+		if (dagur.equals("hvar á að byrja"))
 			return "4";
 		else if (dagur.equals("Mon") || dagur.equals("Tue") || dagur.equals("Wed") || dagur.equals("Thu"))
 			return "06:00-22:30";
@@ -120,7 +113,7 @@ public class Stod {
 	 * @param dagur dagurinn sem a ad skoda
 	 * @return opnunartima fyrir Kringluna a deginum dagur
 	 */
-	public static String Kringlan(String dagur){
+	private static String Kringlan(String dagur){
 		if (dagur.equals("margir eins"))
 			return "Mán-Fim";
 		
@@ -144,7 +137,7 @@ public class Stod {
 	 * @param dagur dagurinn sem a ad skoda
 	 * @return opnunartima fyrir Laugar a deginum dagur
 	 */
-	public static String Laugar(String dagur){
+	private static String Laugar(String dagur){
 		if (dagur.equals("margir eins"))
 			return "Mán-Fös";
 		
@@ -166,7 +159,7 @@ public class Stod {
 	 * @param dagur dagurinn sem a ad skoda
 	 * @return opnunartima fyrir Egilsholl a deginum dagur
 	 */
-	public static String Egilsholl(String dagur){
+	private static String Egilsholl(String dagur){
 		if (dagur.equals("margir eins"))
 			return "Mán-Fös";
 		
@@ -188,7 +181,7 @@ public class Stod {
 	 * @param dagur dagurinn sem a ad skoda
 	 * @return opnunartima fyrir Hafnarfjordur a deginum dagur
 	 */
-	public static String Hafnarfjordur(String dagur){
+	private static String Hafnarfjordur(String dagur){
 		if (dagur.equals("margir eins"))
 			return "Mán-Fim";
 		
@@ -212,7 +205,7 @@ public class Stod {
 	 * @param dagur dagurinn sem a ad skoda
 	 * @return opnunartima fyrir HR a deginum dagur
 	 */
-	public static String HR(String dagur){
+	private static String HR(String dagur){
 		if (dagur.equals("margir eins"))
 			return "Mán-Fös";
 		
@@ -234,7 +227,7 @@ public class Stod {
 	 * @param dagur dagurinn sem a ad skoda
 	 * @return opnunartima fyrir Kopavogur a deginum dagur
 	 */
-	public static String Kopavogur(String dagur){
+	private static String Kopavogur(String dagur){
 		if (dagur.equals("margir eins"))
 			return "Mán-Fim";
 		
@@ -258,7 +251,7 @@ public class Stod {
 	 * @param dagur dagurinn sem a ad skoda
 	 * @return opnunartima fyrir Moso a deginum dagur
 	 */
-	public static String Moso(String dagur){
+	private static String Moso(String dagur){
 		if (dagur.equals("margir eins"))
 			return "Mán-Fös";
 		
@@ -280,7 +273,7 @@ public class Stod {
 	 * @param dagur dagurinn sem a ad skoda
 	 * @return opnunartima fyrir Ogurhvarf a deginum dagur
 	 */
-	public static String Ogurhvarf(String dagur){
+	private static String Ogurhvarf(String dagur){
 		if (dagur.equals("margir eins"))
 			return "Mán-Fim";
 		
@@ -304,7 +297,7 @@ public class Stod {
 	 * @param dagur dagurinn sem a ad skoda
 	 * @return opnunartima fyrir Nesid a deginum dagur
 	 */
-	public static String Nesid(String dagur){
+	private static String Nesid(String dagur){
 		if (dagur.equals("margir eins"))
 			return "Mán-Fös";
 		

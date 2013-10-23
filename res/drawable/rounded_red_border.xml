@@ -5,8 +5,8 @@
     android:shape="rectangle" 
     android:padding="10dp">
 	
-	<solid android:color="#FFFFFF" />
-	<stroke android:color="@color/wcRed"/>
+	<solid android:color="@color/white" />
+	<stroke android:color="@color/wcRed" />
 	
 	<corners
 		android:bottomRightRadius="5dp"

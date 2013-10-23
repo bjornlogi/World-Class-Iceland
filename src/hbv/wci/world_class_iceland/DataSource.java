@@ -1,6 +1,7 @@
 package hbv.wci.world_class_iceland;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,18 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
+import android.util.Log;
+
+/*
+ * Test import
+ */
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+ 
+import net.sourceforge.jtds.jdbc.*;
 
 /**
  * Er notadur til tess ad lesa ur gagnagrunni.

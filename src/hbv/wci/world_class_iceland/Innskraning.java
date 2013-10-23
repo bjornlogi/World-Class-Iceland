@@ -58,6 +58,10 @@ public class Innskraning extends Activity {
 				Intent i = new Intent(Innskraning.this, Stundatafla.class);
 				startActivity(i);
 				break;
+			case R.id.pageviewtest_menu:
+				Intent k = new Intent(Innskraning.this, ViewPageActivity.class);
+				startActivity(k);
+				break;
 		}
 		
 		return true; 

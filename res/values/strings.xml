@@ -27,5 +27,7 @@
     <string name="stundatafla">Stundatafla</string>
     <string name="testdb">Test database</string>
     <string name="weekday">Fimmtudagur</string>
+    
+    <string name="pageview">PageView Test</string>
 
 </resources>

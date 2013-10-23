@@ -44,7 +44,6 @@ public class Stundatafla extends Activity{
 		
 		mDataSource = new DataSource(this);
 		mDataSource.open();
-		
 		if (mDataSource.getAllHoptimar().isEmpty())
 			new AsyncExecution().execute("http://www.worldclass.is/heilsuraekt/stundaskra");
 		else

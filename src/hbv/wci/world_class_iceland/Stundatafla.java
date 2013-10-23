@@ -105,52 +105,52 @@ public class Stundatafla extends Activity{
 		protected String doInBackground(String... params) {
 			String url=params[0];
 				 
-				try { 
-					Document doc = Jsoup.connect(url).get();
-					Elements tableElements = doc.select("table");
+			try { 
+				Document doc = Jsoup.connect(url).get();
+				Elements tableElements = doc.select("table");
+				
+				Elements tableClassesElements = tableElements.select(":not(thead) tr");
+				String timar[] = {"", "morgun", "", "hadegi", "", "siddegi", "", "kvold"};
+				String dagar[] = {"Man", "Tri", "Mid", "Fim", "Fos", "Lau", "Sun"};
+				
+				for (int i = 0; i < tableClassesElements.size(); i++) {
+					Element row = tableClassesElements.get(i);
+					Elements rowItems = row.select("td");
+					String timi = timar[i];
 					
-					Elements tableClassesElements = tableElements.select(":not(thead) tr");
-					String timar[] = {"", "morgun", "", "hadegi", "", "siddegi", "", "kvold"};
-					String dagar[] = {"Man", "Tri", "Mid", "Fim", "Fos", "Lau", "Sun"};
-					
-					for (int i = 0; i < tableClassesElements.size(); i++) {
-						Element row = tableClassesElements.get(i);
-						Elements rowItems = row.select("td");
-						String timi = timar[i];
+					for (int j = 0; j < rowItems.size(); j++) {
+						String dagur = dagar[j];
+						Element list = rowItems.get(j);
+						Elements listItems = list.select("li"); 
 						
-						for (int j = 0; j < rowItems.size(); j++) {
-							String dagur = dagar[j];
-							Element list = rowItems.get(j);
-							Elements listItems = list.select("li"); 
+						for (int k = 0; k < listItems.size(); k++){
+							String hopTimi[] = new String[9];
+							Element links = listItems.get(k);
+							hopTimi[0] = links.select("a").text();
+							hopTimi[1] = links.select(".stod").text();
+							hopTimi[2] = links.select(".salur").text();
+							hopTimi[3] = links.select(".tjalfari").text();
+							hopTimi[4] = links.select(".tegund").text();
+							hopTimi[5] = links.select(".time").text();
+							hopTimi[6] = timi;
+							hopTimi[7] = dagur;
+							Elements lokad = links.select(".locked");
 							
-							for (int k = 0; k < listItems.size(); k++){
-								String hopTimi[] = new String[9];
-								Element links = listItems.get(k);
-								hopTimi[0] = links.select("a").text();
-								hopTimi[1] = links.select(".stod").text();
-								hopTimi[2] = links.select(".salur").text();
-								hopTimi[3] = links.select(".tjalfari").text();
-								hopTimi[4] = links.select(".tegund").text();
-								hopTimi[5] = links.select(".time").text();
-								hopTimi[6] = timi;
-								hopTimi[7] = dagur;
-								Elements lokad = links.select(".locked");
-								
-								if (lokad.text() != "")
-									hopTimi[8] = lokad.attr("title");
-								else
-									hopTimi[8] = " ";
-								
-								mDataSource.addHoptimi(hopTimi);
-								
-							}
+							if (lokad.text() != "")
+								hopTimi[8] = lokad.attr("title");
+							else
+								hopTimi[8] = " ";
+							
+							mDataSource.addHoptimi(hopTimi);
+							
 						}
 					}
 				}
-				catch ( Exception e ) {
-					System.out.println("error: " + e);
-				}
-				return "All Done!";
+			}
+			catch ( Exception e ) {
+				System.out.println("error: " + e);
+			}
+			return "All Done!";
 		}
 			
 		/**

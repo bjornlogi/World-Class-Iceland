@@ -1,5 +1,12 @@
 package hbv.wci.world_class_iceland;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Dictionary;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TimeZone;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -20,10 +27,31 @@ public class Innskraning extends Activity {
 	 * @return none
 	 * @see Bundle
 	 */
+	String vikudagur;
+	Map<String,Integer> map;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_innskraning);
+		
+		java.util.TimeZone T1 = TimeZone.getTimeZone("GMT"); 
+		SimpleDateFormat DOW = new SimpleDateFormat ("EEE");
+		DOW.setTimeZone(T1);
+		
+		Date date = new Date();
+		vikudagur = DOW.format(date);
+		createMap();
+	}
+	
+	private void createMap(){
+		map = new HashMap<String,Integer>();
+		map.put("Mon", 0);
+		map.put("Tue", 1);
+		map.put("Wed", 2);
+		map.put("Thu", 3);
+		map.put("Fri", 4);
+		map.put("Sat", 5);
+		map.put("Sun", 6);
 	}
 
 	/**
@@ -60,6 +88,8 @@ public class Innskraning extends Activity {
 				break;
 			case R.id.pageviewtest_menu:
 				Intent k = new Intent(Innskraning.this, ViewPageActivity.class);
+				System.out.println(map.get(vikudagur));
+				k.putExtra("vikudagur", Integer.toString(map.get(vikudagur)));
 				startActivity(k);
 				break;
 		}

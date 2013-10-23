@@ -33,6 +33,7 @@ public class DataSource {
 	
 	private SQLiteDatabase mSQLiteDatabase;
 	private MySQLiteHelper mSQLiteHelper;
+	private String dagur;
 	
 	private String[] mAllColumns = {
 			MySQLiteHelper.COLUMN_ID,
@@ -51,8 +52,9 @@ public class DataSource {
 	 * 
 	 * @param context
 	 */
-	public DataSource (Context context){
+	public DataSource (Context context, String dagurInntak){
 		mSQLiteHelper = new MySQLiteHelper(context);
+		dagur = dagurInntak;
 	}
 	
 	/**
@@ -129,7 +131,7 @@ public class DataSource {
 	 */
 	private Hoptimar cursorToHoptimar(Cursor cursor) {
 		Hoptimar hoptimi = new Hoptimar();
-		if (cursor.getString(2).equals("Laugar") && cursor.getString(8).equals("Fim")){			 
+		if (cursor.getString(2).equals("Laugar") && cursor.getString(8).equals(this.dagur)){			 
 			hoptimi.setmId(cursor.getLong(0));		
 			hoptimi.setNafn(cursor.getString(1));
 			hoptimi.setStod(cursor.getString(2));

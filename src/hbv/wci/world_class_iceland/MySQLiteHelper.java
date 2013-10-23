@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class MySQLiteHelper extends SQLiteOpenHelper {
 	
-	public static final String TABLE_HOPTIMAR = "users";
+	public static final String TABLE_HOPTIMAR = "hoptimar";
 	public static final String COLUMN_ID = "_id";
 	public static final String NAFN = "nafn";
 	public static final String STOD = "stod";
@@ -25,7 +25,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	public static final String LOKAD = "lokad";
 	
 	private static final String DATABASE_NAME = "worldclass.db";
-	private static final int DATABASE_VERSION = 49;
+	private static final int DATABASE_VERSION = 51;
 	
 	/**
 	 * Tengir gagnagrunninn vid forritid
@@ -69,6 +69,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		db.execSQL("DROP TABLE IF EXISTS "+TABLE_HOPTIMAR);
+		db.execSQL("DROP TABLE IF EXISTS users");
 		onCreate(db);
 	}
 	

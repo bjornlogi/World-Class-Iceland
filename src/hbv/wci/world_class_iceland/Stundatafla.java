@@ -42,7 +42,7 @@ public class Stundatafla extends Activity{
 		
 		mainListView = (ListView) findViewById( R.id.mainListView );
 		
-		mDataSource = new DataSource(this);
+		mDataSource = new DataSource(this, "Fim");
 		mDataSource.open();
 		if (mDataSource.getAllHoptimar().isEmpty())
 			new AsyncExecution().execute("http://www.worldclass.is/heilsuraekt/stundaskra");

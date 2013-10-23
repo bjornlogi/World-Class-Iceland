@@ -12,7 +12,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class MySQLiteHelper extends SQLiteOpenHelper {
 	
-	public static final String TABLE_HOPTIMAR = "users";
+	public static final String TABLE_HOPTIMAR = "hoptimar";
 	public static final String COLUMN_ID = "_id";
 	public static final String NAFN = "nafn";
 	public static final String STOD = "stod";
@@ -24,8 +24,15 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	public static final String DAGUR = "dagur";
 	public static final String LOKAD = "lokad";
 	
+	public static final String TABLE_NOTENDUR = "notendur";
+	public static final String NETFANG = "netfang";
+	public static final String LYKILORD = "lykilord";
+	public static final String STADFEST = "stadfest";
+	public static final String KORT = "kort";
+	public static final String KENNITALA = "kennitala";
+	
 	private static final String DATABASE_NAME = "worldclass.db";
-	private static final int DATABASE_VERSION = 49;
+	private static final int DATABASE_VERSION = 50;
 	
 	/**
 	 * Tengir gagnagrunninn vid forritid
@@ -44,21 +51,39 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	 */
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		// Database creation sql statement
-		String CREATE_TABLE = "create table "+ TABLE_HOPTIMAR + "( " 
-				+ COLUMN_ID		+  	" integer primary key autoincrement, "
-				+ NAFN        	+	" TEXT, "
-				+ STOD          +	" TEXT, "
-	            + SALUR         +	" TEXT, "
-	            + TJALFARI      +	" TEXT, "
-	            + TEGUND        +	" TEXT, "
-	            + KLUKKAN       +	" TEXT, "
-	            + TIMI          +	" TEXT, "
-	            + DAGUR         +	" TEXT, "
-	            + LOKAD		    +	" TEXT ) ";
-		db.execSQL(CREATE_TABLE);	
+		createTable(db, TABLE_HOPTIMAR);
+		createTable(db, TABLE_NOTENDUR);
 	}
-
+	
+	private void createTable(SQLiteDatabase db, String name) {
+		// Database creation sql statement
+		String CREATE_TABLE;
+		if (name == TABLE_HOPTIMAR) {
+			CREATE_TABLE = "create table " + TABLE_HOPTIMAR + "( " 
+					+ COLUMN_ID		+  	" integer primary key autoincrement, "
+					+ NAFN        	+	" TEXT, "
+					+ STOD          +	" TEXT, "
+		            + SALUR         +	" TEXT, "
+		            + TJALFARI      +	" TEXT, "
+		            + TEGUND        +	" TEXT, "
+		            + KLUKKAN       +	" TEXT, "
+		            + TIMI          +	" TEXT, "
+		            + DAGUR         +	" TEXT, "
+		            + LOKAD		    +	" TEXT ) ";
+			db.execSQL(CREATE_TABLE);
+		} else if (name == TABLE_NOTENDUR) {
+			CREATE_TABLE = "create table " + TABLE_NOTENDUR + "( " 
+					+ COLUMN_ID	+	" integer primary key autoincrement, "
+					+ NETFANG	+	" TEXT, "
+					+ LYKILORD	+	" TEXT, "
+		            + STADFEST	+	" TEXT, "
+		            + KENNITALA +	" TEXT, "
+		            + KORT		+	" TEXT ) ";
+			db.execSQL(CREATE_TABLE);
+		}
+		
+	}
+	
 	/**
 	 * Uppfaerir toflu i db
 	 * 

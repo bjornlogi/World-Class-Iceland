@@ -18,9 +18,16 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
+import android.widget.Spinner;
+import android.widget.Button;
+import android.widget.ArrayAdapter;
+import android.view.View;
+import android.view.View.OnClickListener;
+
+
 
 /**
- * Activity sem birtir stundartoflu fyrir daginn i dag.
+ * Activity sem birtir stundatoflu fyrir daginn i dag.
  * 
  * @author Bjorn
  */
@@ -28,6 +35,9 @@ public class Stundatafla extends Activity{
 	private ListView mainListView ;
 	private DataSource mDataSource;
 	public Context mcontext = this;
+	
+	private Spinner spinner1, spinner2;
+	private Button btnSubmit;
 	
 	/**
 	 * Called when the activity is first created.
@@ -40,6 +50,10 @@ public class Stundatafla extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_stundatafla);
 		
+		addItemsOnSpinner2();
+		addListenerOnButton();
+		addListenerOnSpinnerItemSelection();
+		
 		mainListView = (ListView) findViewById( R.id.mainListView );
 		
 		mDataSource = new DataSource(this, "Fim");
@@ -51,6 +65,58 @@ public class Stundatafla extends Activity{
 		
 		
 	}// loka onCreate
+	
+	
+	/**
+	 * Bætir við stökum á dropdownlistann
+	 * 
+	 */
+	public void addItemsOnSpinner2() {
+	 
+		spinner2 = (Spinner) findViewById(R.id.spinner2);
+		List<String> list = new ArrayList<String>();
+		list.add("list 1");
+		list.add("list 2");
+		list.add("list 3");
+		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner2.setAdapter(dataAdapter);
+	  }
+	 
+	/**
+	 * ??
+	 * 
+	 */
+	  public void addListenerOnSpinnerItemSelection() {
+		  spinner1 = (Spinner) findViewById(R.id.spinner1);
+		  spinner1.setOnItemSelectedListener(new CustomOnItemSelectedListener());
+	  }
+	 
+	  /**
+	   * fengin eru gildi þeirra staka sem valin voru úr dropdownlistanum 
+	   */
+	  public void addListenerOnButton() {
+	 
+		  spinner1 = (Spinner) findViewById(R.id.spinner1);
+		  spinner2 = (Spinner) findViewById(R.id.spinner2);
+		  btnSubmit = (Button) findViewById(R.id.btnSubmit);
+	 
+		  btnSubmit.setOnClickListener(new OnClickListener() {
+	 
+		  @Override
+		  public void onClick(View v) {
+	 
+			  Toast.makeText(Stundatafla.this,
+				"OnClickListener : " + 
+				"\nSpinner 1 : "+ String.valueOf(spinner1.getSelectedItem()) + 
+				"\nSpinner 2 : "+ String.valueOf(spinner2.getSelectedItem()),
+				Toast.LENGTH_SHORT).show();
+		  }
+	 
+		});
+	  }
+	
+	
 	
 	/**
 	 * Birtir gogn ur gagnagrunni a skja a listaformi.
@@ -104,52 +170,52 @@ public class Stundatafla extends Activity{
 		protected String doInBackground(String... params) {
 			String url=params[0];
 				 
-				try { 
-					Document doc = Jsoup.connect(url).get();
-					Elements tableElements = doc.select("table");
+			try { 
+				Document doc = Jsoup.connect(url).get();
+				Elements tableElements = doc.select("table");
+				
+				Elements tableClassesElements = tableElements.select(":not(thead) tr");
+				String timar[] = {"", "morgun", "", "hadegi", "", "siddegi", "", "kvold"};
+				String dagar[] = {"Man", "Tri", "Mid", "Fim", "Fos", "Lau", "Sun"};
+				
+				for (int i = 0; i < tableClassesElements.size(); i++) {
+					Element row = tableClassesElements.get(i);
+					Elements rowItems = row.select("td");
+					String timi = timar[i];
 					
-					Elements tableClassesElements = tableElements.select(":not(thead) tr");
-					String timar[] = {"", "morgun", "", "hadegi", "", "siddegi", "", "kvold"};
-					String dagar[] = {"Man", "Tri", "Mid", "Fim", "Fos", "Lau", "Sun"};
-					
-					for (int i = 0; i < tableClassesElements.size(); i++) {
-						Element row = tableClassesElements.get(i);
-						Elements rowItems = row.select("td");
-						String timi = timar[i];
+					for (int j = 0; j < rowItems.size(); j++) {
+						String dagur = dagar[j];
+						Element list = rowItems.get(j);
+						Elements listItems = list.select("li"); 
 						
-						for (int j = 0; j < rowItems.size(); j++) {
-							String dagur = dagar[j];
-							Element list = rowItems.get(j);
-							Elements listItems = list.select("li"); 
+						for (int k = 0; k < listItems.size(); k++){
+							String hopTimi[] = new String[9];
+							Element links = listItems.get(k);
+							hopTimi[0] = links.select("a").text();
+							hopTimi[1] = links.select(".stod").text();
+							hopTimi[2] = links.select(".salur").text();
+							hopTimi[3] = links.select(".tjalfari").text();
+							hopTimi[4] = links.select(".tegund").text();
+							hopTimi[5] = links.select(".time").text();
+							hopTimi[6] = timi;
+							hopTimi[7] = dagur;
+							Elements lokad = links.select(".locked");
 							
-							for (int k = 0; k < listItems.size(); k++){
-								String hopTimi[] = new String[9];
-								Element links = listItems.get(k);
-								hopTimi[0] = links.select("a").text();
-								hopTimi[1] = links.select(".stod").text();
-								hopTimi[2] = links.select(".salur").text();
-								hopTimi[3] = links.select(".tjalfari").text();
-								hopTimi[4] = links.select(".tegund").text();
-								hopTimi[5] = links.select(".time").text();
-								hopTimi[6] = timi;
-								hopTimi[7] = dagur;
-								Elements lokad = links.select(".locked");
-								
-								if (lokad.text() != "")
-									hopTimi[8] = lokad.attr("title");
-								else
-									hopTimi[8] = " ";
-								
-								mDataSource.addHoptimi(hopTimi);
-								
-							}
+							if (lokad.text() != "")
+								hopTimi[8] = lokad.attr("title");
+							else
+								hopTimi[8] = " ";
+							
+							mDataSource.addHoptimi(hopTimi);
+							
 						}
 					}
 				}
-				catch ( Exception e ) {
-					System.out.println("error: " + e);
-				}
-				return "All Done!";
+			}
+			catch ( Exception e ) {
+				System.out.println("error: " + e);
+			}
+			return "All Done!";
 		}
 			
 		/**

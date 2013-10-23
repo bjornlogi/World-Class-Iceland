@@ -29,5 +29,17 @@
     <string name="weekday">Fimmtudagur</string>
     
     <string name="pageview">PageView Test</string>
-
+    
+    <string name="country_prompt">Velja stöð</string>
+ 
+    <string-array name="country_arrays">
+        <item>Malaysia</item>
+        <item>United States</item>
+        <item>Indonesia</item>
+        <item>France</item>
+        <item>Italy</item>
+        <item>Singapore</item>
+        <item>New Zealand</item>
+        <item>India</item>
+    </string-array>
 </resources>

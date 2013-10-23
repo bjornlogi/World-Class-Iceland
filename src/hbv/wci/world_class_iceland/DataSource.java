@@ -35,17 +35,26 @@ public class DataSource {
 	private MySQLiteHelper mSQLiteHelper;
 	private String dagur;
 	
-	private String[] mAllColumns = {
-			MySQLiteHelper.COLUMN_ID,
-			MySQLiteHelper.NAFN,
-			MySQLiteHelper.STOD,
-			MySQLiteHelper.SALUR,
-			MySQLiteHelper.TJALFARI,
-			MySQLiteHelper.TEGUND,
-			MySQLiteHelper.KLUKKAN,
-			MySQLiteHelper.TIMI,
-			MySQLiteHelper.DAGUR,
-			MySQLiteHelper.LOKAD};
+	private String[] hoptimarAllColumns = {
+		MySQLiteHelper.COLUMN_ID,
+		MySQLiteHelper.NAFN,
+		MySQLiteHelper.STOD,
+		MySQLiteHelper.SALUR,
+		MySQLiteHelper.TJALFARI,
+		MySQLiteHelper.TEGUND,
+		MySQLiteHelper.KLUKKAN,
+		MySQLiteHelper.TIMI,
+		MySQLiteHelper.DAGUR,
+		MySQLiteHelper.LOKAD
+	};
+	
+	private String[] notendurAllColumns = {
+		MySQLiteHelper.COLUMN_ID,
+		MySQLiteHelper.NETFANG,
+		MySQLiteHelper.LYKILORD,
+		MySQLiteHelper.STADFEST,
+		MySQLiteHelper.KORT
+	};
 	
 	/**
 	 * Upphafsstillir
@@ -78,7 +87,7 @@ public class DataSource {
 	 * 
 	 * @param hoptimi
 	 */
-	public void addHoptimi(String []hoptimi){
+	public void addHoptimi(String[] hoptimi){
 		ContentValues values = new ContentValues();
 		
 		values.put(MySQLiteHelper.NAFN, hoptimi[0]);
@@ -102,15 +111,13 @@ public class DataSource {
 		
 		List<Map<String, String>> hoptimar = new ArrayList<Map<String, String>>();
 		
-		Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_HOPTIMAR,
-				mAllColumns, null, null, null, null, null);
+		Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_HOPTIMAR, hoptimarAllColumns, null, null, null, null, null);
 		cursor.moveToFirst();
-		while (!cursor.isAfterLast()){
+		while (!cursor.isAfterLast()) {
 			//viljum ekki fa tofluheaderinn
-			if(cursor.getLong(0) != 0){
+			if(cursor.getLong(0) != 0) {
 				Hoptimar hoptimi = cursorToHoptimar(cursor);
-				if(hoptimi !=null)
-				{
+				if(hoptimi !=null) {
 					Map<String, String> map = new HashMap<String, String>(2);
 			    	map.put("timi", cursor.getString(1));
 			    	map.put("klukkan", hoptimi.toString());
@@ -121,6 +128,22 @@ public class DataSource {
 		}
 		cursor.close();
 		return hoptimar;
+	}
+	
+	/**
+	 * Bætir við einum notanda í gagnagrunninn.
+	 * 
+	 * @param user 
+	 */
+	public void addUser(String[] user) {
+		ContentValues values = new ContentValues();
+		
+		values.put(MySQLiteHelper.NETFANG, user[0]);
+		values.put(MySQLiteHelper.LYKILORD, user[1]);
+		values.put(MySQLiteHelper.STADFEST, user[2]);
+		values.put(MySQLiteHelper.KORT, user[3]);
+		
+		mSQLiteDatabase.insert(MySQLiteHelper.TABLE_NOTENDUR, null, values);	
 	}
 	
 	/**

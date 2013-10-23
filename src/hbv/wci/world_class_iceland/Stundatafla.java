@@ -27,7 +27,7 @@ import android.view.View.OnClickListener;
 
 
 /**
- * Activity sem birtir stundartoflu fyrir daginn i dag.
+ * Activity sem birtir stundatoflu fyrir daginn i dag.
  * 
  * @author Bjorn
  */
@@ -68,7 +68,10 @@ public class Stundatafla extends Activity{
 	}// loka onCreate
 	
 	
-	// add items into spinner dynamically
+	/**
+	 * Bætir við stökum á dropdownlistann
+	 * 
+	 */
 	public void addItemsOnSpinner2() {
 	 
 		spinner2 = (Spinner) findViewById(R.id.spinner2);
@@ -81,12 +84,18 @@ public class Stundatafla extends Activity{
 		spinner2.setAdapter(dataAdapter);
 	  }
 	 
+	/**
+	 * ??
+	 * 
+	 */
 	  public void addListenerOnSpinnerItemSelection() {
 		  spinner1 = (Spinner) findViewById(R.id.spinner1);
 		  spinner1.setOnItemSelectedListener(new CustomOnItemSelectedListener());
 	  }
 	 
-	  // get the selected dropdown list value
+	  /**
+	   * fengin eru gildi þeirra staka sem valin voru úr dropdownlistanum 
+	   */
 	  public void addListenerOnButton() {
 	 
 		  spinner1 = (Spinner) findViewById(R.id.spinner1);

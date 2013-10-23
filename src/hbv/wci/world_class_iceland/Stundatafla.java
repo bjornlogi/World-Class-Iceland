@@ -18,6 +18,13 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
+import android.widget.Spinner;
+import android.widget.Button;
+import android.widget.ArrayAdapter;
+import android.view.View;
+import android.view.View.OnClickListener;
+
+
 
 /**
  * Activity sem birtir stundartoflu fyrir daginn i dag.
@@ -29,6 +36,9 @@ public class Stundatafla extends Activity{
 	private DataSource mDataSource;
 	public Context mcontext = this;
 	
+	private Spinner spinner1, spinner2;
+	private Button btnSubmit;
+	
 	/**
 	 * Called when the activity is first created.
 	 * Byr til skjainn og birtir upplysingar a honum.
@@ -39,6 +49,10 @@ public class Stundatafla extends Activity{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_stundatafla);
+		
+		addItemsOnSpinner2();
+		addListenerOnButton();
+		addListenerOnSpinnerItemSelection();
 		
 		mainListView = (ListView) findViewById( R.id.mainListView );
 		
@@ -52,6 +66,49 @@ public class Stundatafla extends Activity{
 		
 		
 	}// loka onCreate
+	
+	
+	// add items into spinner dynamically
+	public void addItemsOnSpinner2() {
+	 
+		spinner2 = (Spinner) findViewById(R.id.spinner2);
+		List<String> list = new ArrayList<String>();
+		list.add("list 1");
+		list.add("list 2");
+		list.add("list 3");
+		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
+		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spinner2.setAdapter(dataAdapter);
+	  }
+	 
+	  public void addListenerOnSpinnerItemSelection() {
+		  spinner1 = (Spinner) findViewById(R.id.spinner1);
+		  spinner1.setOnItemSelectedListener(new CustomOnItemSelectedListener());
+	  }
+	 
+	  // get the selected dropdown list value
+	  public void addListenerOnButton() {
+	 
+		  spinner1 = (Spinner) findViewById(R.id.spinner1);
+		  spinner2 = (Spinner) findViewById(R.id.spinner2);
+		  btnSubmit = (Button) findViewById(R.id.btnSubmit);
+	 
+		  btnSubmit.setOnClickListener(new OnClickListener() {
+	 
+		  @Override
+		  public void onClick(View v) {
+	 
+			  Toast.makeText(Stundatafla.this,
+				"OnClickListener : " + 
+				"\nSpinner 1 : "+ String.valueOf(spinner1.getSelectedItem()) + 
+				"\nSpinner 2 : "+ String.valueOf(spinner2.getSelectedItem()),
+				Toast.LENGTH_SHORT).show();
+		  }
+	 
+		});
+	  }
+	
+	
 	
 	/**
 	 * Birtir gogn ur gagnagrunni a skja a listaformi.

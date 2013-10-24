@@ -9,9 +9,13 @@ import java.util.TimeZone;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 /** 
  * Activity sem synir innskraningar val og menu fyrir navigation
@@ -20,6 +24,8 @@ import android.view.MenuItem;
  * @see Activity
  */
 public class Innskraning extends Activity {
+	private DataSource mDataSource;
+	public Context mContext = this;
 
 	/** Byr til skjainn, bindur layout ur activity_innskraning.xml vid skjainn
 	 *
@@ -41,6 +47,23 @@ public class Innskraning extends Activity {
 		Date date = new Date();
 		vikudagur = DOW.format(date);
 		createMap();
+		
+		mDataSource = new DataSource(mContext);
+		mDataSource.open();
+		
+		final Button skraInn = (Button) findViewById(R.id.skraInnTakki);
+		skraInn.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				final EditText netfangInntak = (EditText) findViewById(R.id.netfangInntak);
+				final EditText lykilordInntak = (EditText) findViewById(R.id.lykilordInntak);
+				
+				String netfang = netfangInntak.getText().toString();
+				String lykilord = lykilordInntak.getText().toString();
+				
+				// skoða gagnagrunn, checkUser() og eitthvað
+				
+			}
+		});
 	}
 	
 	private void createMap(){

@@ -18,6 +18,7 @@
         <activity
             android:name="hbv.wci.world_class_iceland.Innskraning"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,14 +27,24 @@
             </intent-filter>
         </activity>
         
-        <activity android:name=".Opnunartimar"
-            android:label="@string/opnunartimar"></activity>
+        <activity 
+            android:name=".Opnunartimar"
+            android:screenOrientation="portrait"
+            android:label="@string/opnunartimar" ></activity>
         
-        <activity android:name=".Opnunartimi"
-            android:label="@string/opnunartimar"></activity>
-        <activity android:name=".Stundatafla"></activity>
-        <activity android:name=".ViewPageActivity"></activity>
-        <activity android:name=".Expandable"></activity>
+        <activity 
+            android:name=".Opnunartimi"
+            android:label="@string/opnunartimar"
+            android:screenOrientation="portrait" ></activity>
+        <activity 
+            android:name=".Stundatafla"
+            android:screenOrientation="portrait" ></activity>
+        <activity 
+            android:name=".ViewPageActivity"
+            android:screenOrientation="portrait" ></activity>
+        <activity 
+            android:name=".Expandable"
+            android:screenOrientation="portrait" ></activity>
     </application>
 
 </manifest>

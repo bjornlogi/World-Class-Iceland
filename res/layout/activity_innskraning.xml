@@ -11,7 +11,7 @@
 		android:layout_height="wrap_content"
 		android:contentDescription="@string/bakgrunnur"
 		android:scaleType="centerCrop"
-		android:src="@drawable/background1920x1080" />
+		android:src="@drawable/background" />
 
 	<ScrollView 
 		android:id="@+id/scrollViewInnskraning" 
@@ -41,7 +41,7 @@
 				android:id="@+id/netfangInntak"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="180dip"
+				android:layout_marginTop="200dip"
 				android:paddingLeft="5dip"
 				android:paddingRight="5dip"
 				android:ems="10"

@@ -152,6 +152,28 @@ public class DataSource {
 	}
 	
 	/**
+	 * 
+	 * @param netfang
+	 * @param lykilord
+	 * @return
+	 */
+	public boolean checkUser(String netfang, String lykilord) {
+		Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_NOTENDUR, notendurAllColumns, null, null, null, null, null);
+		cursor.moveToFirst();
+		
+		while (!cursor.isAfterLast()) {
+			Notandi notandi = cursorToNotandi(cursor);
+			if(notandi.getLykilord().equals(lykilord) && notandi.getNetfang().equals(netfang)) {
+				return true;
+			}
+			cursor.moveToNext();
+		}
+		cursor.close();
+		
+		return false;
+	}
+	
+	/**
 	 * Lesin er ein rod i gagnagrunninum.
 	 * 
 	 * @param cursor
@@ -173,6 +195,19 @@ public class DataSource {
 			return hoptimi;
 		}	
 		return null;
+	}
+	
+	/**
+	 * 
+	 * @param cursor
+	 * @return
+	 */
+	private Notandi cursorToNotandi(Cursor cursor) {
+		return new Notandi(cursor.getLong(0), 
+							cursor.getString(1), 
+							cursor.getString(2), 
+							cursor.getString(3), 
+							cursor.getString(4));
 	}
 
 }

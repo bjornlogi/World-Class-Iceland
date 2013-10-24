@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 /** 
  * Activity sem synir innskraningar val og menu fyrir navigation
@@ -60,7 +61,23 @@ public class Innskraning extends Activity {
 				String netfang = netfangInntak.getText().toString();
 				String lykilord = lykilordInntak.getText().toString();
 				
-				// skoða gagnagrunn, checkUser() og eitthvað
+				boolean flag = mDataSource.checkUser(netfang, lykilord);
+				
+				if(flag) {
+					Intent i = new Intent(Innskraning.this, ViewPageActivity.class);
+					startActivity(i);
+				} else {
+					Toast.makeText(Innskraning.this, "Rangt netfang og/eÃ°a lykilorÃ°.", Toast.LENGTH_LONG).show();
+				}
+				
+			}
+		});
+		
+		final Button nySkra = (Button) findViewById(R.id.nySkraTakki);
+		nySkra.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
 				
 			}
 		});

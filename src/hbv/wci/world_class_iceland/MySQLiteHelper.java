@@ -72,7 +72,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 		            + LOKAD		    +	" TEXT ) ";
 			db.execSQL(CREATE_TABLE);
 		} else if (name == TABLE_NOTENDUR) {
-			CREATE_TABLE = "create table " + TABLE_NOTENDUR + "( " 
+			CREATE_TABLE = "create table if not exists" + TABLE_NOTENDUR + "( " 
 					+ COLUMN_ID	+	" integer primary key autoincrement, "
 					+ NETFANG	+	" TEXT, "
 					+ LYKILORD	+	" TEXT, "

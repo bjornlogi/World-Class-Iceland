@@ -19,6 +19,8 @@ public class Expandable extends Activity {
 	ExpandableListView expListView;
 	List<String> listHeader;
 	HashMap<String, List<String>> listChild;
+	HashMap<String, String> infoChild;
+	//HashMap<String, List<String>, HashMap<String, String>> listChild;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -28,7 +30,7 @@ public class Expandable extends Activity {
 		
 		fyllaLista();
 		
-		listAdapter = new ExpandableListAdapter(this, listHeader, listChild);
+		listAdapter = new ExpandableListAdapter(this, listHeader, listChild, infoChild);
 		
 		expListView.setAdapter(listAdapter);
 	}
@@ -36,13 +38,19 @@ public class Expandable extends Activity {
 	private void fyllaLista(){
 		listHeader = new ArrayList<String>();
         listChild = new HashMap<String, List<String>>();
+        infoChild = new HashMap<String,String>();
         
         listHeader.add("Morguntímar");
         listHeader.add("Hádegistímar");
         listHeader.add("Kvöldtímar");
         
         List<String> morguntimar = new ArrayList<String>();
+        
+        //HashMap<String, String> morgun = new HashMap<String, String>();
+       // morgun.put("Morguntími 1", "bla");
+        
         morguntimar.add("Morguntími 1");
+        infoChild.put("Morguntími 1","bla");
         morguntimar.add("Morguntími 2");
         
         List<String> hadegistimar = new ArrayList<String>();
@@ -53,9 +61,10 @@ public class Expandable extends Activity {
         kvoldtimar.add("Kvöldtími 1");
         kvoldtimar.add("Kvöldtími 2");
         
+        //listChild.put(listHeader.get(0), morgun);
         listChild.put(listHeader.get(0), morguntimar);
-        listChild.put(listHeader.get(1), hadegistimar);
-        listChild.put(listHeader.get(2), kvoldtimar);
+        //listChild.put(listHeader.get(1), hadegistimar);
+        //listChild.put(listHeader.get(2), kvoldtimar);
 	}
 
 }

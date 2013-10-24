@@ -16,12 +16,17 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private Context _context;
     private List<String> _listDataHeader;
     private HashMap<String, List<String>> _listDataChild;
+    private HashMap<String, String> _infoChild;
+    //private HashMap<String, HashMap<String, String>> _listDataChild;
  
     public ExpandableListAdapter(Context context, List<String> listDataHeader,
-            HashMap<String, List<String>> listChildData) {
+            HashMap<String, List<String>> listChildData, HashMap<String, String> infoChild) {
+//    public ExpandableListAdapter(Context context, List<String> listDataHeader,
+  //  		HashMap<String, HashMap<String, String>> listChildData) {
         this._context = context;
         this._listDataHeader = listDataHeader;
         this._listDataChild = listChildData;
+        this._infoChild = infoChild;
     }
  
     @Override
@@ -40,6 +45,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             boolean isLastChild, View convertView, ViewGroup parent) {
  
         final String childText = (String) getChild(groupPosition, childPosition);
+
  
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this._context
@@ -51,9 +57,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                 .findViewById(R.id.timiTitill);
         
         TextView info = (TextView) convertView.findViewById(R.id.timiInfo);
- 
+        
+        info.setText(this._infoChild.get(childText));
+        
         txtListChild.setText(childText);
-        info.setText("Info");
         return convertView;
     }
  

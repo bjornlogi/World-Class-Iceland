@@ -30,17 +30,10 @@
     
     <string name="pageview">PageView Test</string>
     
-    <string name="country_prompt">Velja stöð</string>
+    <string name="velja_stod">Velja stöð</string>
+    <string name="velja_tegund">Velja tegund</string>
+    <string name="veljaStod">Veldu stöð</string>
+    <string name="veljaTegund">Veldu tegund</string>
     <string name="expandable">Expandable list</string>
  
-    <string-array name="country_arrays">
-        <item>Malaysia</item>
-        <item>United States</item>
-        <item>Indonesia</item>
-        <item>France</item>
-        <item>Italy</item>
-        <item>Singapore</item>
-        <item>New Zealand</item>
-        <item>India</item>
-    </string-array>
 </resources>

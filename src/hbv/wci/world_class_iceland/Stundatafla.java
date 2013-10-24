@@ -50,9 +50,8 @@ public class Stundatafla extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_stundatafla);
 		
-		addItemsOnSpinner2();
+		addItemsOnSpinner();
 		addListenerOnButton();
-		addListenerOnSpinnerItemSelection();
 		
 		mainListView = (ListView) findViewById( R.id.mainListView );
 		
@@ -66,31 +65,49 @@ public class Stundatafla extends Activity{
 		
 	}// loka onCreate
 	
-	
 	/**
 	 * Bætir við stökum á dropdownlistann
 	 * 
 	 */
-	public void addItemsOnSpinner2() {
+	public void addItemsOnSpinner() {
+
 	 
+		spinner1 = (Spinner) findViewById(R.id.spinner1);
+		List<String> list1 = new ArrayList<String>();
+		list1.add("Veldu stöð");
+		list1.add("Laugar");
+		list1.add("Kringlan");
+		list1.add("Hafnarfjörður");
+		list1.add("Ögurhvarf");
+		list1.add("Egilshöll");
+		list1.add("HR");
+		list1.add("Kópavogur");
+		list1.add("Mosfellsbær");
+		list1.add("Seltjarnarnes");
+		list1.add("Spöng");
+		ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list1);
+		dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_item);
+		spinner1.setAdapter(dataAdapter1);
+		
 		spinner2 = (Spinner) findViewById(R.id.spinner2);
-		List<String> list = new ArrayList<String>();
-		list.add("list 1");
-		list.add("list 2");
-		list.add("list 3");
-		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
-		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinner2.setAdapter(dataAdapter);
+		List<String> list2 = new ArrayList<String>();
+		list2.add("Veldu tegund");
+		list2.add("Brennsla / mótun");
+		list2.add("Dans");
+		list2.add("Hardcore / alhliða þjálfun");
+		list2.add("Hardcore/alhliða");
+		list2.add("Lífsstílsnámskeið");
+		list2.add("Líkami og sál");
+		list2.add("Rólegt");
+		list2.add("Spor");
+		list2.add("Styrkur");
+		list2.add("óflokkað");
+		ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list2);
+		dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_item);
+		spinner2.setAdapter(dataAdapter2);
+		
 	  }
 	 
-	/**
-	 * ??
-	 * 
-	 */
-	  public void addListenerOnSpinnerItemSelection() {
-		  spinner1 = (Spinner) findViewById(R.id.spinner1);
-		  spinner1.setOnItemSelectedListener(new CustomOnItemSelectedListener());
-	  }
 	 
 	  /**
 	   * fengin eru gildi þeirra staka sem valin voru úr dropdownlistanum 
@@ -115,6 +132,7 @@ public class Stundatafla extends Activity{
 	 
 		});
 	  }
+	 
 	
 	
 	

@@ -32,6 +32,7 @@ public class ScreenSlidePageFragment extends Fragment {
 	    public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	            Bundle savedInstanceState) {
 		 	int position = getArguments().getInt("position");
+		 	System.out.println("pos " + position);
 	        ViewGroup rootView = (ViewGroup) inflater.inflate(
 	                R.layout.activity_stundatafla, container, false);
 	        TextView t = (TextView) rootView.findViewById(R.id.opnun_header);
@@ -90,7 +91,7 @@ public class ScreenSlidePageFragment extends Fragment {
 				@Override
 				public void onItemClick(AdapterView<?> parnet, android.view.View view,
 						int position, long id) {
-					String msg = "Svona muntu geta skráð þig í tima!";
+					String msg = "Svona muntu geta skráð þig í tíma!";
 					Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
 				}
 			});//loka onclick

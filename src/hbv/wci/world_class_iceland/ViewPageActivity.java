@@ -17,7 +17,7 @@ public class ViewPageActivity extends FragmentActivity {
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
-    private static final int NUM_PAGES = 7;
+    private static final int NUM_PAGES = 7*5;
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -43,7 +43,7 @@ public class ViewPageActivity extends FragmentActivity {
         mPager.setAdapter(mPagerAdapter);
         Intent myIntent= getIntent();
 		String vikudagur = myIntent.getStringExtra("vikudagur");
-        mPager.setCurrentItem(Integer.parseInt(vikudagur));
+        mPager.setCurrentItem(7*2+Integer.parseInt(vikudagur));
         
         mPager.setOnPageChangeListener(new OnPageChangeListener() {
         	int currentPage;
@@ -76,14 +76,11 @@ public class ViewPageActivity extends FragmentActivity {
 
     @Override
     public void onBackPressed() {
-        if (mPager.getCurrentItem() == 0) {
+        
             // If the user is currently looking at the first step, allow the system to handle the
             // Back button. This calls finish() on this activity and pops the back stack.
             super.onBackPressed();
-        } else {
-            // Otherwise, select the previous step.
-            mPager.setCurrentItem(mPager.getCurrentItem() - 1);
-        }
+        
     }
     
     
@@ -101,7 +98,7 @@ public class ViewPageActivity extends FragmentActivity {
         public Fragment getItem(int position) {
         	ScreenSlidePageFragment pf = new ScreenSlidePageFragment();
         	Bundle bdl = new Bundle(1);
-            bdl.putInt("position", position);
+            bdl.putInt("position", position%7);
             pf.setArguments(bdl);
             return pf;
         }

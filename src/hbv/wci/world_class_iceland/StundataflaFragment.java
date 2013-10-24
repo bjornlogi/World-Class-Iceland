@@ -24,7 +24,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ScreenSlidePageFragment extends Fragment {
+public class StundataflaFragment extends Fragment {
 	private ListView mainListView ;
 	private DataSource mDataSource;
 	
@@ -90,7 +90,7 @@ public class ScreenSlidePageFragment extends Fragment {
 				@Override
 				public void onItemClick(AdapterView<?> parnet, android.view.View view,
 						int position, long id) {
-					String msg = "Svona muntu geta skráð þig í tima!";
+					String msg = "Svona muntu geta skráð þig í tíma!";
 					Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
 				}
 			});//loka onclick

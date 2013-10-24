@@ -68,12 +68,8 @@ public class Innskraning extends Activity {
 	
 	private void createMap(){
 		map = new HashMap<String,Integer>();
-		map.put("Mon", 0);
-		map.put("Tue", 1);
-		map.put("Wed", 2);
-		map.put("Thu", 3);
-		map.put("Fri", 4);
-		map.put("Sat", 5);
+		map.put("Mon", 0);map.put("Tue", 1);map.put("Wed", 2);
+		map.put("Thu", 3);map.put("Fri", 4);map.put("Sat", 5);
 		map.put("Sun", 6);
 	}
 

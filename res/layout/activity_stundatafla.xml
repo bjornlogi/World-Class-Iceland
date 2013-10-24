@@ -27,17 +27,19 @@
             android:orientation="horizontal">
             
             <Spinner
-		        android:id="@+id/spinner1"
+		        android:id="@+id/stod"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
-		        android:entries="@array/country_arrays"
-		        android:prompt="@string/country_prompt" 
+		        android:entries="@array/stodvar"
+		        android:prompt="@string/veljaStod" 
 		        android:layout_marginRight="10dp"/>
  
 		    <Spinner
-		        android:id="@+id/spinner2"
+		        android:id="@+id/tegund"
 		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content" 
+		        android:layout_height="wrap_content"
+		        android:entries="@array/tegundir"
+		        android:prompt="@string/veljaTegund" 
 		        android:layout_marginRight="10dp"/>
             
             <Button

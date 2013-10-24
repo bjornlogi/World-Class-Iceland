@@ -56,14 +56,19 @@ public class DataSource {
 		MySQLiteHelper.KORT
 	};
 	
+	
+	public DataSource (Context context, String dagurInntak){
+		mSQLiteHelper = new MySQLiteHelper(context);
+		dagur = dagurInntak;
+	}
+	
 	/**
 	 * Upphafsstillir
 	 * 
 	 * @param context
 	 */
-	public DataSource (Context context, String dagurInntak){
+	public DataSource (Context context) {
 		mSQLiteHelper = new MySQLiteHelper(context);
-		dagur = dagurInntak;
 	}
 	
 	/**

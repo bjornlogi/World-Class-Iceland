@@ -50,6 +50,9 @@ public class Stundatafla extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_stundatafla);
 		
+		addItemsOnSpinner();
+		addListenerOnButton();
+		
 		mainListView = (ListView) findViewById( R.id.mainListView );
 		
 		mDataSource = new DataSource(this, "Fim");
@@ -62,7 +65,73 @@ public class Stundatafla extends Activity{
 		
 	}// loka onCreate
 	
+	/**
+	 * Bætir við stökum á dropdownlistann
+	 * 
+	 */
+	public void addItemsOnSpinner() {
 
+	 
+		spinner1 = (Spinner) findViewById(R.id.spinner1);
+		List<String> list1 = new ArrayList<String>();
+		list1.add("Veldu stöð");
+		list1.add("Laugar");
+		list1.add("Kringlan");
+		list1.add("Hafnarfjörður");
+		list1.add("Ögurhvarf");
+		list1.add("Egilshöll");
+		list1.add("HR");
+		list1.add("Kópavogur");
+		list1.add("Mosfellsbær");
+		list1.add("Seltjarnarnes");
+		list1.add("Spöng");
+		ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list1);
+		dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_item);
+		spinner1.setAdapter(dataAdapter1);
+		
+		spinner2 = (Spinner) findViewById(R.id.spinner2);
+		List<String> list2 = new ArrayList<String>();
+		list2.add("Veldu tegund");
+		list2.add("Brennsla / mótun");
+		list2.add("Dans");
+		list2.add("Hardcore / alhliða þjálfun");
+		list2.add("Hardcore/alhliða");
+		list2.add("Lífsstílsnámskeið");
+		list2.add("Líkami og sál");
+		list2.add("Rólegt");
+		list2.add("Spor");
+		list2.add("Styrkur");
+		list2.add("óflokkað");
+		ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list2);
+		dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_item);
+		spinner2.setAdapter(dataAdapter2);
+		
+	  }
+	 
+	 
+	  /**
+	   * fengin eru gildi þeirra staka sem valin voru úr dropdownlistanum 
+	   */
+	  public void addListenerOnButton() {
+	 
+		  spinner1 = (Spinner) findViewById(R.id.spinner1);
+		  spinner2 = (Spinner) findViewById(R.id.spinner2);
+		  btnSubmit = (Button) findViewById(R.id.btnSubmit);
+	 
+		  btnSubmit.setOnClickListener(new OnClickListener() {
+	 
+		  @Override
+		  public void onClick(View v) {
+	 
+			  Toast.makeText(Stundatafla.this,
+				"OnClickListener : " + 
+				"\nSpinner 1 : "+ String.valueOf(spinner1.getSelectedItem()) + 
+				"\nSpinner 2 : "+ String.valueOf(spinner2.getSelectedItem()),
+				Toast.LENGTH_SHORT).show();
+		  }
+	 
+		});
+	  }
 	 
 	
 	

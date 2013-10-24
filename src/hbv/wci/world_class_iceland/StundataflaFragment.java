@@ -24,7 +24,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ScreenSlidePageFragment extends Fragment {
+public class StundataflaFragment extends Fragment {
 	private ListView mainListView ;
 	private DataSource mDataSource;
 	
@@ -32,7 +32,6 @@ public class ScreenSlidePageFragment extends Fragment {
 	    public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	            Bundle savedInstanceState) {
 		 	int position = getArguments().getInt("position");
-		 	System.out.println("pos " + position);
 	        ViewGroup rootView = (ViewGroup) inflater.inflate(
 	                R.layout.activity_stundatafla, container, false);
 	        TextView t = (TextView) rootView.findViewById(R.id.opnun_header);

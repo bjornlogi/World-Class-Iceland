@@ -9,15 +9,11 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 
-import android.support.v4.app.FragmentTransaction;
-import android.widget.TextView;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-
 public class ViewPageActivity extends FragmentActivity {
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
-    private static final int NUM_PAGES = 7*5;
+    private static final int NUM_PAGES = 7*5; //til ad "wrappa" stundatöflunni
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -43,35 +39,7 @@ public class ViewPageActivity extends FragmentActivity {
         mPager.setAdapter(mPagerAdapter);
         Intent myIntent= getIntent();
 		String vikudagur = myIntent.getStringExtra("vikudagur");
-        mPager.setCurrentItem(7*2+Integer.parseInt(vikudagur));
-        
-        mPager.setOnPageChangeListener(new OnPageChangeListener() {
-        	int currentPage;
-        	@Override
-            public void onPageSelected(int position) {
-                // TODO Auto-generated method stub
-        		currentPage = position;
-        		
-            }
-
-            
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-                // TODO Auto-generated method stub
-
-            }
-
-            public void onPageScrollStateChanged(int state) {
-                // TODO Auto-generated method stub
-//            	 if (state == ViewPager.SCROLL_STATE_DRAGGING) {
-//            		 if (currentPage == 0)
-//            	          mPager.setCurrentItem(6,false);
-//            	     else if (currentPage == NUM_PAGES-1)
-//            	          mPager.setCurrentItem(0,false);
-//            	 }
-
-            }
-        });
-        
+        mPager.setCurrentItem(7*2+Integer.parseInt(vikudagur));//viljum byrja i midjunni        
     }
 
     @Override
@@ -85,8 +53,8 @@ public class ViewPageActivity extends FragmentActivity {
     
     
     /**
-     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
-     * sequence.
+     * Pager Adapter sem stýrir fragmentunum.
+     * 
      */
     private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
         public ScreenSlidePagerAdapter(FragmentManager fm) {
@@ -96,7 +64,7 @@ public class ViewPageActivity extends FragmentActivity {
 
         @Override
         public Fragment getItem(int position) {
-        	ScreenSlidePageFragment pf = new ScreenSlidePageFragment();
+        	StundataflaFragment pf = new StundataflaFragment();
         	Bundle bdl = new Bundle(1);
             bdl.putInt("position", position%7);
             pf.setArguments(bdl);

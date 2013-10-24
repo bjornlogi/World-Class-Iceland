@@ -34,6 +34,7 @@ public class DataSource {
 	private SQLiteDatabase mSQLiteDatabase;
 	private MySQLiteHelper mSQLiteHelper;
 	private String dagur;
+	private String[] filter;
 	
 	private String[] hoptimarAllColumns = {
 		MySQLiteHelper.COLUMN_ID,
@@ -175,6 +176,17 @@ public class DataSource {
 	}
 	
 	/**
+	 * Nidurstodur ur vali notendans
+	 * @param stod
+	 * @param tegund
+	 */
+	public void filter(String stod, String tegund){
+		filter = new String[2];
+		filter[0] = stod;
+		filter[1] = tegund;
+	}
+	
+	/**
 	 * Lesin er ein rod i gagnagrunninum.
 	 * 
 	 * @param cursor
@@ -182,7 +194,19 @@ public class DataSource {
 	 */
 	private Hoptimar cursorToHoptimar(Cursor cursor) {
 		Hoptimar hoptimi = new Hoptimar();
-		if (cursor.getString(2).equals("Laugar") && cursor.getString(8).equals(this.dagur)){			 
+		
+		String stod = "Allar stöðvar";
+		String tegund = "Allar tegundir";
+		if(filter != null){
+			stod = filter[0];
+			tegund = filter[1];
+		}
+		
+		
+		if ((stod=="Allar stöðvar" || cursor.getString(2).equals(stod)) &&
+				(tegund=="Allar tegundir"|| cursor.getString(5).equals(tegund)) &&
+				cursor.getString(8).equals(this.dagur))
+		{			 
 			hoptimi.setmId(cursor.getLong(0));		
 			hoptimi.setNafn(cursor.getString(1));
 			hoptimi.setStod(cursor.getString(2));

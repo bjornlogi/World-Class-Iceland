@@ -13,76 +13,82 @@
         android:scaleType="centerCrop"
         android:src="@drawable/background" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginLeft="50dip"
-        android:layout_marginRight="50dip" >
-
-        <TextView
-            android:id="@+id/textView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="180dp"
-            android:text="@string/netfang"
-            android:typeface="sans"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:textColor="@color/white" />
-
-        <EditText
-            android:id="@+id/editText1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="5dip"
-            android:paddingRight="5dip"
-            android:ems="10"
-            android:hint="@string/netfang"
-            android:background="@drawable/rounded_edittext"
-            android:inputType="textEmailAddress"
-            android:typeface="sans"
-            android:textColor="@color/wcRed"
-            android:textColorHint="@color/wcRed" />
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dip"
-            android:text="@string/lykilord"
-            android:typeface="sans"
-            android:textStyle="bold"
-            android:textSize="20sp"
-            android:textColor="@color/white" />
-
-        <EditText
-            android:id="@+id/editText2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingLeft="5dip"
-            android:paddingRight="5dip"
-            android:ems="10"
-            android:hint="@string/lykilord"
-            android:background="@drawable/rounded_edittext"
-            android:inputType="textPassword" 
-            android:typeface="sans"
-            android:textColor="@color/wcRed"
-            android:textColorHint="@color/wcRed" />
-
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
-            android:paddingLeft="5dip"
-            android:paddingRight="5dip"
-            android:background="@drawable/rounded_edittext"
-            android:textColor="@color/wcRed"
-            android:textStyle="bold"
-            
-            android:text="@string/skraInn" />
+    <ScrollView 
+		android:id="@+id/scrollViewInnskraning" 
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content" >
         
-    </LinearLayout>
+		<LinearLayout
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:orientation="vertical"
+		        android:layout_marginLeft="50dip"
+		        android:layout_marginRight="50dip" >
+		
+		        <TextView
+		            android:id="@+id/netfangMerki"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_marginTop="180dp"
+		            android:text="@string/netfang"
+		            android:typeface="sans"
+		            android:textStyle="bold"
+		            android:textSize="20sp"
+		            android:textColor="@color/white" />
+		
+		        <EditText
+		            android:id="@+id/netfangInntak"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:paddingLeft="5dip"
+		            android:paddingRight="5dip"
+		            android:ems="10"
+		            android:hint="@string/netfang"
+		            android:background="@drawable/rounded_edittext"
+		            android:inputType="textEmailAddress"
+		            android:typeface="sans"
+		            android:textColor="@color/wcRed"
+		            android:textColorHint="@color/wcRed" />
+		
+		        <TextView
+		            android:id="@+id/lykilordMerki"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_marginTop="20dip"
+		            android:text="@string/lykilord"
+		            android:typeface="sans"
+		            android:textStyle="bold"
+		            android:textSize="20sp"
+		            android:textColor="@color/white" />
+		
+		        <EditText
+		            android:id="@+id/lykilordInntak"
+		            android:layout_width="match_parent"
+		            android:layout_height="wrap_content"
+		            android:paddingLeft="5dip"
+		            android:paddingRight="5dip"
+		            android:ems="10"
+		            android:hint="@string/lykilord"
+		            android:background="@drawable/rounded_edittext"
+		            android:inputType="textPassword" 
+		            android:typeface="sans"
+		            android:textColor="@color/wcRed"
+		            android:textColorHint="@color/wcRed" />
+		
+		        <Button
+		            android:id="@+id/skraInnTakki"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_marginTop="10dip"
+		            android:paddingLeft="5dip"
+		            android:paddingRight="5dip"
+		            android:background="@drawable/rounded_edittext"
+		            android:textColor="@color/wcRed"
+		            android:textStyle="bold"
+		            
+		            android:text="@string/skraInn" />
+		        
+		    </LinearLayout>
+    </ScrollView>
     
 </FrameLayout>

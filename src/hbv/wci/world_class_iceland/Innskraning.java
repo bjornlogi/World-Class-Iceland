@@ -107,9 +107,12 @@ public class Innskraning extends Activity {
 				break;
 			case R.id.pageviewtest_menu:
 				Intent k = new Intent(Innskraning.this, ViewPageActivity.class);
-				System.out.println(map.get(vikudagur));
 				k.putExtra("vikudagur", Integer.toString(map.get(vikudagur)));
 				startActivity(k);
+				break;
+			case R.id.expandable_menu:
+				Intent l = new Intent(Innskraning.this, Expandable.class);
+				startActivity(l);
 				break;
 		}
 		

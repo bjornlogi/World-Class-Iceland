@@ -30,31 +30,10 @@
     
     <string name="pageview">PageView Test</string>
     
+    <string name="velja_stod">Velja stöð</string>
+    <string name="velja_tegund">Velja tegund</string>
     <string name="veljaStod">Veldu stöð</string>
     <string name="veljaTegund">Veldu tegund</string>
     <string name="expandable">Expandable list</string>
  
-    <string-array name="stodvar">
-        <item>Malaysia</item>
-        <item>United States</item>
-        <item>Indonesia</item>
-        <item>France</item>
-        <item>Italy</item>
-        <item>Singapore</item>
-        <item>New Zealand</item>
-        <item>India</item>
-    </string-array>
-    
-    <string-array name="tegundir">
-        <item>Brennsla / mótun</item>
-        <item>Dans</item>
-        <item>Hardcore / alhliða þjálfun</item>
-        <item>Hardcore/alhliða</item>
-        <item>Lífsstílsnámskeið</item>
-        <item>Líkami og sál</item>
-        <item>Rólegt</item>
-        <item>Spor</item>
-        <item>Styrkur</item>
-        <item>óflokkað</item>
-    </string-array>
 </resources>

@@ -73,7 +73,7 @@ public class Stundatafla extends Activity{
 	 */
 	public void addItemsOnSpinner2() {
 	 
-		spinner2 = (Spinner) findViewById(R.id.spinner2);
+		spinner2 = (Spinner) findViewById(R.id.tegund);
 		List<String> list = new ArrayList<String>();
 		list.add("list 1");
 		list.add("list 2");
@@ -88,7 +88,7 @@ public class Stundatafla extends Activity{
 	 * 
 	 */
 	  public void addListenerOnSpinnerItemSelection() {
-		  spinner1 = (Spinner) findViewById(R.id.spinner1);
+		  spinner1 = (Spinner) findViewById(R.id.stod);
 		  spinner1.setOnItemSelectedListener(new CustomOnItemSelectedListener());
 	  }
 	 
@@ -97,8 +97,8 @@ public class Stundatafla extends Activity{
 	   */
 	  public void addListenerOnButton() {
 	 
-		  spinner1 = (Spinner) findViewById(R.id.spinner1);
-		  spinner2 = (Spinner) findViewById(R.id.spinner2);
+		  spinner1 = (Spinner) findViewById(R.id.stod);
+		  spinner2 = (Spinner) findViewById(R.id.tegund);
 		  btnSubmit = (Button) findViewById(R.id.btnSubmit);
 	 
 		  btnSubmit.setOnClickListener(new OnClickListener() {

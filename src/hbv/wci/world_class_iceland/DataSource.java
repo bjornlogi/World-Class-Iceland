@@ -121,6 +121,7 @@ public class DataSource {
 		while (!cursor.isAfterLast()) {
 			//viljum ekki fa tofluheaderinn
 			if(cursor.getLong(0) != 0) {
+				
 				Hoptimar hoptimi = cursorToHoptimar(cursor);
 				if(hoptimi !=null) {
 					Map<String, String> map = new HashMap<String, String>(2);

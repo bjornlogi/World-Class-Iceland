@@ -31,6 +31,7 @@
     <string name="pageview">PageView Test</string>
     
     <string name="country_prompt">Velja stöð</string>
+    <string name="expandable">Expandable list</string>
  
     <string-array name="country_arrays">
         <item>Malaysia</item>

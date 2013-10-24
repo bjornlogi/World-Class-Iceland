@@ -9,6 +9,7 @@ import java.util.TimeZone;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
@@ -67,7 +68,7 @@ public class Innskraning extends Activity {
 					Intent i = new Intent(Innskraning.this, ViewPageActivity.class);
 					startActivity(i);
 				} else {
-					Toast.makeText(Innskraning.this, "Rangt netfang og/eða lykilorð.", Toast.LENGTH_LONG).show();
+					Toast.makeText(Innskraning.this, R.string.rangt, Toast.LENGTH_LONG).show();
 				}
 				
 			}
@@ -77,8 +78,34 @@ public class Innskraning extends Activity {
 		nySkra.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
+				// TODO laga að hann komist ekki lengra en að prenta út '1'
+				int i=0;
+				System.out.println(i++);
+				final Dialog dialog = new Dialog(mContext);
+				System.out.println(i++);
+				dialog.setContentView(R.layout.dialog_nyskra);
+				System.out.println(i++);
+				dialog.setTitle(R.string.nySkra);
+				System.out.println(i++);
+				Button submit = (Button) dialog.findViewById(R.id.dialogSubmit);
+				System.out.println(i++);
+				submit.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						dialog.dismiss();
+					}
+				});
+				System.out.println(i++);
+				Button cancel = (Button) dialog.findViewById(R.id.dialogCancel);
+				System.out.println(i++);
+				cancel.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						dialog.dismiss();
+					}
+				});
 				
+				dialog.show();
 			}
 		});
 	}

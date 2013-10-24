@@ -50,10 +50,6 @@ public class Stundatafla extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_stundatafla);
 		
-		addItemsOnSpinner2();
-		addListenerOnButton();
-		addListenerOnSpinnerItemSelection();
-		
 		mainListView = (ListView) findViewById( R.id.mainListView );
 		
 		mDataSource = new DataSource(this, "Fim");
@@ -66,55 +62,8 @@ public class Stundatafla extends Activity{
 		
 	}// loka onCreate
 	
-	
-	/**
-	 * Bætir við stökum á dropdownlistann
-	 * 
-	 */
-	public void addItemsOnSpinner2() {
+
 	 
-		spinner2 = (Spinner) findViewById(R.id.tegund);
-		List<String> list = new ArrayList<String>();
-		list.add("list 1");
-		list.add("list 2");
-		list.add("list 3");
-		ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list);
-		dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spinner2.setAdapter(dataAdapter);
-	  }
-	 
-	/**
-	 * ??
-	 * 
-	 */
-	  public void addListenerOnSpinnerItemSelection() {
-		  spinner1 = (Spinner) findViewById(R.id.stod);
-		  spinner1.setOnItemSelectedListener(new CustomOnItemSelectedListener());
-	  }
-	 
-	  /**
-	   * fengin eru gildi þeirra staka sem valin voru úr dropdownlistanum 
-	   */
-	  public void addListenerOnButton() {
-	 
-		  spinner1 = (Spinner) findViewById(R.id.stod);
-		  spinner2 = (Spinner) findViewById(R.id.tegund);
-		  btnSubmit = (Button) findViewById(R.id.btnSubmit);
-	 
-		  btnSubmit.setOnClickListener(new OnClickListener() {
-	 
-		  @Override
-		  public void onClick(View v) {
-	 
-			  Toast.makeText(Stundatafla.this,
-				"OnClickListener : " + 
-				"\nSpinner 1 : "+ String.valueOf(spinner1.getSelectedItem()) + 
-				"\nSpinner 2 : "+ String.valueOf(spinner2.getSelectedItem()),
-				Toast.LENGTH_SHORT).show();
-		  }
-	 
-		});
-	  }
 	
 	
 	

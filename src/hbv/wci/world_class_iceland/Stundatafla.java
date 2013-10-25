@@ -12,6 +12,7 @@ import org.jsoup.select.Elements;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.AdapterView;
@@ -21,6 +22,8 @@ import android.widget.Toast;
 import android.widget.Spinner;
 import android.widget.Button;
 import android.widget.ArrayAdapter;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 
@@ -128,7 +131,43 @@ public class Stundatafla extends Activity{
 	  }
 	 
 	
-	
+		/**
+		 * Byr til valmynd fyrir skjainn, hann kemur ur innskraning.xml
+		 * 
+		 * @param menu 
+		 * @return boolean gildi sem segir manni eitthvad
+		 * @see Menu
+		 */
+		@Override
+		public boolean onCreateOptionsMenu(Menu menu) {
+			// Inflate the menu; this adds items to the action bar if it is present.
+			getMenuInflater().inflate(R.menu.menu_worldclass, menu);
+			return true;
+		}
+		
+		/**
+		 * Styrir i hvada Activity verdur kallad fyrir hvern af valmoguleikunum
+		 * 
+		 * @param item 
+		 * @return boolean gildi sem segir manni breytingin a Activity hafi gengid upp
+		 * @see MenuItem
+		 */
+		@Override
+		public boolean onOptionsItemSelected(MenuItem item) {
+			switch (item.getItemId()) {
+				case R.id.opnun_menu:
+					Intent j = new Intent(Stundatafla.this, Opnunartimar.class);
+					startActivity(j);
+					break;
+				case R.id.stundatafla_menu:
+					Intent i = new Intent(Stundatafla.this, Stundatafla.class);
+					startActivity(i);
+					break;
+			}
+			
+			return true; 
+		}
+	  
 	
 	/**
 	 * Birtir gogn ur gagnagrunni a skja a listaformi.
@@ -154,6 +193,7 @@ public class Stundatafla extends Activity{
 			}
 		});//loka onclick
 	}
+
 		
 	/**
 	 * Skrapar gogn af vef og setur inn i gagnagrunn ef hann er ekki til stadar.
@@ -263,4 +303,6 @@ public class Stundatafla extends Activity{
 			super.onPostExecute(result);
 		}
 	}
+	
+	
 }//loka Stundatafla

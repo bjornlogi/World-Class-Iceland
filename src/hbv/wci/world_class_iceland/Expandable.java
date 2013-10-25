@@ -28,9 +28,12 @@ public class Expandable extends Activity {
 		
 		expListView = (ExpandableListView) findViewById(R.id.expandable1);
 		
-		fyllaLista();
+		DataSource mDataSource = new DataSource(this, "Fim");
+		mDataSource.open();
 		
-		listAdapter = new ExpandableListAdapter(this, listHeader, listChild, infoChild);
+		StundatofluTimi st = mDataSource.getAllStundatoflutimar();
+		
+		listAdapter = new ExpandableListAdapter(this, st.listHeader, st.listChild, st.infoChild);
 		
 		expListView.setAdapter(listAdapter);
 	}
@@ -39,10 +42,6 @@ public class Expandable extends Activity {
 		listHeader = new ArrayList<String>();
         listChild = new HashMap<String, List<String>>();
         infoChild = new HashMap<String,String>();
-        
-        listHeader.add("Morguntímar");
-        listHeader.add("Hádegistímar");
-        listHeader.add("Kvöldtímar");
         
         List<String> morguntimar = new ArrayList<String>();
         
@@ -60,11 +59,19 @@ public class Expandable extends Activity {
         List<String> kvoldtimar = new ArrayList<String>();
         kvoldtimar.add("Kvöldtími 1");
         kvoldtimar.add("Kvöldtími 2");
-        
-        //listChild.put(listHeader.get(0), morgun);
-        listChild.put(listHeader.get(0), morguntimar);
-        //listChild.put(listHeader.get(1), hadegistimar);
-        //listChild.put(listHeader.get(2), kvoldtimar);
+        int i = 0;
+        if (!morguntimar.isEmpty()){
+        	listHeader.add("Morguntímar");
+        	listChild.put(listHeader.get(i++), morguntimar);
+        }
+        if (!hadegistimar.isEmpty()){
+        	listHeader.add("Hádegistímar");
+        	listChild.put(listHeader.get(i++), hadegistimar);
+        	}
+        if (!kvoldtimar.isEmpty()){
+        	listHeader.add("Kvöldtímar");
+        	listChild.put(listHeader.get(i), kvoldtimar);
+        	}
 	}
 
 }

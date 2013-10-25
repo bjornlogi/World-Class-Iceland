@@ -35,6 +35,9 @@ public class DataSource {
 	private MySQLiteHelper mSQLiteHelper;
 	private String dagur;
 	private String[] filter;
+	List<String> listHeader;
+	HashMap<String, List<String>> listChild;
+	HashMap<String, String> infoChild;
 	
 	private String[] hoptimarAllColumns = {
 		MySQLiteHelper.COLUMN_ID,
@@ -106,6 +109,60 @@ public class DataSource {
 		values.put(MySQLiteHelper.DAGUR, hoptimi[7]);
 		values.put(MySQLiteHelper.LOKAD, hoptimi[8]);
 		mSQLiteDatabase.insert(MySQLiteHelper.TABLE_HOPTIMAR, null, values);		
+	}
+	
+	public StundatofluTimi getAllStundatoflutimar(){
+		listHeader = new ArrayList<String>();
+        listChild = new HashMap<String, List<String>>();
+        infoChild = new HashMap<String,String>();
+        
+        List<String> morguntimar = new ArrayList<String>();
+        List<String> hadegistimar = new ArrayList<String>();
+        List<String> siddegistimar = new ArrayList<String>();
+        List<String> kvoldtimar = new ArrayList<String>();
+        
+        Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_HOPTIMAR, hoptimarAllColumns, null, null, null, null, null);
+		cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+			//viljum ekki fa tofluheaderinn
+			if(cursor.getLong(0) != 0) {
+				Hoptimar hoptimi = cursorToHoptimar(cursor);
+				if(hoptimi !=null) {
+					if (cursor.getString(7).equals("morgun"))
+						morguntimar.add(cursor.getString(1)+"$id"+cursor.getString(0));
+					else if (cursor.getString(7).equals("hadegi"))
+						hadegistimar.add(cursor.getString(1)+"$id"+cursor.getString(0));
+					else if (cursor.getString(7).equals("siddegi"))
+						siddegistimar.add(cursor.getString(1)+"$id"+cursor.getString(0));
+					else
+						kvoldtimar.add(cursor.getString(1)+"$id"+cursor.getString(0));
+					
+					infoChild.put("id"+cursor.getString(0), hoptimi.toString());
+				}
+				cursor.moveToNext();
+			}		
+		}
+		cursor.close();
+		
+		int i = 0;
+        if (!morguntimar.isEmpty()){
+        	listHeader.add("Morguntímar");
+        	listChild.put(listHeader.get(i++), morguntimar);
+        }
+        if (!hadegistimar.isEmpty()){
+        	listHeader.add("Hádegistímar");
+        	listChild.put(listHeader.get(i++), hadegistimar);
+        	}
+        if (!siddegistimar.isEmpty()){
+        	listHeader.add("Síðdegistímar");
+        	listChild.put(listHeader.get(i++), siddegistimar);
+        	}
+        if (!kvoldtimar.isEmpty()){
+        	listHeader.add("Kvöldtímar");
+        	listChild.put(listHeader.get(i), kvoldtimar);
+        	}
+		
+		return new StundatofluTimi(listHeader, listChild,infoChild);
 	}
 	
 	/**

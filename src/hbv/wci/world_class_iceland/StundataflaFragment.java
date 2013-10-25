@@ -3,6 +3,7 @@ package hbv.wci.world_class_iceland;
 import hbv.wci.world_class_iceland.Stundatafla.AsyncExecution;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,25 +19,42 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class StundataflaFragment extends Fragment {
 	private ListView mainListView ;
 	private DataSource mDataSource;
+	private Spinner spinner1, spinner2;
+	private Button btnSubmit;
+	private String stod = "";
+	private String tegund = "";
+	ExpandableListAdapter listAdapter;
+	ExpandableListView expListView;
+	List<String> listHeader;
+	HashMap<String, List<String>> listChild;
+	HashMap<String, String> infoChild;
+	ViewGroup rootView;
 	
 	 @Override
 	    public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	            Bundle savedInstanceState) {
 		 	int position = getArguments().getInt("position");
-	        ViewGroup rootView = (ViewGroup) inflater.inflate(
-	                R.layout.activity_stundatafla, container, false);
+		 	stod = getArguments().getString("stod");
+		 	tegund = getArguments().getString("tegund");
+	        rootView = (ViewGroup) inflater.inflate(
+	                R.layout.expandable, container, false);
 	        TextView t = (TextView) rootView.findViewById(R.id.opnun_header);
-	        mainListView = (ListView) rootView.findViewById( R.id.mainListView );
-	      
+	        expListView = (ExpandableListView) rootView.findViewById(R.id.expandable1);
+	        System.out.println(position);
 	        switch(position){
 	        case 0:
 	        	t.setText("Mánudagur");
@@ -68,6 +86,7 @@ public class StundataflaFragment extends Fragment {
 	        	break;
 	        }
 	        mDataSource.open();
+	       
 	        if (mDataSource.getAllHoptimar().isEmpty())
 	        	new AsyncExecution().execute("http://www.worldclass.is/heilsuraekt/stundaskra");
 	        else
@@ -76,16 +95,17 @@ public class StundataflaFragment extends Fragment {
 	    }
 	 
 	 void synaLista(){
-			List<Map<String, String>> list = new ArrayList<Map<String, String>>();
-			
-			list = mDataSource.getAllHoptimar();
-			SimpleAdapter adapter = new SimpleAdapter(getActivity(), list, android.R.layout.simple_list_item_2, 
-					new String[] {"timi", "klukkan"}, 
-					new int[] {android.R.id.text1, android.R.id.text2}) ;
-			
-			mainListView.setAdapter( adapter );
-			
-			mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+		 if (stod != "" && tegund != "")
+			 mDataSource.filter(stod, tegund);
+		 StundatofluTimi st = mDataSource.getAllStundatoflutimar();
+	     listAdapter = new ExpandableListAdapter(getActivity(), st.listHeader, st.listChild, st.infoChild);
+		 expListView.setAdapter(listAdapter);
+		 
+		 //uncommenta tetta svo ad allir listsar byrja opnadir
+//		 for (int position = 1; position <= listAdapter.getGroupCount(); position++)
+//			 expListView.expandGroup(position - 1);
+		 
+			expListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
 				@Override
 				public void onItemClick(AdapterView<?> parnet, android.view.View view,
@@ -95,6 +115,7 @@ public class StundataflaFragment extends Fragment {
 				}
 			});//loka onclick
 		}
+
 	 /**
 		 * Skrapar gogn af vef og setur inn i gagnagrunn ef hann er ekki til stadar.
 		 * 
@@ -109,7 +130,7 @@ public class StundataflaFragment extends Fragment {
 			 */
 			@Override
 			protected void onPreExecute() {
-				progressDialog= ProgressDialog.show(getActivity(), "Hleðsla í gangi","Erum að sækja gögn, hinkraðu smá", true);
+				//progressDialog= ProgressDialog.show(getActivity(), "Hleðsla í gangi","Erum að sækja gögn, hinkraðu smá", true);
 				super.onPreExecute();
 			}
 			
@@ -198,7 +219,7 @@ public class StundataflaFragment extends Fragment {
 			 */
 			@Override
 			protected void onPostExecute(String result) {
-				progressDialog.dismiss();
+				//progressDialog.dismiss();
 				synaLista();
 				super.onPostExecute(result);
 			}

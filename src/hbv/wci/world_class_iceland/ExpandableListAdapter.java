@@ -17,12 +17,9 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private List<String> _listDataHeader;
     private HashMap<String, List<String>> _listDataChild;
     private HashMap<String, String> _infoChild;
-    //private HashMap<String, HashMap<String, String>> _listDataChild;
  
     public ExpandableListAdapter(Context context, List<String> listDataHeader,
             HashMap<String, List<String>> listChildData, HashMap<String, String> infoChild) {
-//    public ExpandableListAdapter(Context context, List<String> listDataHeader,
-  //  		HashMap<String, HashMap<String, String>> listChildData) {
         this._context = context;
         this._listDataHeader = listDataHeader;
         this._listDataChild = listChildData;
@@ -58,9 +55,14 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         
         TextView info = (TextView) convertView.findViewById(R.id.timiInfo);
         
-        info.setText(this._infoChild.get(childText));
+        String[] parts = new String[2];
+        int dollariStadur = childText.indexOf("$");
+        parts[0] = childText.substring(0, dollariStadur);
+        parts[1] = childText.substring(dollariStadur+1);
         
-        txtListChild.setText(childText);
+        txtListChild.setText(parts[0]);
+        info.setText(this._infoChild.get(parts[1]));
+
         return convertView;
     }
  
@@ -93,12 +95,27 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
             LayoutInflater infalInflater = (LayoutInflater) this._context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.list_group, null);
+            
         }
- 
+        
         TextView lblListHeader = (TextView) convertView
                 .findViewById(R.id.lblListHeader);
         lblListHeader.setTypeface(null, Typeface.BOLD);
-        lblListHeader.setText(headerTitle);
+        
+        try{
+        	if (getChildrenCount(groupPosition) > 0){
+        		lblListHeader.setText(headerTitle);	 
+                return convertView;
+        	}
+        		
+        	}
+        catch (Exception e){
+        	
+        }
+        
+ 
+        
+        lblListHeader.setText("");
  
         return convertView;
     }

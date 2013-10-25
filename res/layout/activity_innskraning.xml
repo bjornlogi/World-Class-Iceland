@@ -107,7 +107,6 @@
 					android:background="@drawable/rounded_edittext"
 					android:textColor="@color/wcRed"
 					android:textStyle="bold"
-					
 					android:text="@string/nySkra" />
 				
 			</LinearLayout>

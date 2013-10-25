@@ -29,14 +29,12 @@ public class Nyskraning extends Activity {
 		lykilord2.setTypeface(Typeface.SANS_SERIF);
 		final EditText kennitala = (EditText) findViewById(R.id.kennitalaInntak);
 		
-		
 		final Button nySkra = (Button) findViewById(R.id.nySkraTakki);
 		nySkra.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				mDataSource = new DataSource(mContext);
 				mDataSource.open();
-				
 				
 				//[netfang,lykilord,kennitala,stadfest,kort]
 				mDataSource.addUser(new String[]{netfang.getText().toString(),lykilord.getText().toString(),kennitala.getText().toString(),"nei","nei"});
@@ -45,7 +43,6 @@ public class Nyskraning extends Activity {
 				startActivity(j);
 			}
 		});
-		
 		
 	}
 }

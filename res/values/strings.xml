@@ -39,5 +39,7 @@
     <string name="expandable">Expandable list</string>
     <string name="nySkra">Nýskrá</string>
     <string name="rangt">Rangt netfang og/eða lykilorð</string>
+    
+    <string name="velja">Velja</string>
  
 </resources>

@@ -3,6 +3,8 @@ package hbv.wci.world_class_iceland;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.view.View.OnClickListener;
@@ -140,6 +142,43 @@ public class Opnunartimar extends Activity {
 			}
 		});
 		
+	}
+	
+	/**
+	 * Byr til valmynd fyrir skjainn, hann kemur ur innskraning.xml
+	 * 
+	 * @param menu 
+	 * @return boolean gildi sem segir manni eitthvad
+	 * @see Menu
+	 */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.menu_worldclass, menu);
+		return true;
+	}
+	
+	/**
+	 * Styrir i hvada Activity verdur kallad fyrir hvern af valmoguleikunum
+	 * 
+	 * @param item 
+	 * @return boolean gildi sem segir manni breytingin a Activity hafi gengid upp
+	 * @see MenuItem
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.opnun_menu:
+				Intent j = new Intent(Opnunartimar.this, Opnunartimar.class);
+				startActivity(j);
+				break;
+			case R.id.stundatafla_menu:
+				Intent i = new Intent(Opnunartimar.this, Stundatafla.class);
+				startActivity(i);
+				break;
+		}
+		
+		return true; 
 	}
 
 }

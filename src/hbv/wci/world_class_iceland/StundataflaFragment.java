@@ -101,20 +101,38 @@ public class StundataflaFragment extends Fragment {
 		 st = mDataSource.getAllStundatoflutimar();
 	     listAdapter = new ExpandableListAdapter(getActivity(), st.listHeader, st.listChild, st.infoChild);
 		 expListView.setAdapter(listAdapter);
-		 
+		 expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+			 
+	            public boolean onChildClick(ExpandableListView parent, View v,
+	                    int groupPosition, int childPosition, long id) {
+	                final String selected = (String) listAdapter.getChild(
+	                        groupPosition, childPosition);
+	                Toast.makeText(getActivity(), selected, Toast.LENGTH_LONG)
+	                        .show();
+	 
+	                return true;
+	            }
+	        });
 		 //uncommenta tetta svo ad allir listsar byrja opnadir
 //		 for (int position = 1; position <= listAdapter.getGroupCount(); position++)
 //			 expListView.expandGroup(position - 1);
 		 
-			expListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-				@Override
-				public void onItemClick(AdapterView<?> parnet, android.view.View view,
-						int position, long id) {
-					String msg = "Svona muntu geta skráð þig í tíma!";
-					Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
-				}
-			});//loka onclick
+//		 expListView.setOnChildClickListener(new OnChildClickListener() {
+//			 
+//	            @Override
+//	            public boolean onChildClick(ExpandableListView parent, View v,
+//	                    int groupPosition, int childPosition, long id) {
+//	                Toast.makeText(
+//	                        getApplicationContext(),
+//	                        listDataHeader.get(groupPosition)
+//	                                + " : "
+//	                                + listDataChild.get(
+//	                                        listDataHeader.get(groupPosition)).get(
+//	                                        childPosition), Toast.LENGTH_SHORT)
+//	                        .show();
+//	                return false;
+//	            }
+//	        });//loka onclick
 		}
 
 	 /**

@@ -117,7 +117,7 @@ public class Innskraning extends Activity {
 	 * Styrir i hvada Activity verdur kallad fyrir hvern af valmoguleikunum
 	 * 
 	 * @param item 
-	 * @return boolean gildi sem segir manni eitthvad
+	 * @return boolean gildi sem segir manni breytingin a Activity hafi gengid upp
 	 * @see MenuItem
 	 */
 	@Override

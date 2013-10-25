@@ -26,6 +26,7 @@ public class Nyskraning extends Activity {
 		final EditText lykilord = (EditText) findViewById(R.id.lykilordInntakNr1);
 		lykilord.setTypeface(Typeface.SANS_SERIF);
 		final EditText lykilord2 = (EditText) findViewById(R.id.lykilordInntakNr2);
+		lykilord2.setTypeface(Typeface.SANS_SERIF);
 		final EditText kennitala = (EditText) findViewById(R.id.kennitalaInntak);
 		
 		

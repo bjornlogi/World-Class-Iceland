@@ -27,9 +27,10 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	public static final String TABLE_NOTENDUR = "notendur";
 	public static final String NETFANG = "netfang";
 	public static final String LYKILORD = "lykilord";
+	public static final String KENNITALA = "kennitala";
 	public static final String STADFEST = "stadfest";
 	public static final String KORT = "kort";
-	public static final String KENNITALA = "kennitala";
+	
 	
 	private static final String DATABASE_NAME = "worldclass.db";
 	private static final int DATABASE_VERSION = 59;

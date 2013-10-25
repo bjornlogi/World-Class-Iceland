@@ -19,7 +19,9 @@
     
     <string name="netfang">Netfang</string>
     <string name="lykilord">Lykilorð</string>
+    <string name="lykilordAftur">Lykilorð aftur</string>
     <string name="skraInn">Skrá Inn</string>
+    <string name="kennitala">Kennitala</string>
     <string name="bakgrunnur">Bakgrunnur</string>
     
    	<string name="stod_description">Mynd af stöð</string>

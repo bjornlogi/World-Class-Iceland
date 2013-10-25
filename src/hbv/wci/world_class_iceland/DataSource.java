@@ -204,8 +204,9 @@ public class DataSource {
 		
 		values.put(MySQLiteHelper.NETFANG, user[0]);
 		values.put(MySQLiteHelper.LYKILORD, user[1]);
-		values.put(MySQLiteHelper.STADFEST, user[2]);
-		values.put(MySQLiteHelper.KORT, user[3]);
+		values.put(MySQLiteHelper.KENNITALA, user[2]);
+		values.put(MySQLiteHelper.STADFEST, user[3]);
+		values.put(MySQLiteHelper.KORT, user[4]);
 		
 		mSQLiteDatabase.insert(MySQLiteHelper.TABLE_NOTENDUR, null, values);	
 	}

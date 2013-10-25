@@ -12,6 +12,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -65,7 +66,7 @@ public class Innskraning extends Activity {
 				boolean flag = mDataSource.checkUser(netfang, lykilord);
 				
 				if(flag) {
-					Intent i = new Intent(Innskraning.this, ViewPageActivity.class);
+					Intent i = new Intent(Innskraning.this, Stundatafla.class);
 					startActivity(i);
 				} else {
 					Toast.makeText(Innskraning.this, R.string.rangt, Toast.LENGTH_LONG).show();
@@ -78,42 +79,23 @@ public class Innskraning extends Activity {
 		nySkra.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// TODO laga að hann komist ekki lengra en að prenta út '1'
-				int i=0;
-				System.out.println(i++);
-				final Dialog dialog = new Dialog(mContext);
-				System.out.println(i++);
-				dialog.setContentView(R.layout.dialog_nyskra);
-				System.out.println(i++);
-				dialog.setTitle(R.string.nySkra);
-				System.out.println(i++);
-				Button submit = (Button) dialog.findViewById(R.id.dialogSubmit);
-				System.out.println(i++);
-				submit.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						dialog.dismiss();
-					}
-				});
-				System.out.println(i++);
-				Button cancel = (Button) dialog.findViewById(R.id.dialogCancel);
-				System.out.println(i++);
-				cancel.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						dialog.dismiss();
-					}
-				});
-				
-				dialog.show();
+				Intent j = new Intent(Innskraning.this, Nyskraning.class);
+				startActivity(j);
 			}
 		});
+		
+		final EditText lykilord = (EditText) findViewById(R.id.lykilordInntak);
+		lykilord.setTypeface(Typeface.SANS_SERIF);
 	}
 	
 	private void createMap(){
 		map = new HashMap<String,Integer>();
-		map.put("Mon", 0);map.put("Tue", 1);map.put("Wed", 2);
-		map.put("Thu", 3);map.put("Fri", 4);map.put("Sat", 5);
+		map.put("Mon", 0);
+		map.put("Tue", 1);
+		map.put("Wed", 2);
+		map.put("Thu", 3);
+		map.put("Fri", 4);
+		map.put("Sat", 5);
 		map.put("Sun", 6);
 	}
 

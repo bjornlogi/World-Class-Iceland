@@ -143,7 +143,6 @@ public class StundataflaFragment extends Fragment {
 			@Override
 			protected String doInBackground(String... params) {
 				String url=params[0];
-					 
 					try { 
 						Document doc = Jsoup.connect(url).get();
 						Elements tableElements = doc.select("table");

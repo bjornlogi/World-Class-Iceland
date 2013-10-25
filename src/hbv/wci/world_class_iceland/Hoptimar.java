@@ -207,6 +207,7 @@ public class Hoptimar {
 	public String toString(){
 		String upplysingar = "";
 		upplysingar += klukkan;
+		upplysingar += "\n" + stod;
 		if (!salur.equals(""))
 			upplysingar += "\n" + salur;
 		if (!tjalfari.equals(""))

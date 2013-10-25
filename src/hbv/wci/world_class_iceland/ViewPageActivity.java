@@ -36,8 +36,8 @@ public class ViewPageActivity extends FragmentActivity {
     private PagerAdapter mPagerAdapter;
 	private Spinner spinner1, spinner2;
 	private Button btnSubmit;
-	private String stod = "";
-	private String tegund = "";
+	private String stod = "Allar stöðvar";
+	private String tegund = "Allar tegundir";
    private int currentPos;
     
     @Override
@@ -150,7 +150,7 @@ public class ViewPageActivity extends FragmentActivity {
         public ScreenSlidePagerAdapter(FragmentManager fm) {
             super(fm);
         }
-
+        int i = 0;
         @Override
         public Fragment getItem(int position) {
         	System.out.println("g");
@@ -165,6 +165,7 @@ public class ViewPageActivity extends FragmentActivity {
         private Bundle prepareBundle(int position){
         	Bundle bdl = new Bundle(3);
             bdl.putInt("position", position%7);
+            bdl.putInt("update", i++);
             bdl.putString("stod", stod);
             bdl.putString("tegund", tegund);
             return bdl;

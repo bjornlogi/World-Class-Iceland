@@ -32,7 +32,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	public static final String KENNITALA = "kennitala";
 	
 	private static final String DATABASE_NAME = "worldclass.db";
-	private static final int DATABASE_VERSION = 53;
+	private static final int DATABASE_VERSION = 59;
 	
 	/**
 	 * Tengir gagnagrunninn vid forritid

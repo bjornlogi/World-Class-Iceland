@@ -43,6 +43,7 @@ public class StundataflaFragment extends Fragment {
 	HashMap<String, List<String>> listChild;
 	HashMap<String, String> infoChild;
 	ViewGroup rootView;
+	StundatofluTimi st;
 	
 	 @Override
 	    public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,8 +87,9 @@ public class StundataflaFragment extends Fragment {
 	        	break;
 	        }
 	        mDataSource.open();
-	       
-	        if (mDataSource.getAllHoptimar().isEmpty())
+	        st = mDataSource.getAllStundatoflutimar();
+	        System.out.println(st.listHeader.isEmpty());
+	        if (st.listHeader.isEmpty() && getArguments().getInt("update") ==0)
 	        	new AsyncExecution().execute("http://www.worldclass.is/heilsuraekt/stundaskra");
 	        else
 	        	synaLista();
@@ -95,9 +97,8 @@ public class StundataflaFragment extends Fragment {
 	    }
 	 
 	 void synaLista(){
-		 if (stod != "" && tegund != "")
-			 mDataSource.filter(stod, tegund);
-		 StundatofluTimi st = mDataSource.getAllStundatoflutimar();
+		 mDataSource.filter(stod, tegund);
+		 st = mDataSource.getAllStundatoflutimar();
 	     listAdapter = new ExpandableListAdapter(getActivity(), st.listHeader, st.listChild, st.infoChild);
 		 expListView.setAdapter(listAdapter);
 		 
@@ -130,7 +131,7 @@ public class StundataflaFragment extends Fragment {
 			 */
 			@Override
 			protected void onPreExecute() {
-				//progressDialog= ProgressDialog.show(getActivity(), "Hleðsla í gangi","Erum að sækja gögn, hinkraðu smá", true);
+				progressDialog= ProgressDialog.show(getActivity(), "Hleðsla í gangi","Erum að sækja gögn, hinkraðu smá", true);
 				super.onPreExecute();
 			}
 			
@@ -219,7 +220,7 @@ public class StundataflaFragment extends Fragment {
 			 */
 			@Override
 			protected void onPostExecute(String result) {
-				//progressDialog.dismiss();
+				progressDialog.dismiss();
 				synaLista();
 				super.onPostExecute(result);
 			}

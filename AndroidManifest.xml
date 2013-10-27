@@ -41,10 +41,10 @@
             android:label="@string/opnunartimar"
             android:screenOrientation="portrait" ></activity>
         <activity 
-            android:name=".Stundatafla"
+            android:name=".Stundataflagamalt"
             android:screenOrientation="portrait" ></activity>
         <activity 
-            android:name=".ViewPageActivity"
+            android:name=".StundataflaActivity"
             android:screenOrientation="portrait" ></activity>
         <activity 
             android:name=".Expandable"

@@ -17,25 +17,25 @@ public class Nyskraning extends Activity {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO bæta við on change listener og athuga hvort lykilorðin séu eins
-		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_nyskraning);
 		
 		final EditText netfang = (EditText) findViewById(R.id.netfangInntak2);
 		final EditText lykilord = (EditText) findViewById(R.id.lykilordInntakNr1);
-		lykilord.setTypeface(Typeface.SANS_SERIF);
 		final EditText lykilord2 = (EditText) findViewById(R.id.lykilordInntakNr2);
-		lykilord2.setTypeface(Typeface.SANS_SERIF);
 		final EditText kennitala = (EditText) findViewById(R.id.kennitalaInntak);
-		
 		final Button nySkra = (Button) findViewById(R.id.nySkraTakki);
+		
+		lykilord.setTypeface(Typeface.SANS_SERIF);
+		lykilord2.setTypeface(Typeface.SANS_SERIF);
+		
 		nySkra.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				mDataSource = new DataSource(mContext);
 				mDataSource.open();
 				
+				// TODO Validate the input to addUser, and toast if there is mismatch
 				//[netfang,lykilord,kennitala,stadfest,kort]
 				mDataSource.addUser(new String[]{netfang.getText().toString(),lykilord.getText().toString(),kennitala.getText().toString(),"nei","nei"});
 				

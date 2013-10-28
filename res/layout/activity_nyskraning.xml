@@ -42,40 +42,10 @@
 				android:textColorHint="@color/wcRed" />
 			
 			<EditText
-				android:id="@+id/lykilordInntakNr1"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="15dip"
-				android:paddingLeft="5dip"
-				android:paddingRight="5dip"
-				android:ems="10"
-				android:hint="@string/lykilord"
-				android:background="@drawable/rounded_edittext"
-				android:inputType="textPassword"
-				android:typeface="sans"
-				android:textColor="@color/wcRed"
-				android:textColorHint="@color/wcRed" />
-			
-			<EditText
-				android:id="@+id/lykilordInntakNr2"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="15dip"
-				android:paddingLeft="5dip"
-				android:paddingRight="5dip"
-				android:ems="10"
-				android:hint="@string/lykilordAftur"
-				android:background="@drawable/rounded_edittext"
-				android:inputType="textPassword"
-				android:typeface="sans"
-				android:textColor="@color/wcRed"
-				android:textColorHint="@color/wcRed" />
-			
-			<EditText
 				android:id="@+id/kennitalaInntak"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_marginTop="15dip"
+				android:layout_marginTop="20dip"
 				android:paddingLeft="5dip"
 				android:paddingRight="5dip"
 				android:ems="10"
@@ -85,9 +55,35 @@
 				android:typeface="sans"
 				android:textColor="@color/wcRed"
 				android:textColorHint="@color/wcRed" />
-				
-
-				
+			
+			<EditText
+				android:id="@+id/lykilordInntakNr1"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="20dip"
+				android:paddingLeft="5dip"
+				android:paddingRight="5dip"
+				android:ems="10"
+				android:hint="@string/lykilord"
+				android:background="@drawable/rounded_edittext"
+				android:inputType="textPassword"
+				android:textColor="@color/wcRed"
+				android:textColorHint="@color/wcRed" />
+			
+			<EditText
+				android:id="@+id/lykilordInntakNr2"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="20dip"
+				android:paddingLeft="5dip"
+				android:paddingRight="5dip"
+				android:ems="10"
+				android:hint="@string/lykilordAftur"
+				android:background="@drawable/rounded_edittext"
+				android:inputType="textPassword"
+				android:textColor="@color/wcRed"
+				android:textColorHint="@color/wcRed" />
+							
 			<Button
 				android:id="@+id/nySkraTakki"
 				android:layout_width="120dip"

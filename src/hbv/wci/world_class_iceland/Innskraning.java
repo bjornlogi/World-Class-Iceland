@@ -40,7 +40,7 @@ public class Innskraning extends Activity {
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
 	
-	private String[] a = new String[] {"Innskraning", "Nyskraning", "Opnunartimar", "Stundatafla"};
+	private String[] drawerListItems = new String[] {"Opnunartímar", "Stundatafla", "Útskrá"};
 	
 
 	/** Byr til skjainn, bindur layout ur activity_innskraning.xml vid skjainn
@@ -67,12 +67,14 @@ public class Innskraning extends Activity {
 		mDataSource = new DataSource(mContext);
 		mDataSource.open();
 		
+		final EditText netfangInntak = (EditText) findViewById(R.id.netfangInntak);
+		final EditText lykilordInntak = (EditText) findViewById(R.id.lykilordInntakNr3);
 		final Button skraInn = (Button) findViewById(R.id.skraInnTakki);
+		
+		lykilordInntak.setTypeface(Typeface.SANS_SERIF);
+		
 		skraInn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				final EditText netfangInntak = (EditText) findViewById(R.id.netfangInntak);
-				final EditText lykilordInntak = (EditText) findViewById(R.id.lykilordInntak);
-				
 				String netfang = netfangInntak.getText().toString();
 				String lykilord = lykilordInntak.getText().toString();
 				
@@ -97,7 +99,7 @@ public class Innskraning extends Activity {
 			}
 		});
 		
-		final EditText lykilord = (EditText) findViewById(R.id.lykilordInntak);
+		final EditText lykilord = (EditText) findViewById(R.id.lykilordInntakNr3);
 		lykilord.setTypeface(Typeface.SANS_SERIF);
 		
 		/*
@@ -110,7 +112,7 @@ public class Innskraning extends Activity {
 		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 		
 		// set up the drawer's list view with items and click listener
-		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, a));
+		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, drawerListItems));
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
 		// enable ActionBar app icon to behave as action to toggle nav drawer
@@ -142,23 +144,21 @@ public class Innskraning extends Activity {
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			selectItem(position);
+			mDrawerList.setItemChecked(position, true);
+			mDrawerLayout.closeDrawer(mDrawerList);
+			
+			String str = drawerListItems[position];
+			if (str.equals("Stundatafla")) {
+				Intent i = new Intent(Innskraning.this, StundataflaActivity.class);
+				i.putExtra("vikudagur", Integer.toString(map.get(vikudagur)));
+				startActivity(i);
+			} else if (str.equals("Opnunartímar")){
+				Intent i = new Intent(Innskraning.this, Opnunartimar.class);
+				startActivity(i);
+			} else if (str.equals("Útskrá")) {
+				System.out.println("Útskrá!");
+			}
 		}
-	}
-	
-	private void selectItem(int position) {
-		mDrawerList.setItemChecked(position, true);
-		mDrawerLayout.closeDrawer(mDrawerList);
-		
-		System.out.println("pre trying...");
-		try {
-			System.out.println("trying...");
-			startActivity(new Intent(Innskraning.this, Class.forName(a[position])));
-			System.out.println("trying some more...");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}		
 	}
 	
 	@Override
@@ -171,7 +171,7 @@ public class Innskraning extends Activity {
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
-		// Pass any configuration change to the drawer toggls
+		// Pass any configuration change to the drawer toggle
 		mDrawerToggle.onConfigurationChanged(newConfig);
 	}
 	
@@ -194,6 +194,14 @@ public class Innskraning extends Activity {
 		map.put("Sat", 5);
 		map.put("Sun", 6);
 	}
+	
+	private static String deIcelandicify(String s) {
+		s.replaceAll("á", "a");
+		s.replaceAll("í", "i");
+		s.replaceAll("ý", "y");
+		
+		return s;
+	} 
 
 	/**
 	 * Byr til valmynd fyrir skjainn, hann kemur ur innskraning.xml

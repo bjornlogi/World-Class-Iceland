@@ -1,115 +1,110 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	tools:context=".InnskraningActivity"
-	android:background="@color/wcRed" >
-
-	<ImageView
-		android:id="@+id/imageView1"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:contentDescription="@string/bakgrunnur"
-		android:scaleType="centerCrop"
-		android:src="@drawable/background" />
-
-	<ScrollView 
-		android:id="@+id/scrollViewInnskraning" 
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content" >
-		
-		<LinearLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:orientation="vertical"
-			android:layout_marginLeft="50dip"
-			android:layout_marginRight="50dip" >
-			
-			<!--
-			<TextView
-				android:id="@+id/netfangMerki"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="180dp"
-				android:text="@string/netfang"
-				android:typeface="sans"
-				android:textStyle="bold"
-				android:textSize="20sp"
-				android:textColor="@color/white" />
-			-->
-			<EditText
-				android:id="@+id/netfangInntak"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="200dip"
-				android:paddingLeft="5dip"
-				android:paddingRight="5dip"
-				android:ems="10"
-				android:hint="@string/netfang"
-				android:background="@drawable/rounded_edittext"
-				android:inputType="textEmailAddress"
-				android:typeface="sans"
-				android:textColor="@color/wcRed"
-				android:textColorHint="@color/wcRed" />
-			<!-- 
-			<TextView
-				android:id="@+id/lykilordMerki"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="20dip"
-				android:text="@string/lykilord"
-				android:typeface="sans"
-				android:textStyle="bold"
-				android:textSize="20sp"
-				android:textColor="@color/white" />
-			-->
-			<EditText
-				android:id="@+id/lykilordInntak"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_marginTop="20dip"
-				android:paddingLeft="5dip"
-				android:paddingRight="5dip"
-				android:ems="10"
-				android:hint="@string/lykilord"
-				android:background="@drawable/rounded_edittext"
-				android:inputType="textPassword" 
-				android:typeface="sans"
-				android:textColor="@color/wcRed"
-				android:textColorHint="@color/wcRed" />
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"   
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <FrameLayout 
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		tools:context=".InnskraningActivity"
+		android:background="@color/wcRed" >
 	
-			<LinearLayout 
+		<ImageView
+			android:id="@+id/imageView1"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:contentDescription="@string/bakgrunnur"
+			android:scaleType="centerCrop"
+			android:src="@drawable/background" />
+	
+		<ScrollView 
+			android:id="@+id/scrollViewInnskraning" 
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" >
+			
+			<LinearLayout
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:orientation="horizontal" >
+				android:orientation="vertical"
+				android:layout_marginLeft="50dip"
+				android:layout_marginRight="50dip" >
 				
-				<Button
-					android:id="@+id/skraInnTakki"
-					android:layout_width="120dip"
-					android:layout_height="35dip"
-					android:layout_marginTop="30dip"
+				<EditText
+					android:id="@+id/netfangInntak"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="200dip"
 					android:paddingLeft="5dip"
 					android:paddingRight="5dip"
+					android:ems="10"
+					android:hint="@string/netfang"
 					android:background="@drawable/rounded_edittext"
+					android:inputType="textEmailAddress"
+					android:typeface="sans"
 					android:textColor="@color/wcRed"
-					android:textStyle="bold"
+					android:textColorHint="@color/wcRed" />
+				
+				<EditText
+					android:id="@+id/lykilordInntakNr3"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="20dip"
+					android:paddingLeft="5dip"
+					android:paddingRight="5dip"
+					android:ems="10"
+					android:hint="@string/lykilord"
+					android:background="@drawable/rounded_edittext"
+					android:inputType="textPassword" 
+					android:typeface="sans"
+					android:textColor="@color/wcRed"
+					android:textColorHint="@color/wcRed" />
+		
+				<LinearLayout 
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:orientation="horizontal" >
 					
-					android:text="@string/skraInn" />
-				
-				<Button
-					android:id="@+id/nySkraTakki"
-					android:layout_width="120dip"
-					android:layout_height="35dip"
-					android:layout_marginTop="30dip"
-					android:layout_marginLeft="20dip"
-					android:paddingLeft="5dip"
-					android:paddingRight="5dip"
-					android:background="@drawable/rounded_edittext"
-					android:textColor="@color/wcRed"
-					android:textStyle="bold"
-					android:text="@string/nySkra" />
-				
+					<Button
+						android:id="@+id/skraInnTakki"
+						android:layout_width="120dip"
+						android:layout_height="35dip"
+						android:layout_marginTop="30dip"
+						android:paddingLeft="5dip"
+						android:paddingRight="5dip"
+						android:background="@drawable/rounded_edittext"
+						android:textColor="@color/wcRed"
+						android:textStyle="bold"
+						
+						android:text="@string/skraInn" />
+					
+					<Button
+						android:id="@+id/nySkraTakki"
+						android:layout_width="120dip"
+						android:layout_height="35dip"
+						android:layout_marginTop="30dip"
+						android:layout_marginLeft="20dip"
+						android:paddingLeft="5dip"
+						android:paddingRight="5dip"
+						android:background="@drawable/rounded_edittext"
+						android:textColor="@color/wcRed"
+						android:textStyle="bold"
+						android:text="@string/nySkra" />
+					
+				</LinearLayout>
 			</LinearLayout>
-		</LinearLayout>
-	</ScrollView>
-</FrameLayout>
+		</ScrollView>
+	</FrameLayout>
+
+	<ListView
+        android:id="@+id/left_drawer"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:divider="@color/wcRed"
+        android:dividerHeight="0dp"
+        android:background="@android:color/background_light" />
+	
+</android.support.v4.widget.DrawerLayout>

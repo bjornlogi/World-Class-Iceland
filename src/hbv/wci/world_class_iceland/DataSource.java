@@ -111,6 +111,19 @@ public class DataSource {
 		mSQLiteDatabase.insert(MySQLiteHelper.TABLE_HOPTIMAR, null, values);		
 	}
 	
+	public boolean isEmpty(){
+		try{
+		 Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_HOPTIMAR, hoptimarAllColumns, null, null, null, null, null);
+		 boolean empty = !cursor.moveToFirst();
+		 cursor.close();
+		 return empty;
+		}
+		catch (Exception e){
+			System.out.println("Error: " + e);
+			return true;
+		}
+	}
+	
 	public StundatofluTimi getAllStundatoflutimar(){
 		listHeader = new ArrayList<String>();
         listChild = new HashMap<String, List<String>>();
@@ -142,7 +155,6 @@ public class DataSource {
 				cursor.moveToNext();
 			}		
 		}
-		cursor.close();
 		
 		int i = 0;
         if (!morguntimar.isEmpty()){
@@ -161,7 +173,8 @@ public class DataSource {
         	listHeader.add("Kvöldtímar");
         	listChild.put(listHeader.get(i), kvoldtimar);
         	}
-		
+        
+        cursor.close();
 		return new StundatofluTimi(listHeader, listChild,infoChild);
 	}
 	
@@ -170,29 +183,29 @@ public class DataSource {
 	 * 
 	 * @return List
 	 */
-	public List<Map<String, String>> getAllHoptimar(){
-		
-		List<Map<String, String>> hoptimar = new ArrayList<Map<String, String>>();
-		
-		Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_HOPTIMAR, hoptimarAllColumns, null, null, null, null, null);
-		cursor.moveToFirst();
-		while (!cursor.isAfterLast()) {
-			//viljum ekki fa tofluheaderinn
-			if(cursor.getLong(0) != 0) {
-				
-				Hoptimar hoptimi = cursorToHoptimar(cursor);
-				if(hoptimi !=null) {
-					Map<String, String> map = new HashMap<String, String>(2);
-			    	map.put("timi", cursor.getString(1));
-			    	map.put("klukkan", hoptimi.toString());
-			    	hoptimar.add(map);
-				}
-				cursor.moveToNext();
-			}		
-		}
-		cursor.close();
-		return hoptimar;
-	}
+//	public List<Map<String, String>> getAllHoptimar(){
+//		
+//		List<Map<String, String>> hoptimar = new ArrayList<Map<String, String>>();
+//		
+//		Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_HOPTIMAR, hoptimarAllColumns, null, null, null, null, null);
+//		cursor.moveToFirst();
+//		while (!cursor.isAfterLast()) {
+//			//viljum ekki fa tofluheaderinn
+//			if(cursor.getLong(0) != 0) {
+//				
+//				Hoptimar hoptimi = cursorToHoptimar(cursor);
+//				if(hoptimi !=null) {
+//					Map<String, String> map = new HashMap<String, String>(2);
+//			    	map.put("timi", cursor.getString(1));
+//			    	map.put("klukkan", hoptimi.toString());
+//			    	hoptimar.add(map);
+//				}
+//				cursor.moveToNext();
+//			}		
+//		}
+//		cursor.close();
+//		return hoptimar;
+//	}
 	
 	/**
 	 * Bætir við einum notanda í gagnagrunninn.
@@ -261,9 +274,9 @@ public class DataSource {
 		}
 		
 		
-		if ((stod=="Allar stöðvar" || cursor.getString(2).equals(stod)) &&
-				(tegund=="Allar tegundir"|| cursor.getString(5).equals(tegund)) &&
-				cursor.getString(8).equals(this.dagur))
+		if ((stod=="Allar stöðvar" || cursor.getString(2).equals(stod)) 
+				&& (tegund=="Allar tegundir"|| cursor.getString(5).equals(tegund)) 
+				&& cursor.getString(8).equals(this.dagur))
 		{			 
 			hoptimi.setmId(cursor.getLong(0));		
 			hoptimi.setNafn(cursor.getString(1));

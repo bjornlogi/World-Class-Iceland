@@ -104,6 +104,8 @@ public class StundataflaActivity extends FragmentActivity {
 	  /**
 	   * fengin eru gildi þeirra staka sem valin voru úr dropdownlistanum 
 	   */
+      private boolean first = true;
+      private boolean second = true;
 	  public void addListenerOnButton() {
 	 
 		  spinner1 = (Spinner) findViewById(R.id.spinner1);
@@ -114,7 +116,10 @@ public class StundataflaActivity extends FragmentActivity {
 			    @Override
 			    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
 			    	stod = String.valueOf(spinner1.getSelectedItem());
-			    	mPagerAdapter.notifyDataSetChanged();
+			    	if (first)
+			    		first = !first;
+			    	else
+			    		mPagerAdapter.notifyDataSetChanged();
 			    }
 			    @Override
 			    public void onNothingSelected(AdapterView<?> parentView) {
@@ -124,8 +129,11 @@ public class StundataflaActivity extends FragmentActivity {
 		  spinner2.setOnItemSelectedListener(new OnItemSelectedListener() {
 			    @Override
 			    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-			    	tegund = String.valueOf(spinner1.getSelectedItem());
-			    	mPagerAdapter.notifyDataSetChanged();
+			    	tegund = String.valueOf(spinner2.getSelectedItem());
+			    	if (second)
+			    		second = !second;
+			    	else
+			    		mPagerAdapter.notifyDataSetChanged();
 			    }
 			    @Override
 			    public void onNothingSelected(AdapterView<?> parentView) {

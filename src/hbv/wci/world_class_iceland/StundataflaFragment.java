@@ -1,6 +1,6 @@
 package hbv.wci.world_class_iceland;
 
-import hbv.wci.world_class_iceland.Stundatafla.AsyncExecution;
+//import hbv.wci.world_class_iceland.Stundataflagamalt.AsyncExecution;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,10 +53,23 @@ public class StundataflaFragment extends Fragment {
 		 	tegund = getArguments().getString("tegund");
 	        rootView = (ViewGroup) inflater.inflate(
 	                R.layout.expandable, container, false);
-	        TextView t = (TextView) rootView.findViewById(R.id.opnun_header);
+	        
 	        expListView = (ExpandableListView) rootView.findViewById(R.id.expandable1);
-	        System.out.println(position);
-	        switch(position){
+
+	        akvedaDag(position);
+	        mDataSource.open();
+	        st = mDataSource.getAllStundatoflutimar();
+	        System.out.println(st.listHeader.isEmpty());
+	        if (st.listHeader.isEmpty() && getArguments().getInt("update") ==0)
+	        	new AsyncExecution().execute("http://www.worldclass.is/heilsuraekt/stundaskra");
+	        else
+	        	synaLista();
+	        return rootView;
+	    }
+	 
+	 private void akvedaDag(int position){
+		 TextView t = (TextView) rootView.findViewById(R.id.opnun_header);
+		 switch(position){
 	        case 0:
 	        	t.setText("Mánudagur");
 	        	mDataSource = new DataSource(getActivity(), "Man");
@@ -86,15 +99,7 @@ public class StundataflaFragment extends Fragment {
 	        	mDataSource = new DataSource(getActivity(), "Sun");
 	        	break;
 	        }
-	        mDataSource.open();
-	        st = mDataSource.getAllStundatoflutimar();
-	        System.out.println(st.listHeader.isEmpty());
-	        if (st.listHeader.isEmpty() && getArguments().getInt("update") ==0)
-	        	new AsyncExecution().execute("http://www.worldclass.is/heilsuraekt/stundaskra");
-	        else
-	        	synaLista();
-	        return rootView;
-	    }
+	 }
 	 
 	 void synaLista(){
 		 mDataSource.filter(stod, tegund);
@@ -116,23 +121,6 @@ public class StundataflaFragment extends Fragment {
 		 //uncommenta tetta svo ad allir listsar byrja opnadir
 //		 for (int position = 1; position <= listAdapter.getGroupCount(); position++)
 //			 expListView.expandGroup(position - 1);
-		 
-//		 expListView.setOnChildClickListener(new OnChildClickListener() {
-//			 
-//	            @Override
-//	            public boolean onChildClick(ExpandableListView parent, View v,
-//	                    int groupPosition, int childPosition, long id) {
-//	                Toast.makeText(
-//	                        getApplicationContext(),
-//	                        listDataHeader.get(groupPosition)
-//	                                + " : "
-//	                                + listDataChild.get(
-//	                                        listDataHeader.get(groupPosition)).get(
-//	                                        childPosition), Toast.LENGTH_SHORT)
-//	                        .show();
-//	                return false;
-//	            }
-//	        });//loka onclick
 		}
 
 	 /**

@@ -66,7 +66,7 @@ public class Innskraning extends Activity {
 				boolean flag = mDataSource.checkUser(netfang, lykilord);
 				
 				if(flag) {
-					Intent i = new Intent(Innskraning.this, Stundatafla.class);
+					Intent i = new Intent(Innskraning.this, StundataflaActivity.class);
 					startActivity(i);
 				} else {
 					Toast.makeText(Innskraning.this, R.string.rangt, Toast.LENGTH_LONG).show();
@@ -128,17 +128,9 @@ public class Innskraning extends Activity {
 				startActivity(j);
 				break;
 			case R.id.stundatafla_menu:
-				Intent i = new Intent(Innskraning.this, Stundatafla.class);
-				startActivity(i);
-				break;
-			case R.id.pageviewtest_menu:
-				Intent k = new Intent(Innskraning.this, ViewPageActivity.class);
+				Intent k = new Intent(Innskraning.this, StundataflaActivity.class);
 				k.putExtra("vikudagur", Integer.toString(map.get(vikudagur)));
 				startActivity(k);
-				break;
-			case R.id.expandable_menu:
-				Intent l = new Intent(Innskraning.this, Expandable.class);
-				startActivity(l);
 				break;
 		}
 		

@@ -173,7 +173,7 @@ public class Opnunartimar extends Activity {
 				startActivity(j);
 				break;
 			case R.id.stundatafla_menu:
-				Intent i = new Intent(Opnunartimar.this, Stundatafla.class);
+				Intent i = new Intent(Opnunartimar.this, StundataflaActivity.class);
 				startActivity(i);
 				break;
 		}

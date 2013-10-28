@@ -37,8 +37,8 @@ public class StundataflaFragment extends Fragment {
 	private Button btnSubmit;
 	private String stod = "";
 	private String tegund = "";
-	ExpandableListAdapter listAdapter;
-	ExpandableListView expListView;
+	private ExpandableListAdapter listAdapter;
+	private ExpandableListView expListView;
 	List<String> listHeader;
 	HashMap<String, List<String>> listChild;
 	HashMap<String, String> infoChild;
@@ -58,9 +58,8 @@ public class StundataflaFragment extends Fragment {
 
 	        akvedaDag(position);
 	        mDataSource.open();
-	        st = mDataSource.getAllStundatoflutimar();
-	        System.out.println(st.listHeader.isEmpty());
-	        if (st.listHeader.isEmpty() && getArguments().getInt("update") ==0)
+	        
+	        if (getArguments().getInt("update") ==0 && mDataSource.isEmpty())
 	        	new AsyncExecution().execute("http://www.worldclass.is/heilsuraekt/stundaskra");
 	        else
 	        	synaLista();

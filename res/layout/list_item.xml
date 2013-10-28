@@ -2,17 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="55dip"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+	
+	>
  
     <TextView
         android:id="@+id/timiTitill"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="5dp"
         android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
         android:paddingTop="5dp"
         android:text="placeholder"
-        android:textSize="17dip" />
+        android:textSize="17dip"
+        />
 
     <TextView
         android:id="@+id/timiInfo"

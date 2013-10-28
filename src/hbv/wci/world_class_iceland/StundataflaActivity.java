@@ -14,11 +14,14 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
-public class ViewPageActivity extends FragmentActivity {
+public class StundataflaActivity extends FragmentActivity {
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
@@ -43,7 +46,7 @@ public class ViewPageActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pager);
+        setContentView(R.layout.activity_stundatafla);
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.viewpagermain);
@@ -55,36 +58,15 @@ public class ViewPageActivity extends FragmentActivity {
 		String vikudagur = myIntent.getStringExtra("vikudagur");
 		currentPos=7*2+Integer.parseInt(vikudagur);
         mPager.setCurrentItem(currentPos);//viljum byrja i midjunni  
-        
-        mPager.setOnPageChangeListener(new OnPageChangeListener() {
-        	@Override
-            public void onPageSelected(int position) {
-        		//((OnRefreshListener )mPagerAdapter.getItem()).onRefresh();
-        		
-        		//mPagerAdapter.notifyDataSetChanged();
-           }
-
-            
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-            	currentPos = arg0;
-            }
-
-            public void onPageScrollStateChanged(int state) {
-            }
-        });
     }
 
     @Override
     public void onBackPressed() {
-        
-            // If the user is currently looking at the first step, allow the system to handle the
-            // Back button. This calls finish() on this activity and pops the back stack.
-            super.onBackPressed();
+        super.onBackPressed();
         
     }
     
     public void addItemsOnSpinner() {
-
 		spinner1 = (Spinner) findViewById(R.id.spinner1);
 		List<String> list1 = new ArrayList<String>();
 		list1.add("Allar stöðvar");
@@ -127,6 +109,29 @@ public class ViewPageActivity extends FragmentActivity {
 		  spinner1 = (Spinner) findViewById(R.id.spinner1);
 		  spinner2 = (Spinner) findViewById(R.id.spinner2);
 		  btnSubmit = (Button) findViewById(R.id.btnSubmit);
+		  
+		  spinner1.setOnItemSelectedListener(new OnItemSelectedListener() {
+			    @Override
+			    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+			    	stod = String.valueOf(spinner1.getSelectedItem());
+			    	mPagerAdapter.notifyDataSetChanged();
+			    }
+			    @Override
+			    public void onNothingSelected(AdapterView<?> parentView) {
+			    }
+
+			});
+		  spinner2.setOnItemSelectedListener(new OnItemSelectedListener() {
+			    @Override
+			    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+			    	tegund = String.valueOf(spinner1.getSelectedItem());
+			    	mPagerAdapter.notifyDataSetChanged();
+			    }
+			    @Override
+			    public void onNothingSelected(AdapterView<?> parentView) {
+			    }
+
+			});
 	 
 		  btnSubmit.setOnClickListener(new OnClickListener() {
 	 
@@ -135,8 +140,6 @@ public class ViewPageActivity extends FragmentActivity {
 			  stod = String.valueOf(spinner1.getSelectedItem());
 			  tegund = String.valueOf(spinner2.getSelectedItem());
 			  mPagerAdapter.notifyDataSetChanged();
-			  
-			  //mPager.setCurrentItem(mPager.getCurrentItem());
 		  }
 	 
 		});
@@ -153,11 +156,8 @@ public class ViewPageActivity extends FragmentActivity {
         int i = 0;
         @Override
         public Fragment getItem(int position) {
-        	System.out.println("g");
         	StundataflaFragment pf = new StundataflaFragment();
-        	//pf.setTitle(Integer.toString(position));
         	Bundle bdl = prepareBundle(position);
-        	//System.out.println (position);
             pf.setArguments(bdl);
             return pf;
         }
@@ -171,6 +171,10 @@ public class ViewPageActivity extends FragmentActivity {
             return bdl;
         }
         
+        /**
+         * Fall sem er kallad eftir notifyDataSetChanged(), viljum lata refresha
+         * 
+         */
         public int getItemPosition(Object item) {
             return POSITION_NONE;
         }

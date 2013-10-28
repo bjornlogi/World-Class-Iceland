@@ -10,14 +10,4 @@
 		android:orderInCategory="100" 
 		android:showAsAction="never" 
 		android:title="@string/stundatafla"/>
-	<item
-		android:id="@+id/pageviewtest_menu" 
-		android:orderInCategory="100" 
-		android:showAsAction="never" 
-		android:title="@string/pageview"/>
-	<item
-		android:id="@+id/expandable_menu" 
-		android:orderInCategory="100" 
-		android:showAsAction="never" 
-		android:title="@string/expandable"/>
 </menu>

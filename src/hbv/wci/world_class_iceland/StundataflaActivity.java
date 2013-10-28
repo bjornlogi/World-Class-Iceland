@@ -38,7 +38,6 @@ public class StundataflaActivity extends FragmentActivity {
      */
     private PagerAdapter mPagerAdapter;
 	private Spinner spinner1, spinner2;
-	private Button btnSubmit;
 	private String stod = "Allar stöðvar";
 	private String tegund = "Allar tegundir";
    private int currentPos;
@@ -53,7 +52,7 @@ public class StundataflaActivity extends FragmentActivity {
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
         addItemsOnSpinner();
-		addListenerOnButton();
+		addListenerOnSpinner();
         Intent myIntent= getIntent();
 		String vikudagur = myIntent.getStringExtra("vikudagur");
 		currentPos=7*2+Integer.parseInt(vikudagur);
@@ -106,11 +105,11 @@ public class StundataflaActivity extends FragmentActivity {
 	   */
       private boolean first = true;
       private boolean second = true;
-	  public void addListenerOnButton() {
+	  public void addListenerOnSpinner() {
 	 
 		  spinner1 = (Spinner) findViewById(R.id.spinner1);
 		  spinner2 = (Spinner) findViewById(R.id.spinner2);
-		  btnSubmit = (Button) findViewById(R.id.btnSubmit);
+		  //btnSubmit = (Button) findViewById(R.id.btnSubmit);
 		  
 		  spinner1.setOnItemSelectedListener(new OnItemSelectedListener() {
 			    @Override
@@ -140,17 +139,6 @@ public class StundataflaActivity extends FragmentActivity {
 			    }
 
 			});
-	 
-		  btnSubmit.setOnClickListener(new OnClickListener() {
-	 
-		  @Override
-		  public void onClick(View v) {
-			  stod = String.valueOf(spinner1.getSelectedItem());
-			  tegund = String.valueOf(spinner2.getSelectedItem());
-			  mPagerAdapter.notifyDataSetChanged();
-		  }
-	 
-		});
 	  }
     
     /**

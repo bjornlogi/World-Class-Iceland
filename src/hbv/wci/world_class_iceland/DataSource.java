@@ -179,35 +179,6 @@ public class DataSource {
 	}
 	
 	/**
-	 * Naer i alla timana ur gagnagrunninum og skilar teim i lista af hakktoflum
-	 * 
-	 * @return List
-	 */
-//	public List<Map<String, String>> getAllHoptimar(){
-//		
-//		List<Map<String, String>> hoptimar = new ArrayList<Map<String, String>>();
-//		
-//		Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_HOPTIMAR, hoptimarAllColumns, null, null, null, null, null);
-//		cursor.moveToFirst();
-//		while (!cursor.isAfterLast()) {
-//			//viljum ekki fa tofluheaderinn
-//			if(cursor.getLong(0) != 0) {
-//				
-//				Hoptimar hoptimi = cursorToHoptimar(cursor);
-//				if(hoptimi !=null) {
-//					Map<String, String> map = new HashMap<String, String>(2);
-//			    	map.put("timi", cursor.getString(1));
-//			    	map.put("klukkan", hoptimi.toString());
-//			    	hoptimar.add(map);
-//				}
-//				cursor.moveToNext();
-//			}		
-//		}
-//		cursor.close();
-//		return hoptimar;
-//	}
-	
-	/**
 	 * Bætir við einum notanda í gagnagrunninn.
 	 * 
 	 * @param user 

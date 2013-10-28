@@ -46,9 +46,10 @@ public class Opnunartimar extends Activity {
 		{
 			public void onClick(View v) 
 			{ 
-				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
-				j.putExtra("stod","Spöngin");
-				startActivity(j);
+				createIntent("Spöngin");
+//				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
+//				j.putExtra("stod","Spöngin");
+//				startActivity(j);
 			}
 		});
 		
@@ -56,9 +57,10 @@ public class Opnunartimar extends Activity {
 		{
 			public void onClick(View v) 
 			{ 
-				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
-				j.putExtra("stod","Kringlan");
-				startActivity(j);
+				createIntent("Kringlan");
+//				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
+//				j.putExtra("stod","Kringlan");
+//				startActivity(j);
 			}
 		});
 		
@@ -66,9 +68,10 @@ public class Opnunartimar extends Activity {
 		{
 			public void onClick(View v) 
 			{ 
-				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
-				j.putExtra("stod","Laugar");
-				startActivity(j);
+				createIntent("Laugar");
+//				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
+//				j.putExtra("stod","Laugar");
+//				startActivity(j);
 			}
 		});
 		
@@ -76,9 +79,10 @@ public class Opnunartimar extends Activity {
 		{
 			public void onClick(View v) 
 			{ 
-				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
-				j.putExtra("stod","Egilshöll");
-				startActivity(j);
+				createIntent("Egilshöll");
+//				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
+//				j.putExtra("stod","Egilshöll");
+//				startActivity(j);
 			}
 		});
 		
@@ -86,9 +90,10 @@ public class Opnunartimar extends Activity {
 		{
 			public void onClick(View v) 
 			{ 
-				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
-				j.putExtra("stod","Hafnarfjörður");
-				startActivity(j);
+				createIntent("Hafnarfjörður");
+//				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
+//				j.putExtra("stod","Hafnarfjörður");
+//				startActivity(j);
 			}
 		});
 		
@@ -96,9 +101,10 @@ public class Opnunartimar extends Activity {
 		{
 			public void onClick(View v) 
 			{ 
-				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
-				j.putExtra("stod","Seltjarnarnes");
-				startActivity(j);
+				createIntent("Seltjarnarnes");
+//				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
+//				j.putExtra("stod","Seltjarnarnes");
+//				startActivity(j);
 			}
 		});
 		
@@ -106,9 +112,10 @@ public class Opnunartimar extends Activity {
 		{
 			public void onClick(View v) 
 			{ 
-				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
-				j.putExtra("stod","Mosfellsbær");
-				startActivity(j);
+				createIntent("Mosfellsbær");
+//				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
+//				j.putExtra("stod","Mosfellsbær");
+//				startActivity(j);
 			}
 		});
 		
@@ -116,32 +123,42 @@ public class Opnunartimar extends Activity {
 		{
 			public void onClick(View v) 
 			{ 
-				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
-				j.putExtra("stod","Ögurhvarf");
-				startActivity(j);
+				createIntent("Ögurhvarf");
+//				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
+//				j.putExtra("stod","Ögurhvarf");
+//				startActivity(j);
 			}
 		});
 		
 		kpv_takki.setOnClickListener(new OnClickListener()
 		{
 			public void onClick(View v) 
-			{ 
-				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
-				j.putExtra("stod","Kópavogur");
-				startActivity(j);
+			{
+				createIntent("Kópavogur");
+//				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
+//				j.putExtra("stod","Kópavogur");
+//				startActivity(j);
 			}
 		});
 		
 		hr_takki.setOnClickListener(new OnClickListener()
 		{
 			public void onClick(View v) 
-			{ 
-				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
-				j.putExtra("stod","Háskólinn í Reykjavík");
-				startActivity(j);
+			{
+				createIntent("Háskólinn í Reykjavík");
+//				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
+//				j.putExtra("stod","Háskólinn í Reykjavík");
+//				startActivity(j);
 			}
 		});
 		
+	}
+	
+	private void createIntent(String stod){
+		Intent i = new Intent(this, Opnunartimi.class);
+		i.putExtra("stod", stod);
+		i.putExtra("vikudagur", getIntent().getStringExtra("vikudagur"));
+		startActivity(i);
 	}
 	
 	/**

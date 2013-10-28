@@ -2,6 +2,7 @@ package hbv.wci.world_class_iceland;
 
 //import hbv.wci.world_class_iceland.Stundataflagamalt.AsyncExecution;
 
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +14,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -190,7 +192,12 @@ public class StundataflaFragment extends Fragment {
 							}
 						}
 					}
-					catch ( Exception e ) {
+					catch ( UnknownHostException e ) {
+						TextView t = (TextView) rootView.findViewById(R.id.opnun_header);
+						t.setTextColor(Color.RED);
+						t.setText("Ekki náðist samband við vefþjón");
+					}
+					catch ( Exception e){
 						System.out.println("error: " + e);
 					}
 					return "All Done!";

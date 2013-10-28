@@ -125,6 +125,7 @@ public class Innskraning extends Activity {
 		switch (item.getItemId()) {
 			case R.id.opnun_menu:
 				Intent j = new Intent(Innskraning.this, Opnunartimar.class);
+				j.putExtra("vikudagur", Integer.toString(map.get(vikudagur)));
 				startActivity(j);
 				break;
 			case R.id.stundatafla_menu:

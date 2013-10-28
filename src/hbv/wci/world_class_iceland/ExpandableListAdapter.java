@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
  
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -49,7 +50,7 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.list_item, null);
         }
-        //convertView.setBackgroundColor("#FF6666");
+        //convertView.setBackgroundColor(0xFF0000);
         TextView txtListChild = (TextView) convertView
                 .findViewById(R.id.timiTitill);
         

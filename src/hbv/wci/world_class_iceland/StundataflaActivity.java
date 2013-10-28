@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -45,7 +46,7 @@ public class StundataflaActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pager);
+        setContentView(R.layout.activity_stundatafla);
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) findViewById(R.id.viewpagermain);
@@ -108,6 +109,29 @@ public class StundataflaActivity extends FragmentActivity {
 		  spinner1 = (Spinner) findViewById(R.id.spinner1);
 		  spinner2 = (Spinner) findViewById(R.id.spinner2);
 		  btnSubmit = (Button) findViewById(R.id.btnSubmit);
+		  
+		  spinner1.setOnItemSelectedListener(new OnItemSelectedListener() {
+			    @Override
+			    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+			    	stod = String.valueOf(spinner1.getSelectedItem());
+			    	mPagerAdapter.notifyDataSetChanged();
+			    }
+			    @Override
+			    public void onNothingSelected(AdapterView<?> parentView) {
+			    }
+
+			});
+		  spinner2.setOnItemSelectedListener(new OnItemSelectedListener() {
+			    @Override
+			    public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+			    	tegund = String.valueOf(spinner1.getSelectedItem());
+			    	mPagerAdapter.notifyDataSetChanged();
+			    }
+			    @Override
+			    public void onNothingSelected(AdapterView<?> parentView) {
+			    }
+
+			});
 	 
 		  btnSubmit.setOnClickListener(new OnClickListener() {
 	 

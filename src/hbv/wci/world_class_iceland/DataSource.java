@@ -111,6 +111,11 @@ public class DataSource {
 		mSQLiteDatabase.insert(MySQLiteHelper.TABLE_HOPTIMAR, null, values);		
 	}
 	
+	public void dropTable(){
+		mSQLiteDatabase.execSQL("DROP table if exists hoptimar");
+		System.out.println("Table dropped");
+	}
+	
 	public boolean isEmpty(){
 		try{
 		 Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_HOPTIMAR, hoptimarAllColumns, null, null, null, null, null);

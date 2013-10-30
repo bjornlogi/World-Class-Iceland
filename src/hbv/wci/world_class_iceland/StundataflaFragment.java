@@ -33,19 +33,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class StundataflaFragment extends Fragment {
-	private ListView mainListView ;
 	private DataSource mDataSource;
-	private Spinner spinner1, spinner2;
-	private Button btnSubmit;
 	private String stod = "";
 	private String tegund = "";
 	private ExpandableListAdapter listAdapter;
 	private ExpandableListView expListView;
-	List<String> listHeader;
-	HashMap<String, List<String>> listChild;
-	HashMap<String, String> infoChild;
-	ViewGroup rootView;
-	StundatofluTimi st;
+	//List<String> listHeader;
+	//HashMap<String, List<String>> listChild;
+	//HashMap<String, String> infoChild;
+	private ViewGroup rootView;
+	private StundatofluTimi st;
+	private boolean veftjonn = true;
 	
 	 @Override
 	    public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -220,6 +218,7 @@ public class StundataflaFragment extends Fragment {
 			 */
 			@Override
 			protected void onCancelled() {
+				mDataSource.dropTable();
 				super.onCancelled();
 			}
 		

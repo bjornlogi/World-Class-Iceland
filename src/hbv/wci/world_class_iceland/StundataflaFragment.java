@@ -38,12 +38,8 @@ public class StundataflaFragment extends Fragment {
 	private String tegund = "";
 	private ExpandableListAdapter listAdapter;
 	private ExpandableListView expListView;
-	//List<String> listHeader;
-	//HashMap<String, List<String>> listChild;
-	//HashMap<String, String> infoChild;
 	private ViewGroup rootView;
 	private StundatofluTimi st;
-	private boolean veftjonn = true;
 	
 	 @Override
 	    public View onCreateView(LayoutInflater inflater, ViewGroup container,

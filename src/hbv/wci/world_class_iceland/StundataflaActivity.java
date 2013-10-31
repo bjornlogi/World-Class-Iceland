@@ -109,7 +109,6 @@ public class StundataflaActivity extends FragmentActivity {
 	 
 		  spinner1 = (Spinner) findViewById(R.id.spinner1);
 		  spinner2 = (Spinner) findViewById(R.id.spinner2);
-		  //btnSubmit = (Button) findViewById(R.id.btnSubmit);
 		  
 		  spinner1.setOnItemSelectedListener(new OnItemSelectedListener() {
 			    @Override

@@ -53,7 +53,7 @@ public class Nyskraning extends Activity {
 				if (validEmail && noEmptyField && validKennitala && passwordMatch)
 				{
 					final Dialog dialog = new Dialog(context);
-					dialog.setContentView(R.layout.dialog_nyskra_villa);
+					dialog.setContentView(R.layout.dialog_nyskra);
 					dialog.setTitle("Til hamingju");
 		 
 					// set the custom dialog components - text, image and button
@@ -82,7 +82,7 @@ public class Nyskraning extends Activity {
 				}			
 				else{
 					final Dialog dialog = new Dialog(context);
-					dialog.setContentView(R.layout.dialog_nyskra_villa);
+					dialog.setContentView(R.layout.dialog_nyskra);
 					dialog.setTitle("Villa");
 		 
 					// set the custom dialog components - text, image and button

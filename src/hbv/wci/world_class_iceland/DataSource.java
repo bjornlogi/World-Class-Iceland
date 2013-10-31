@@ -118,10 +118,10 @@ public class DataSource {
 	
 	public boolean isEmpty(){
 		try{
-		 Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_HOPTIMAR, hoptimarAllColumns, null, null, null, null, null);
-		 boolean empty = !cursor.moveToFirst();
-		 cursor.close();
-		 return empty;
+			Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_HOPTIMAR, hoptimarAllColumns, null, null, null, null, null);
+			boolean empty = !cursor.moveToFirst();
+			cursor.close();
+			return empty;
 		}
 		catch (Exception e){
 			System.out.println("Error: " + e);
@@ -131,17 +131,17 @@ public class DataSource {
 	
 	public StundatofluTimi getAllStundatoflutimar(){
 		listHeader = new ArrayList<String>();
-        listChild = new HashMap<String, List<String>>();
-        infoChild = new HashMap<String,String>();
-        
-        List<String> morguntimar = new ArrayList<String>();
-        List<String> hadegistimar = new ArrayList<String>();
-        List<String> siddegistimar = new ArrayList<String>();
-        List<String> kvoldtimar = new ArrayList<String>();
-        
-        Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_HOPTIMAR, hoptimarAllColumns, null, null, null, null, null);
+		listChild = new HashMap<String, List<String>>();
+		infoChild = new HashMap<String,String>();
+		
+		List<String> morguntimar = new ArrayList<String>();
+		List<String> hadegistimar = new ArrayList<String>();
+		List<String> siddegistimar = new ArrayList<String>();
+		List<String> kvoldtimar = new ArrayList<String>();
+		
+		Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_HOPTIMAR, hoptimarAllColumns, null, null, null, null, null);
 		cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
+		while (!cursor.isAfterLast()) {
 			//viljum ekki fa tofluheaderinn
 			if(cursor.getLong(0) != 0) {
 				Hoptimar hoptimi = cursorToHoptimar(cursor);
@@ -162,24 +162,24 @@ public class DataSource {
 		}
 		
 		int i = 0;
-        if (!morguntimar.isEmpty()){
-        	listHeader.add("Morguntímar");
-        	listChild.put(listHeader.get(i++), morguntimar);
-        }
-        if (!hadegistimar.isEmpty()){
-        	listHeader.add("Hádegistímar");
-        	listChild.put(listHeader.get(i++), hadegistimar);
-        	}
-        if (!siddegistimar.isEmpty()){
-        	listHeader.add("Síðdegistímar");
-        	listChild.put(listHeader.get(i++), siddegistimar);
-        	}
-        if (!kvoldtimar.isEmpty()){
-        	listHeader.add("Kvöldtímar");
-        	listChild.put(listHeader.get(i), kvoldtimar);
-        	}
-        
-        cursor.close();
+		if (!morguntimar.isEmpty()){
+			listHeader.add("Morguntímar");
+			listChild.put(listHeader.get(i++), morguntimar);
+		}
+		if (!hadegistimar.isEmpty()){
+			listHeader.add("Hádegistímar");
+			listChild.put(listHeader.get(i++), hadegistimar);
+		}
+		if (!siddegistimar.isEmpty()){
+			listHeader.add("Síðdegistímar");
+			listChild.put(listHeader.get(i++), siddegistimar);
+		}
+		if (!kvoldtimar.isEmpty()){
+			listHeader.add("Kvöldtímar");
+			listChild.put(listHeader.get(i), kvoldtimar);
+		}
+		
+		cursor.close();
 		return new StundatofluTimi(listHeader, listChild,infoChild);
 	}
 	
@@ -210,16 +210,22 @@ public class DataSource {
 		Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_NOTENDUR, notendurAllColumns, null, null, null, null, null);
 		cursor.moveToFirst();
 		
+		boolean flag=false;
+		int i=0;
 		while (!cursor.isAfterLast()) {
+			System.out.print("iteration #");
+			System.out.println(i++);
 			Notandi notandi = cursorToNotandi(cursor);
-			if(notandi.getLykilord().equals(lykilord) && notandi.getNetfang().equals(netfang)) {
-				return true;
-			}
+			
+			boolean check = notandi.getLykilord().equals(lykilord);
+			check = check && notandi.getNetfang().equals(netfang);
+			flag = flag || check;
+			
 			cursor.moveToNext();
 		}
 		cursor.close();
 		
-		return false;
+		return flag;
 	}
 	
 	/**
@@ -275,11 +281,7 @@ public class DataSource {
 	 * @return
 	 */
 	private Notandi cursorToNotandi(Cursor cursor) {
-		return new Notandi(cursor.getLong(0), 
-							cursor.getString(1), 
-							cursor.getString(2), 
-							cursor.getString(3), 
-							cursor.getString(4));
+		return new Notandi(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
 	}
 
 }

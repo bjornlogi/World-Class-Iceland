@@ -82,6 +82,7 @@ public class Innskraning extends Activity {
 				
 				if(flag) {
 					Intent i = new Intent(Innskraning.this, StundataflaActivity.class);
+					i.putExtra("vikudagur", Integer.toString(map.get(vikudagur)));
 					startActivity(i);
 				} else {
 					Toast.makeText(Innskraning.this, R.string.rangt, Toast.LENGTH_LONG).show();

@@ -43,11 +43,7 @@ public class Nyskraning extends Activity {
 			public void onClick(View v) {
 				mDataSource = new DataSource(mContext);
 				mDataSource.open();
-				
-				
-				
-				// TODO Validate the input to addUser, and toast if there is mismatch
-				//[netfang,lykilord,kennitala,stadfest,kort],
+
 				// TODO ef gefid upp netfang, lykilord og ytt a nyskra, baeta vid gognum inn i nyskraningar inputin
 				//svo ekki turfi ad skrifa aftur
 				Boolean validEmail = validate(netfang.getText().toString());
@@ -56,10 +52,33 @@ public class Nyskraning extends Activity {
 				Boolean passwordMatch = passwordMatch(lykilord.getText().toString(), lykilord2.getText().toString());
 				if (validEmail && noEmptyField && validKennitala && passwordMatch)
 				{
-					mDataSource.addUser(new String[]{netfang.getText().toString(),lykilord.getText().toString(),kennitala.getText().toString(),"nei","nei"});
+					final Dialog dialog = new Dialog(context);
+					dialog.setContentView(R.layout.dialog_nyskra_villa);
+					dialog.setTitle("Til hamingju");
+		 
+					// set the custom dialog components - text, image and button
+					TextView text = (TextView) dialog.findViewById(R.id.text);
+					String info ="Þú ert nú skráður í kerfið. Upplýsingar þínar:";
+					info += "\nnetfang: " + netfang.getText().toString();
+					info += "\nkennitala: " + kennitala.getText().toString();
+											
+					text.setText(info);
 					
-					Intent j = new Intent(Nyskraning.this, Innskraning.class);
-					startActivity(j);
+					Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+					// if button is clicked, close the custom dialog
+					dialogButton.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							dialog.dismiss();
+							
+							mDataSource.addUser(new String[]{netfang.getText().toString(),lykilord.getText().toString(),kennitala.getText().toString(),"nei","nei"});			
+							Intent j = new Intent(Nyskraning.this, Innskraning.class);
+							startActivity(j);
+						}
+					});
+		 
+					dialog.show();
+					
 				}			
 				else{
 					final Dialog dialog = new Dialog(context);

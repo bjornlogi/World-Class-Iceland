@@ -69,10 +69,6 @@ public class Nyskraning extends Activity {
 					// set the custom dialog components - text, image and button
 					TextView text = (TextView) dialog.findViewById(R.id.text);
 					String villa ="Vinsamlegast lagaðu:";
-					villa+="\nnetfang" + netfang.getText().toString();
-					villa+="\nlykilord" + lykilord.getText().toString();
-					villa+="\nkenno" +kennitala.getText().toString();
-					villa+="\nlyk2" + lykilord2.getText().toString();
 					if(!noEmptyField)
 						villa += "\nFylla verður út í alla reiti.";
 					if(!validEmail)
@@ -110,7 +106,7 @@ public class Nyskraning extends Activity {
 	    return matcher.find();
 	}
 	public static boolean isNotEmptyNyskra(String email, String password, String kennitala, String lykilord2){
-		return (email != "" && password != "" && kennitala != "" && lykilord2 != "");	
+		return (!email.isEmpty() && !password.isEmpty() && !kennitala.isEmpty() && !lykilord2.isEmpty());	
 	}
 	public static boolean isKennitala(String kennitala){
 		return(kennitala.length() == 10);

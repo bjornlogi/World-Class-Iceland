@@ -70,23 +70,13 @@ public class Nyskraning extends Activity {
 	    return matcher.find();
 	}
 	public static boolean isNotEmptyNyskra(String email, String password, String kennitala, String lykilord2){
-		if(email != "" && password != "" && kennitala != "" && lykilord2 != "")
-			return true;
-		else
-			return false;		
+		return (email != "" && password != "" && kennitala != "" && lykilord2 != "");	
 	}
 	public static boolean isKennitala(String kennitala){
-		if(kennitala.length() == 10)
-			return true;
-		else
-			return false;
+		return(kennitala.length() == 10);
 	}
 	public static boolean passwordMatch(String lykilord1, String lykilord2){
-		if(lykilord1.equals(lykilord2)){
-			return true;
-		}
-		else
-			return false;
+		return(lykilord1.equals(lykilord2));
 	}
 	 
 }

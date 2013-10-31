@@ -25,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /** 
@@ -85,7 +86,27 @@ public class Innskraning extends Activity {
 					i.putExtra("vikudagur", Integer.toString(map.get(vikudagur)));
 					startActivity(i);
 				} else {
-					Toast.makeText(Innskraning.this, R.string.rangt, Toast.LENGTH_LONG).show();
+					final Dialog dialog = new Dialog(mContext);
+					dialog.setContentView(R.layout.dialog_nyskra);
+					dialog.setTitle("Innskráningarvilla");
+		 
+					// set the custom dialog components - text, image and button
+					TextView text = (TextView) dialog.findViewById(R.id.text);
+					String info = "Ekki tókst að skrá þig inn.\nAthugaðu hvort netfangið og lykilorðið eru rétt.";
+	
+											
+					text.setText(info);
+					
+					Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+					// if button is clicked, close the custom dialog
+					dialogButton.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							dialog.dismiss();
+						}
+					});
+		 
+					dialog.show();
 				}
 				
 			}

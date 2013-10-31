@@ -50,7 +50,8 @@ public class Nyskraning extends Activity {
 				Boolean noEmptyField = isNotEmptyNyskra(netfang.getText().toString(), lykilord.getText().toString(), kennitala.getText().toString(), lykilord2.getText().toString());
 				Boolean validKennitala = isKennitala(kennitala.getText().toString());
 				Boolean passwordMatch = passwordMatch(lykilord.getText().toString(), lykilord2.getText().toString());
-				if (validEmail && noEmptyField && validKennitala && passwordMatch)
+				Boolean emailAvailable = !mDataSource.userExists(netfang.getText().toString());
+				if (validEmail && noEmptyField && validKennitala && passwordMatch && emailAvailable)
 				{
 					final Dialog dialog = new Dialog(context);
 					dialog.setContentView(R.layout.dialog_nyskra);
@@ -88,14 +89,16 @@ public class Nyskraning extends Activity {
 					// set the custom dialog components - text, image and button
 					TextView text = (TextView) dialog.findViewById(R.id.text);
 					String villa ="Vinsamlegast lagaðu:";
-					if(!noEmptyField)
-						villa += "\nFylla verður út í alla reiti.";
+					if(!emailAvailable)
+						villa += "\nNetfang er þegar skráð.";
 					if(!validEmail)
 						villa += "\nNetfang er ekki á réttu formi.";
 					if(!validKennitala)
 						villa += "\nKennitala er ekki á réttu formi.";
 					if(!passwordMatch)
 						villa += "\nLykilorð stemma ekki.";
+					if(!noEmptyField)
+						villa += "\nFylla verður út í alla reiti.";
 								
 					text.setText(villa);
 					

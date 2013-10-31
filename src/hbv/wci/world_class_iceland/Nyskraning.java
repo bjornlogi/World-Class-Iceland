@@ -10,7 +10,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.app.Dialog;
+import android.content.Context;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -29,6 +33,7 @@ public class Nyskraning extends Activity {
 		final EditText lykilord2 = (EditText) findViewById(R.id.lykilordInntakNr2);
 		final EditText kennitala = (EditText) findViewById(R.id.kennitalaInntak);
 		final Button nySkra = (Button) findViewById(R.id.nySkraTakki);
+		final Context context = this;
 		
 		lykilord.setTypeface(Typeface.SANS_SERIF);
 		lykilord2.setTypeface(Typeface.SANS_SERIF);
@@ -57,7 +62,42 @@ public class Nyskraning extends Activity {
 					startActivity(j);
 				}			
 				else{
-					Toast.makeText(Nyskraning.this, R.string.rangt, Toast.LENGTH_LONG).show();
+					final Dialog dialog = new Dialog(context);
+					dialog.setContentView(R.layout.dialog_nyskra_villa);
+					dialog.setTitle("Villa");
+		 
+					// set the custom dialog components - text, image and button
+					TextView text = (TextView) dialog.findViewById(R.id.text);
+					String villa ="Vinsamlegast lagaðu:";
+					villa+="\nnetfang" + netfang.getText().toString();
+					villa+="\nlykilord" + lykilord.getText().toString();
+					villa+="\nkenno" +kennitala.getText().toString();
+					villa+="\nlyk2" + lykilord2.getText().toString();
+					if(!noEmptyField)
+						villa += "\nFylla verður út í alla reiti.";
+					if(!validEmail)
+						villa += "\nNetfang er ekki á réttu formi.";
+					if(!validKennitala)
+						villa += "\nKennitala er ekki á réttu formi.";
+					if(!passwordMatch)
+						villa += "\nLykilorð stemma ekki.";
+								
+					text.setText(villa);
+					
+					
+					
+					Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+					// if button is clicked, close the custom dialog
+					dialogButton.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							dialog.dismiss();
+						}
+					});
+		 
+					dialog.show();
+							
+					//Toast.makeText(Nyskraning.this, R.string.rangt, Toast.LENGTH_LONG).show();
 				}
 									
 			}

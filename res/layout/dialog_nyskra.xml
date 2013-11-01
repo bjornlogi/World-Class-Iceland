@@ -7,16 +7,21 @@
     <TextView
         android:id="@+id/text"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"/>
     
      <Button
         android:id="@+id/dialogButtonOK"
-        android:layout_width="100px"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text=" Ok "
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_below="@+id/text"
-        />
+        android:layout_marginBottom="5dp"
+        android:layout_below="@+id/text"/>
  
 </RelativeLayout>

@@ -228,6 +228,24 @@ public class DataSource {
 		return flag;
 	}
 	
+	public boolean userExists(String netfang){
+		Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_NOTENDUR, notendurAllColumns, null, null, null, null, null);
+		cursor.moveToFirst();
+		
+		boolean flag=false;
+
+		while (!cursor.isAfterLast()) {
+			Notandi notandi = cursorToNotandi(cursor);
+			
+			boolean userExists = notandi.getNetfang().equals(netfang);			
+			cursor.moveToNext();
+			if(userExists)
+				flag = true;
+		}
+		cursor.close();		
+		return flag;
+	}
+	
 	/**
 	 * Nidurstodur ur vali notendans
 	 * @param stod

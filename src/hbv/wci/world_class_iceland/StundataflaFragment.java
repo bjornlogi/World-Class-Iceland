@@ -54,11 +54,8 @@ public class StundataflaFragment extends Fragment {
 
 	        akvedaDag(position);
 	        mDataSource.open();
-	        
-	        if (getArguments().getInt("update") ==0 && mDataSource.isEmpty())
-	        	new AsyncExecution().execute("http://www.worldclass.is/heilsuraekt/stundaskra");
-	        else
-	        	synaLista();
+	     	synaLista();
+	     	
 	        return rootView;
 	    }
 	 
@@ -116,121 +113,5 @@ public class StundataflaFragment extends Fragment {
 		 //uncommenta tetta svo ad allir listsar byrja opnadir
 //		 for (int position = 1; position <= listAdapter.getGroupCount(); position++)
 //			 expListView.expandGroup(position - 1);
-		}
-
-	 /**
-		 * Skrapar gogn af vef og setur inn i gagnagrunn ef hann er ekki til stadar.
-		 * 
-		 * @author Bjorn
-		 * @see AsyncTask
-		 */
-		public class AsyncExecution extends AsyncTask<String, Integer, String>{
-			ProgressDialog progressDialog;
-			/**
-			 * Fall sem er keyrt a undan Async verkinu.
-			 * 
-			 */
-			@Override
-			protected void onPreExecute() {
-				progressDialog= ProgressDialog.show(getActivity(), "Hleðsla í gangi","Erum að sækja gögn, hinkraðu smá", true);
-				super.onPreExecute();
-			}
-			
-			/**
-			 * Skrapar gogn af vef og setur inn i gagnagrunn i bakgrunns traedi.
-			 * 
-			 * @param params URL a sidunni sem sott er gogn af. 
-			 */
-			@Override
-			protected String doInBackground(String... params) {
-				String url=params[0];
-					try { 
-						Document doc = Jsoup.connect(url).get();
-						Elements tableElements = doc.select("table");
-						
-						Elements tableClassesElements = tableElements.select(":not(thead) tr");
-						String timar[] = {"", "morgun", "", "hadegi", "", "siddegi", "", "kvold"};
-						String dagar[] = {"Man", "Tri", "Mid", "Fim", "Fos", "Lau", "Sun"};
-						
-						for (int i = 0; i < tableClassesElements.size(); i++) {
-							Element row = tableClassesElements.get(i);
-							Elements rowItems = row.select("td");
-							String timi = timar[i];
-							
-							for (int j = 0; j < rowItems.size(); j++) {
-								String dagur = dagar[j];
-								Element list = rowItems.get(j);
-								Elements listItems = list.select("li"); 
-								
-								for (int k = 0; k < listItems.size(); k++){
-									String hopTimi[] = new String[9];
-									Element links = listItems.get(k);
-									hopTimi[0] = links.select("a").text();
-									hopTimi[1] = links.select(".stod").text();
-									hopTimi[2] = links.select(".salur").text();
-									hopTimi[3] = links.select(".tjalfari").text();
-									hopTimi[4] = links.select(".tegund").text();
-									hopTimi[5] = links.select(".time").text();
-									hopTimi[6] = timi;
-									hopTimi[7] = dagur;
-									Elements lokad = links.select(".locked");
-									
-									if (lokad.text() != "")
-										hopTimi[8] = lokad.attr("title");
-									else
-										hopTimi[8] = " ";
-									
-									mDataSource.addHoptimi(hopTimi);
-									
-								}
-							}
-						}
-					}
-					catch ( UnknownHostException e ) {
-						TextView t = (TextView) rootView.findViewById(R.id.opnun_header);
-						t.setTextColor(Color.RED);
-						t.setText("Ekki náðist samband við vefþjón");
-					}
-					catch ( Exception e){
-						TextView t = (TextView) rootView.findViewById(R.id.opnun_header);
-						t.setTextColor(Color.RED);
-						t.setText("Villa kom upp við að ná tengingu við vefþjón");
-					}
-					return "All Done!";
-			}
-				
-			/**
-			 * Kallad reglulega a tetta fall medan a keyrslunni stendur.
-			 * 
-			 * @param values
-			 */
-			@Override
-			protected void onProgressUpdate(Integer... values) {
-				super.onProgressUpdate(values);
-			}
-			
-			/**
-			 * Ef haett er vid keyrsluna adur en hun er fullklarud, ta keyra tetta fall
-			 * 
-			 * @see android.os.AsyncTask#onCancelled()
-			 */
-			@Override
-			protected void onCancelled() {
-				mDataSource.dropTable();
-				super.onCancelled();
-			}
-		
-			/**
-			 * Tegar buid er ad hlada inn asynchronous verkinu, keyrir tetta fall sem birtir
-			 * gognin i listanum.
-			 * 
-			 * @param result
-			 */
-			@Override
-			protected void onPostExecute(String result) {
-				progressDialog.dismiss();
-				synaLista();
-				super.onPostExecute(result);
-			}
 		}
 }

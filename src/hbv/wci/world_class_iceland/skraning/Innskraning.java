@@ -1,13 +1,7 @@
 package hbv.wci.world_class_iceland.skraning;
 
-//import hbv.wci.world_class_iceland.StundataflaFragment.AsyncExecution;
 
 import hbv.wci.world_class_iceland.R;
-import hbv.wci.world_class_iceland.R.drawable;
-import hbv.wci.world_class_iceland.R.id;
-import hbv.wci.world_class_iceland.R.layout;
-import hbv.wci.world_class_iceland.R.menu;
-import hbv.wci.world_class_iceland.R.string;
 import hbv.wci.world_class_iceland.data.DataSource;
 import hbv.wci.world_class_iceland.opnunartimar.Opnunartimar;
 import hbv.wci.world_class_iceland.stundatafla.StundataflaActivity;
@@ -25,6 +19,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
@@ -33,7 +29,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
@@ -47,7 +42,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /** 
  * Activity sem synir innskraningar val og menu fyrir navigation
@@ -89,8 +83,9 @@ public class Innskraning extends Activity {
 		mDataSource = new DataSource(mContext);
 		mDataSource.open();
 		
-		if (mDataSource.isEmpty())
+		if (mDataSource.isEmpty() && isNetworkAvailable())
         	new AsyncExecution().execute("http://www.worldclass.is/heilsuraekt/stundaskra");
+			
 		
 		final EditText netfangInntak = (EditText) findViewById(R.id.netfangInntak);
 		final EditText lykilordInntak = (EditText) findViewById(R.id.lykilordInntakNr3);
@@ -181,6 +176,16 @@ public class Innskraning extends Activity {
         };
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
 		
+	}
+	
+	/*
+	 * Athugar hvort ad siminn se nettengdur
+	 */
+	private boolean isNetworkAvailable() {
+	    ConnectivityManager connectivityManager 
+	          = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+	    return activeNetworkInfo != null && activeNetworkInfo.isConnected();
 	}
 	
 	/* The click listner for ListView in the navigation drawer */

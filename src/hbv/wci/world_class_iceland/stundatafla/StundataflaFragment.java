@@ -7,6 +7,7 @@ import hbv.wci.world_class_iceland.R.id;
 import hbv.wci.world_class_iceland.R.layout;
 import hbv.wci.world_class_iceland.data.DataSource;
 import hbv.wci.world_class_iceland.data.StundatofluTimi;
+import hbv.wci.world_class_iceland.skraning.Innskraning;
 
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -58,10 +59,14 @@ public class StundataflaFragment extends Fragment {
 	                R.layout.expandable, container, false);
 	        
 	        expListView = (ExpandableListView) rootView.findViewById(R.id.expandable1);
-
+	        
 	        akvedaDag(position);
 	        mDataSource.open();
-	     	synaLista();
+	        if (mDataSource.isEmpty() && getArguments().getString("update")=="0")
+	        	Toast.makeText(getActivity(),"Tengstu netinu til að sjá stundatöfluna", Toast.LENGTH_LONG)
+	        	.show();
+	        else
+	        	synaLista();
 	     	
 	        return rootView;
 	    }
@@ -121,4 +126,5 @@ public class StundataflaFragment extends Fragment {
 //		 for (int position = 1; position <= listAdapter.getGroupCount(); position++)
 //			 expListView.expandGroup(position - 1);
 		}
+	 
 }

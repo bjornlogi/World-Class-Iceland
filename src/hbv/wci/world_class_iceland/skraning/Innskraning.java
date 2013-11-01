@@ -304,7 +304,7 @@ public class Innskraning extends Activity {
 		 */
 		@Override
 		protected void onPreExecute() {
-			progressDialog= ProgressDialog.show(mContext, "Hleðsla í gangi","Erum að sækja gögn, hinkraðu smá", true);
+			progressDialog= ProgressDialog.show(mContext, "Hleð niður gögnum","Hinkraðu augnablik", true);
 			super.onPreExecute();
 		}
 		

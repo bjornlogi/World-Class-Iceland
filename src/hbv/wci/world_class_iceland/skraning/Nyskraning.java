@@ -112,7 +112,8 @@ public class Nyskraning extends Activity {
 							dialog.dismiss();
 							
 							mDataSource.addUser(new String[]{netfang.getText().toString(),lykilord.getText().toString(),kennitala.getText().toString(),"nei","nei"});			
-							Intent j = new Intent(Nyskraning.this, Innskraning.class);
+							Intent j = new Intent(Nyskraning.this, StundataflaActivity.class);
+							j.putExtra("vikudagur", Integer.toString(map.get(vikudagur)));
 							startActivity(j);
 						}
 					});
@@ -128,7 +129,7 @@ public class Nyskraning extends Activity {
 		 
 					// set the custom dialog components - text, image and button
 					TextView text = (TextView) dialog.findViewById(R.id.text);
-					String villa ="Vinsamlegast lagaðu:";
+					String villa ="Vinsamlegast lagaðu eftirfarandi:";
 					if(!emailAvailable)
 						villa += "\nNetfang er þegar skráð.";
 					else {

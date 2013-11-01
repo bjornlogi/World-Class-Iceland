@@ -192,7 +192,9 @@ public class StundataflaFragment extends Fragment {
 						t.setText("Ekki náðist samband við vefþjón");
 					}
 					catch ( Exception e){
-						System.out.println("error: " + e);
+						TextView t = (TextView) rootView.findViewById(R.id.opnun_header);
+						t.setTextColor(Color.RED);
+						t.setText("Villa kom upp við að ná tengingu við vefþjón");
 					}
 					return "All Done!";
 			}

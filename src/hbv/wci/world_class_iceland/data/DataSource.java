@@ -1,4 +1,5 @@
-package hbv.wci.world_class_iceland;
+package hbv.wci.world_class_iceland.data;
+
 
 import java.util.ArrayList;
 

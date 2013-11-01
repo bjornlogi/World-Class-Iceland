@@ -1,6 +1,16 @@
-package hbv.wci.world_class_iceland;
+package hbv.wci.world_class_iceland.skraning;
 
 //import hbv.wci.world_class_iceland.StundataflaFragment.AsyncExecution;
+
+import hbv.wci.world_class_iceland.R;
+import hbv.wci.world_class_iceland.R.drawable;
+import hbv.wci.world_class_iceland.R.id;
+import hbv.wci.world_class_iceland.R.layout;
+import hbv.wci.world_class_iceland.R.menu;
+import hbv.wci.world_class_iceland.R.string;
+import hbv.wci.world_class_iceland.data.DataSource;
+import hbv.wci.world_class_iceland.opnunartimar.Opnunartimar;
+import hbv.wci.world_class_iceland.stundatafla.StundataflaActivity;
 
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
@@ -13,6 +23,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
 
 import android.os.AsyncTask;
 import android.os.Bundle;

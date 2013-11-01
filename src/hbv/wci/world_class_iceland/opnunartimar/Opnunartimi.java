@@ -1,8 +1,14 @@
-package hbv.wci.world_class_iceland;
+package hbv.wci.world_class_iceland.opnunartimar;
+
+import hbv.wci.world_class_iceland.R;
+import hbv.wci.world_class_iceland.R.id;
+import hbv.wci.world_class_iceland.R.layout;
+import hbv.wci.world_class_iceland.data.Stod;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
+
 
 import android.app.Activity;
 import android.content.Intent;

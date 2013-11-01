@@ -1,4 +1,4 @@
-package hbv.wci.world_class_iceland;
+package hbv.wci.world_class_iceland.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

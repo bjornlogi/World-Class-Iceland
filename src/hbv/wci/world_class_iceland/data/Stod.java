@@ -1,4 +1,4 @@
-package hbv.wci.world_class_iceland;
+package hbv.wci.world_class_iceland.data;
 
 /**
  * Heldur utan um opnunartimana og er library til ad vinna med opnunartimana.

@@ -1,4 +1,4 @@
-package hbv.wci.world_class_iceland;
+package hbv.wci.world_class_iceland.skraning;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -23,6 +23,15 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Configuration;
 
+import hbv.wci.world_class_iceland.R;
+import hbv.wci.world_class_iceland.R.drawable;
+import hbv.wci.world_class_iceland.R.id;
+import hbv.wci.world_class_iceland.R.layout;
+import hbv.wci.world_class_iceland.R.string;
+import hbv.wci.world_class_iceland.data.DataSource;
+import hbv.wci.world_class_iceland.opnunartimar.Opnunartimar;
+import hbv.wci.world_class_iceland.stundatafla.StundataflaActivity;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -30,6 +39,7 @@ import java.util.Map;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 public class Nyskraning extends Activity {
 	private DataSource mDataSource;

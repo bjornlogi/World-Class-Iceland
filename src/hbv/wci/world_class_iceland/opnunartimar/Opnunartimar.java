@@ -1,5 +1,10 @@
-package hbv.wci.world_class_iceland;
+package hbv.wci.world_class_iceland.opnunartimar;
 
+import hbv.wci.world_class_iceland.R;
+import hbv.wci.world_class_iceland.R.id;
+import hbv.wci.world_class_iceland.R.layout;
+import hbv.wci.world_class_iceland.R.menu;
+import hbv.wci.world_class_iceland.stundatafla.StundataflaActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

@@ -1,4 +1,8 @@
-package hbv.wci.world_class_iceland;
+package hbv.wci.world_class_iceland.stundatafla;
+
+import hbv.wci.world_class_iceland.R;
+import hbv.wci.world_class_iceland.R.id;
+import hbv.wci.world_class_iceland.R.layout;
 
 import java.util.ArrayList;
 import android.support.v4.view.ViewPager.OnPageChangeListener;

@@ -77,11 +77,12 @@ public class Nyskraning extends Activity {
 				Boolean noEmptyField = isNotEmptyNyskra(netfang.getText().toString(), lykilord.getText().toString(), kennitala.getText().toString(), lykilord2.getText().toString());
 				Boolean validKennitala = isKennitala(kennitala.getText().toString());
 				Boolean passwordMatch = passwordMatch(lykilord.getText().toString(), lykilord2.getText().toString());
-				Boolean emailAvailable = true; //!mDataSource.userExists(netfang.getText().toString());
+				Boolean emailAvailable = !mDataSource.userExists(netfang.getText().toString());
 				if (validEmail && noEmptyField && validKennitala && passwordMatch && emailAvailable)
 				{
 					final Dialog dialog = new Dialog(context);
 					dialog.setContentView(R.layout.dialog_nyskra);
+					dialog.setCanceledOnTouchOutside(false);
 					dialog.setTitle("Til hamingju");
 		 
 					// set the custom dialog components - text, image and button
@@ -89,6 +90,7 @@ public class Nyskraning extends Activity {
 					String info ="Þú ert nú skráður í kerfið. Upplýsingar þínar:";
 					info += "\nnetfang: " + netfang.getText().toString();
 					info += "\nkennitala: " + kennitala.getText().toString();
+					info += "\nVinsamlegast ýttu á 'OK' til að samþykkja upplýsingarnar.";
 											
 					text.setText(info);
 					
@@ -111,6 +113,7 @@ public class Nyskraning extends Activity {
 				else{
 					final Dialog dialog = new Dialog(context);
 					dialog.setContentView(R.layout.dialog_nyskra);
+					dialog.setCanceledOnTouchOutside(false);
 					dialog.setTitle("Villa");
 		 
 					// set the custom dialog components - text, image and button
@@ -118,17 +121,18 @@ public class Nyskraning extends Activity {
 					String villa ="Vinsamlegast lagaðu:";
 					if(!emailAvailable)
 						villa += "\nNetfang er þegar skráð.";
-					if(!validEmail)
-						villa += "\nNetfang er ekki á réttu formi.";
-					if(!validKennitala)
-						villa += "\nKennitala er ekki á réttu formi.";
-					if(!passwordMatch)
-						villa += "\nLykilorð stemma ekki.";
-					if(!noEmptyField)
-						villa += "\nFylla verður út í alla reiti.";
+					else {
+						if(!validEmail)
+							villa += "\nNetfang er ekki á réttu formi.";
+						if(!validKennitala)
+							villa += "\nKennitala er ekki á réttu formi.";
+						if(!passwordMatch)
+							villa += "\nLykilorð stemma ekki.";
+						if(!noEmptyField)
+							villa += "\nFylla verður út í alla reiti.";
+					}
 								
 					text.setText(villa);
-					
 					
 					
 					Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
@@ -139,9 +143,7 @@ public class Nyskraning extends Activity {
 							dialog.dismiss();
 						}
 					});
-		 
 					dialog.show();
-							
 					//Toast.makeText(Nyskraning.this, R.string.rangt, Toast.LENGTH_LONG).show();
 				}
 									

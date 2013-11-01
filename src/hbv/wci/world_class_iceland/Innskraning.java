@@ -41,8 +41,10 @@ public class Innskraning extends Activity {
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
 	
-	private String[] drawerListItems = new String[] {"Opnunartímar", "Stundatafla", "Útskrá"};
+	private String[] drawerListItems = new String[] {"Notandi", "Opnunartímar", "Stundatafla", "Útskrá"};
 	
+	private String vikudagur;
+	private Map<String,Integer> map;
 
 	/** Byr til skjainn, bindur layout ur activity_innskraning.xml vid skjainn
 	 *
@@ -50,8 +52,6 @@ public class Innskraning extends Activity {
 	 * @return none
 	 * @see Bundle
 	 */
-	String vikudagur;
-	Map<String,Integer> map;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -120,9 +120,6 @@ public class Innskraning extends Activity {
 				startActivity(j);
 			}
 		});
-		
-		final EditText lykilord = (EditText) findViewById(R.id.lykilordInntakNr3);
-		lykilord.setTypeface(Typeface.SANS_SERIF);
 		
 		/*
 		 * CREATE DRAWER

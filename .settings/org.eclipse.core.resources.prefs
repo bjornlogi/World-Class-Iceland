@@ -1,19 +1,21 @@
-eclipse.preferences.version=1
+eclipse.preferences.version=2
 
-encoding//src/hbv/wci/world_class_iceland/DataSource.java=UTF-8
-encoding//src/hbv/wci/world_class_iceland/Hoptimar.java=UTF-8
-encoding//src/hbv/wci/world_class_iceland/MySQLiteHelper.java=UTF-8
-encoding//src/hbv/wci/world_class_iceland/Notandi.java=UTF-8
-encoding//src/hbv/wci/world_class_iceland/Stod.java=UTF-8
-encoding//src/hbv/wci/world_class_iceland/StundatofluTimi.java=UTF-8
+encoding//src/hbv/wci/world_class_iceland/data/DataSource.java=UTF-8
+encoding//src/hbv/wci/world_class_iceland/data/Hoptimar.java=UTF-8
+encoding//src/hbv/wci/world_class_iceland/data/MySQLiteHelper.java=UTF-8
+encoding//src/hbv/wci/world_class_iceland/data/Notandi.java=UTF-8
+encoding//src/hbv/wci/world_class_iceland/data/Stod.java=UTF-8
+encoding//src/hbv/wci/world_class_iceland/data/StundatofluTimi.java=UTF-8
 
-encoding//src/hbv/wci/world_class_iceland/Opnunartimar.java=UTF-8
-encoding//src/hbv/wci/world_class_iceland/Opnunartimi.java=UTF-8
+encoding//src/hbv/wci/world_class_iceland/opnunartimar/Opnunartimar.java=UTF-8
+encoding//src/hbv/wci/world_class_iceland/opnunartimar/Opnunartimi.java=UTF-8
 
-encoding//src/hbv/wci/world_class_iceland/Innskraning.java=UTF-8
-encoding//src/hbv/wci/world_class_iceland/Nyskraning.java=UTF-8
+encoding//src/hbv/wci/world_class_iceland/skraning/Innskraning.java=UTF-8
+encoding//src/hbv/wci/world_class_iceland/skraning/Nyskraning.java=UTF-8
 
-encoding//src/hbv/wci/world_class_iceland/ExpandableListAdapter.java=UTF-8
-encoding//src/hbv/wci/world_class_iceland/StundataflaActivity.java=UTF-8
-encoding//src/hbv/wci/world_class_iceland/StundataflaFragment.java=UTF-8
+encoding//src/hbv/wci/world_class_iceland/stundatafla/ExpandableListAdapter.java=UTF-8
+encoding//src/hbv/wci/world_class_iceland/stundatafla/StundataflaActivity.java=UTF-8
+encoding//src/hbv/wci/world_class_iceland/stundatafla/StundataflaFragment.java=UTF-8
+
+
 

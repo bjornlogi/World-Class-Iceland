@@ -292,7 +292,7 @@ public class Innskraning extends Activity {
 				break;
 		}
 		
-		return true; 
+		return super.onOptionsItemSelected(item); 
 	}
 	
 	 /**

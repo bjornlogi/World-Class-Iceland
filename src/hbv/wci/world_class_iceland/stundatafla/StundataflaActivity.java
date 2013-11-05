@@ -40,7 +40,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-public class StundataflaActivity extends FragmentActivity {
+public class StundataflaActivity extends FragmentActivity implements Stundatafla {
 	/**
 	 * The number of pages (wizard steps) to show in this demo.
 	 */
@@ -73,62 +73,16 @@ public class StundataflaActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_stundatafla);
-		
-		java.util.TimeZone T1 = TimeZone.getTimeZone("GMT"); 
-		SimpleDateFormat DOW = new SimpleDateFormat ("EEE");
-		DOW.setTimeZone(T1);
-		
-		Date date = new Date();
-		vikudagur = DOW.format(date);
-		createMap();
 
 		// Instantiate a ViewPager and a PagerAdapter.
-		mPager = (ViewPager) findViewById(R.id.viewpagermain);
-		mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-		mPager.setAdapter(mPagerAdapter);
-		addItemsOnSpinner();
-		addListenerOnSpinner();
-		Intent myIntent= getIntent();
-		String vikudagur = myIntent.getStringExtra("vikudagur");
-		currentPos=7*2+Integer.parseInt(vikudagur);
-		mPager.setCurrentItem(currentPos);//viljum byrja i midjunni  
+		setPagerAndAdapter();
+		setDate();
+		setSpinners();
 		
 		/*
 		 * CREATE DRAWER
 		 */
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_stundatafla);
-		mDrawerList = (ListView) findViewById(R.id.left_drawer_stundatafla);
-
-		// set a custom shadow that overlays the main content when the drawer opens
-		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-		
-		// set up the drawer's list view with items and click listener
-		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, drawerListItems));
-		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
-		// enable ActionBar app icon to behave as action to toggle nav drawer
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setHomeButtonEnabled(true);
-		
-		// ActionBarDrawerToggle ties together the the proper interactions
-		// between the sliding drawer and the action bar app icon
-		mDrawerToggle = new ActionBarDrawerToggle(
-			this,                  /* host Activity */
-			mDrawerLayout,         /* DrawerLayout object */
-			R.drawable.ic_drawer,  /* nav drawer image to replace 'Up' caret */
-			R.string.app_name,     /* "open drawer" description for accessibility */
-			R.string.app_name      /* "close drawer" description for accessibility */
-		){
-            public void onDrawerClosed(View view) {
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-
-            public void onDrawerOpened(View drawerView) {
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
-		mDrawerLayout.setDrawerListener(mDrawerToggle);
-
+		setDrawer();
 	}
 
 	@Override
@@ -137,7 +91,30 @@ public class StundataflaActivity extends FragmentActivity {
 		
 	}
 	
-	public void addItemsOnSpinner() {
+	public void setPagerAndAdapter(){
+		mPager = (ViewPager) findViewById(R.id.viewpagermain);
+		mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
+		mPager.setAdapter(mPagerAdapter);
+	}
+	
+	public void setDate(){
+		
+		java.util.TimeZone T1 = TimeZone.getTimeZone("GMT"); 
+		SimpleDateFormat DOW = new SimpleDateFormat ("EEE");
+		DOW.setTimeZone(T1);
+		
+		Date date = new Date();
+		vikudagur = DOW.format(date);
+		createMap();
+		
+		
+		Intent myIntent= getIntent();
+		String vikudagur = myIntent.getStringExtra("vikudagur");
+		currentPos=7*2+Integer.parseInt(vikudagur);
+		mPager.setCurrentItem(currentPos);//viljum byrja i midjunni  
+	}
+	
+	public void setSpinners() {
 		spinner1 = (Spinner) findViewById(R.id.spinner1);
 		List<String> list1 = new ArrayList<String>();
 		list1.add("Allar stöðvar");
@@ -168,6 +145,8 @@ public class StundataflaActivity extends FragmentActivity {
 		ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list2);
 		dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_item);
 		spinner2.setAdapter(dataAdapter2);
+		
+		addListenerOnSpinner();
 		
 	}
 	
@@ -207,6 +186,42 @@ public class StundataflaActivity extends FragmentActivity {
 			public void onNothingSelected(AdapterView<?> parentView) {}
 
 		});
+	}
+	
+	public void setDrawer()
+	{
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_stundatafla);
+		mDrawerList = (ListView) findViewById(R.id.left_drawer_stundatafla);
+
+		// set a custom shadow that overlays the main content when the drawer opens
+		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+		
+		// set up the drawer's list view with items and click listener
+		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, drawerListItems));
+		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+		// enable ActionBar app icon to behave as action to toggle nav drawer
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setHomeButtonEnabled(true);
+		
+		// ActionBarDrawerToggle ties together the the proper interactions
+		// between the sliding drawer and the action bar app icon
+		mDrawerToggle = new ActionBarDrawerToggle(
+			this,                  /* host Activity */
+			mDrawerLayout,         /* DrawerLayout object */
+			R.drawable.ic_drawer,  /* nav drawer image to replace 'Up' caret */
+			R.string.app_name,     /* "open drawer" description for accessibility */
+			R.string.app_name      /* "close drawer" description for accessibility */
+		){
+            public void onDrawerClosed(View view) {
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
 	}
 	
 	/**

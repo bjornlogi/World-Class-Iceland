@@ -1,21 +1,6 @@
 package hbv.wci.world_class_iceland.stundatafla;
 
-import hbv.wci.world_class_iceland.R;
-import hbv.wci.world_class_iceland.R.id;
-import hbv.wci.world_class_iceland.R.layout;
-import hbv.wci.world_class_iceland.opnunartimar.Opnunartimar;
-import hbv.wci.world_class_iceland.skraning.Innskraning;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TimeZone;
-
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-import java.util.List;
-
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -26,31 +11,47 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
+import android.view.View;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import hbv.wci.world_class_iceland.opnunartimar.Opnunartimar;
+import hbv.wci.world_class_iceland.R.id;
+import hbv.wci.world_class_iceland.R.layout;
+import hbv.wci.world_class_iceland.Global;
+import hbv.wci.world_class_iceland.R;
+import hbv.wci.world_class_iceland.skraning.Innskraning;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TimeZone;
 
 public class StundataflaActivity extends FragmentActivity implements Stundatafla {
 	/**
 	 * The number of pages (wizard steps) to show in this demo.
 	 */
 	private static final int NUM_PAGES = 7*5; //til ad "wrappa" stundatöflunni
-	
+	private Context mContext = this;
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
 	
-	private String[] drawerListItems = new String[] {"Notandi", "Opnunartímar", "Stundatafla", "Útskrá"};
 	private String vikudagur;
 	private Map<String,Integer> map;
 
@@ -188,8 +189,7 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 		});
 	}
 	
-	public void setDrawer()
-	{
+	public void setDrawer()	{
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_stundatafla);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer_stundatafla);
 
@@ -197,7 +197,7 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 		
 		// set up the drawer's list view with items and click listener
-		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, drawerListItems));
+		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, Global.drawerListItems));
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
 		// enable ActionBar app icon to behave as action to toggle nav drawer
@@ -271,7 +271,7 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 			mDrawerList.setItemChecked(position, true);
 			mDrawerLayout.closeDrawer(mDrawerList);
 			
-			String str = drawerListItems[position];
+			String str = Global.drawerListItems[position];
 			if (str.equals("Stundatafla")) {
 				Intent i = new Intent(StundataflaActivity.this, StundataflaActivity.class);
 				i.putExtra("vikudagur", Integer.toString(map.get(vikudagur)));
@@ -280,7 +280,15 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 				Intent i = new Intent(StundataflaActivity.this, Opnunartimar.class);
 				startActivity(i);
 			} else if (str.equals("Útskrá")) {
-				System.out.println("Útskrá!");
+				if (Global.currentUser==null) {
+					Toast.makeText(mContext, "Það gerðist ekkert..", Toast.LENGTH_LONG).show();
+				} else {
+					Global.currentUser = null;
+				}
+			} else if (str.contains("@")) {
+				//Intent i = new Intent(Innskraning.this, UmNotenda.class);
+				//startActivity(i);
+				System.out.println(Global.currentUser);
 			}
 		}
 	}
@@ -303,6 +311,14 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// If the nav drawer is open, hide action items related to the content view
+		
+		// check if user is logged in
+		if(Global.currentUser == null) {
+			Global.drawerListItems = new String[] {"Opnunartímar", "Stundatafla"};
+		} else {
+			Global.drawerListItems = new String[] {Global.currentUser, "Opnunartímar", "Stundatafla", "Útskrá"};
+		}
+		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, Global.drawerListItems));
 		
 		//boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
 		//menu.findItem(R.id.opnun_menu).setVisible(!drawerOpen);

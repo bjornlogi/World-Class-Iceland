@@ -1,19 +1,7 @@
 package hbv.wci.world_class_iceland.opnunartimar;
 
-import hbv.wci.world_class_iceland.R;
-import hbv.wci.world_class_iceland.R.id;
-import hbv.wci.world_class_iceland.R.layout;
-import hbv.wci.world_class_iceland.data.Stod;
-import hbv.wci.world_class_iceland.stundatafla.StundataflaActivity;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TimeZone;
-
-
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -31,6 +19,20 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TimeZone;
+
+import hbv.wci.world_class_iceland.Global;
+import hbv.wci.world_class_iceland.R;
+import hbv.wci.world_class_iceland.R.id;
+import hbv.wci.world_class_iceland.R.layout;
+import hbv.wci.world_class_iceland.data.Stod;
+import hbv.wci.world_class_iceland.stundatafla.StundataflaActivity;
 
 /**
  * Activity sem synir opnunartima einnar stodvar.
@@ -39,12 +41,11 @@ import android.widget.TextView;
  * @see Activity
  */
 public class Opnunartimi extends Activity {
-	
+	private Context mContext = this;
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
 	
-	private String[] drawerListItems = new String[] {"Notandi", "Opnunartímar", "Stundatafla", "Útskrá"};
 	private String vikudagur;
 	private Map<String,Integer> map;
 	
@@ -93,42 +94,7 @@ public class Opnunartimi extends Activity {
 		/*
 		 * CREATE DRAWER
 		 */
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_opnunartimi);
-		mDrawerList = (ListView) findViewById(R.id.left_drawer_opnunartimi);
-
-		// set a custom shadow that overlays the main content when the drawer opens
-		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-		
-		// set up the drawer's list view with items and click listener
-		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, drawerListItems));
-		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
-		// enable ActionBar app icon to behave as action to toggle nav drawer
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setHomeButtonEnabled(true);
-		
-		// ActionBarDrawerToggle ties together the the proper interactions
-		// between the sliding drawer and the action bar app icon
-		mDrawerToggle = new ActionBarDrawerToggle(
-			this,                  /* host Activity */
-			mDrawerLayout,         /* DrawerLayout object */
-			R.drawable.ic_drawer,  /* nav drawer image to replace 'Up' caret */
-			R.string.app_name,     /* "open drawer" description for accessibility */
-			R.string.app_name      /* "close drawer" description for accessibility */
-		){
-            public void onDrawerClosed(View view) {
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-
-            public void onDrawerOpened(View drawerView) {
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
-		mDrawerLayout.setDrawerListener(mDrawerToggle);
-		
-		/*
-		 * END CREATE DRAWER
-		 */
+		setDrawer();
 		
 	}
 	
@@ -305,7 +271,7 @@ public class Opnunartimi extends Activity {
 			mDrawerList.setItemChecked(position, true);
 			mDrawerLayout.closeDrawer(mDrawerList);
 			
-			String str = drawerListItems[position];
+			String str = Global.drawerListItems[position];
 			if (str.equals("Stundatafla")) {
 				Intent i = new Intent(Opnunartimi.this, StundataflaActivity.class);
 				System.out.println("vikudagur: " + vikudagur);
@@ -315,7 +281,15 @@ public class Opnunartimi extends Activity {
 				Intent i = new Intent(Opnunartimi.this, Opnunartimar.class);
 				startActivity(i);
 			} else if (str.equals("Útskrá")) {
-				System.out.println("Útskrá!");
+				if (Global.currentUser==null) {
+					Toast.makeText(mContext, "Það gerðist ekkert..", Toast.LENGTH_LONG).show();
+				} else {
+					Global.currentUser = null;
+				}
+			} else if (str.contains("@")) {
+				//Intent i = new Intent(Innskraning.this, UmNotenda.class);
+				//startActivity(i);
+				System.out.println(Global.currentUser);
 			}
 		}
 	}
@@ -339,6 +313,14 @@ public class Opnunartimi extends Activity {
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// If the nav drawer is open, hide action items related to the content view
 		
+		// check if user is logged in
+		if(Global.currentUser == null) {
+			Global.drawerListItems = new String[] {"Opnunartímar", "Stundatafla"};
+		} else {
+			Global.drawerListItems = new String[] {Global.currentUser, "Opnunartímar", "Stundatafla", "Útskrá"};
+		}
+		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, Global.drawerListItems));
+		
 		//boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
 		//menu.findItem(R.id.opnun_menu).setVisible(!drawerOpen);
 		return super.onPrepareOptionsMenu(menu);
@@ -353,6 +335,41 @@ public class Opnunartimi extends Activity {
 		map.put("Fri", 4);
 		map.put("Sat", 5);
 		map.put("Sun", 6);
+	}
+	
+	public void setDrawer()	{
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_opnunartimi);
+		mDrawerList = (ListView) findViewById(R.id.left_drawer_opnunartimi);
+
+		// set a custom shadow that overlays the main content when the drawer opens
+		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+		
+		// set up the drawer's list view with items and click listener
+		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, Global.drawerListItems));
+		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+		// enable ActionBar app icon to behave as action to toggle nav drawer
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setHomeButtonEnabled(true);
+		
+		// ActionBarDrawerToggle ties together the the proper interactions
+		// between the sliding drawer and the action bar app icon
+		mDrawerToggle = new ActionBarDrawerToggle(
+			this,                  /* host Activity */
+			mDrawerLayout,         /* DrawerLayout object */
+			R.drawable.ic_drawer,  /* nav drawer image to replace 'Up' caret */
+			R.string.app_name,     /* "open drawer" description for accessibility */
+			R.string.app_name      /* "close drawer" description for accessibility */
+		){
+            public void onDrawerClosed(View view) {
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
 	}
 	
 }

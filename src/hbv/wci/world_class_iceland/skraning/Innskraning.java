@@ -1,10 +1,35 @@
 package hbv.wci.world_class_iceland.skraning;
 
+import android.app.Activity;
+import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.Typeface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import hbv.wci.world_class_iceland.R;
 import hbv.wci.world_class_iceland.data.DataSource;
 import hbv.wci.world_class_iceland.opnunartimar.Opnunartimar;
+import hbv.wci.world_class_iceland.R;
 import hbv.wci.world_class_iceland.stundatafla.StundataflaActivity;
+import hbv.wci.world_class_iceland.Global;
 
 import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
@@ -18,31 +43,6 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.app.Activity;
-import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.Configuration;
-import android.graphics.Typeface;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
-
 /** 
  * Activity sem synir innskraningar val og menu fyrir navigation
  * 
@@ -55,8 +55,6 @@ public class Innskraning extends Activity {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
-	
-	private String[] drawerListItems = new String[] {"Notandi", "Opnunartímar", "Stundatafla", "Útskrá"};
 	
 	private String vikudagur;
 	private Map<String,Integer> map;
@@ -101,6 +99,8 @@ public class Innskraning extends Activity {
 				boolean flag = mDataSource.checkUser(netfang, lykilord);
 				
 				if(flag) {
+					Global.currentUser = netfang;
+					
 					Intent i = new Intent(Innskraning.this, StundataflaActivity.class);
 					i.putExtra("vikudagur", Integer.toString(map.get(vikudagur)));
 					startActivity(i);
@@ -140,9 +140,109 @@ public class Innskraning extends Activity {
 			}
 		});
 		
-		/*
-		 * CREATE DRAWER
-		 */
+		setDrawer();
+		
+	}
+	
+	/*
+	 * Athugar hvort ad siminn se nettengdur
+	 */
+	private boolean isNetworkAvailable() {
+	    ConnectivityManager connectivityManager 
+	          = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+	    return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+	}
+	
+	/* The click listner for ListView in the navigation drawer */
+	private class DrawerItemClickListener implements ListView.OnItemClickListener {
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			mDrawerList.setItemChecked(position, true);
+			mDrawerLayout.closeDrawer(mDrawerList);
+			
+			String str = Global.drawerListItems[position];
+			if (str.equals("Stundatafla")) {
+				Intent i = new Intent(Innskraning.this, StundataflaActivity.class);
+				i.putExtra("vikudagur", Integer.toString(map.get(vikudagur)));
+				startActivity(i);
+			} else if (str.equals("Opnunartímar")){
+				Intent i = new Intent(Innskraning.this, Opnunartimar.class);
+				startActivity(i);
+			} else if (str.equals("Útskrá")) {
+				if (Global.currentUser==null) {
+					Toast.makeText(mContext, "Það gerðist ekkert..", Toast.LENGTH_LONG).show();
+				} else {
+					Global.currentUser = null;
+				}
+			} else if (str.contains("@")) {
+				//Intent i = new Intent(Innskraning.this, UmNotenda.class);
+				//startActivity(i);
+				System.out.println(Global.currentUser);
+			}
+		}
+	}
+	
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		// Sync the toggle state after onRestoreInstanceState has occurred.
+		mDrawerToggle.syncState();
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		// Pass any configuration change to the drawer toggle
+		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
+	
+	/* Called whenever we call invalidateOptionsMenu() */
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		// If the nav drawer is open, hide action items related to the content view
+		// check if user is logged in
+		if(Global.currentUser == null) {
+			Global.drawerListItems = new String[] {"Opnunartímar", "Stundatafla"};
+		} else {
+			Global.drawerListItems = new String[] {Global.currentUser, "Opnunartímar", "Stundatafla", "Útskrá"};
+		}
+		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, Global.drawerListItems));
+		
+		//boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+		//menu.findItem(R.id.opnun_menu).setVisible(!drawerOpen);
+		return super.onPrepareOptionsMenu(menu);
+	}
+		
+	private void createMap(){
+		map = new HashMap<String,Integer>();
+		map.put("Mon", 0);
+		map.put("Tue", 1);
+		map.put("Wed", 2);
+		map.put("Thu", 3);
+		map.put("Fri", 4);
+		map.put("Sat", 5);
+		map.put("Sun", 6);
+	}
+	
+	/**
+	 * Styrir i hvada Activity verdur kallad fyrir hvern af valmoguleikunum
+	 * 
+	 * @param item 
+	 * @return boolean gildi sem segir manni breytingin a Activity hafi gengid upp
+	 * @see MenuItem
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Drawer toggle button
+		if (mDrawerToggle.onOptionsItemSelected(item)) {
+	          return true;
+	    }
+		
+		return super.onOptionsItemSelected(item); 
+	}
+	
+	public void setDrawer()	{
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_innskraning);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer_innskraning);
 
@@ -150,7 +250,7 @@ public class Innskraning extends Activity {
 		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 		
 		// set up the drawer's list view with items and click listener
-		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, drawerListItems));
+		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, Global.drawerListItems));
 		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
 		// enable ActionBar app icon to behave as action to toggle nav drawer
@@ -175,101 +275,6 @@ public class Innskraning extends Activity {
             }
         };
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
-		/*
-		 * END CREATE DRAWER
-		 */
-		
-	}
-	
-	/*
-	 * Athugar hvort ad siminn se nettengdur
-	 */
-	private boolean isNetworkAvailable() {
-	    ConnectivityManager connectivityManager 
-	          = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-	    return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-	}
-	
-	/* The click listner for ListView in the navigation drawer */
-	private class DrawerItemClickListener implements ListView.OnItemClickListener {
-		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			mDrawerList.setItemChecked(position, true);
-			mDrawerLayout.closeDrawer(mDrawerList);
-			
-			String str = drawerListItems[position];
-			if (str.equals("Stundatafla")) {
-				Intent i = new Intent(Innskraning.this, StundataflaActivity.class);
-				i.putExtra("vikudagur", Integer.toString(map.get(vikudagur)));
-				startActivity(i);
-			} else if (str.equals("Opnunartímar")){
-				Intent i = new Intent(Innskraning.this, Opnunartimar.class);
-				startActivity(i);
-			} else if (str.equals("Útskrá")) {
-				System.out.println("Útskrá!");
-			}
-		}
-	}
-	
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-		// Sync the toggle state after onRestoreInstanceState has occurred.
-		mDrawerToggle.syncState();
-	}
-
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-		// Pass any configuration change to the drawer toggle
-		mDrawerToggle.onConfigurationChanged(newConfig);
-	}
-	
-	/* Called whenever we call invalidateOptionsMenu() */
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		// If the nav drawer is open, hide action items related to the content view
-		
-		//boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-		//menu.findItem(R.id.opnun_menu).setVisible(!drawerOpen);
-		return super.onPrepareOptionsMenu(menu);
-	}
-		
-	private void createMap(){
-		map = new HashMap<String,Integer>();
-		map.put("Mon", 0);
-		map.put("Tue", 1);
-		map.put("Wed", 2);
-		map.put("Thu", 3);
-		map.put("Fri", 4);
-		map.put("Sat", 5);
-		map.put("Sun", 6);
-	}
-	
-	private static String deIcelandicify(String s) {
-		s.replaceAll("á", "a");
-		s.replaceAll("í", "i");
-		s.replaceAll("ý", "y");
-		
-		return s;
-	} 
-	
-	/**
-	 * Styrir i hvada Activity verdur kallad fyrir hvern af valmoguleikunum
-	 * 
-	 * @param item 
-	 * @return boolean gildi sem segir manni breytingin a Activity hafi gengid upp
-	 * @see MenuItem
-	 */
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Drawer toggle button
-		if (mDrawerToggle.onOptionsItemSelected(item)) {
-	          return true;
-	    }
-		
-		return super.onOptionsItemSelected(item); 
 	}
 	
 	 /**

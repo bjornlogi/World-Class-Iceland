@@ -214,8 +214,8 @@ public class DataSource {
 		boolean flag=false;
 		int i=0;
 		while (!cursor.isAfterLast()) {
-			System.out.print("iteration #");
-			System.out.println(i++);
+			// System.out.print("iteration #");
+			// System.out.println(i++);
 			Notandi notandi = cursorToNotandi(cursor);
 			
 			boolean check = notandi.getLykilord().equals(lykilord);

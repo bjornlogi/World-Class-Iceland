@@ -23,6 +23,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Configuration;
 
+import hbv.wci.world_class_iceland.Global;
 import hbv.wci.world_class_iceland.R;
 import hbv.wci.world_class_iceland.R.drawable;
 import hbv.wci.world_class_iceland.R.id;
@@ -40,7 +41,6 @@ import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 public class Nyskraning extends Activity {
 	private DataSource mDataSource;
 	public Context mContext = this;
@@ -48,7 +48,6 @@ public class Nyskraning extends Activity {
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
 	
-	private String[] drawerListItems = new String[] {"Notandi", "Opnunartímar", "Stundatafla", "Útskrá"};
 	private String vikudagur;
 	private Map<String,Integer> map;
 	
@@ -161,41 +160,7 @@ public class Nyskraning extends Activity {
 			}
 		});
 		
-		/*
-		 * CREATE DRAWER
-		 */
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_nyskraning);
-		mDrawerList = (ListView) findViewById(R.id.left_drawer_nyskraning);
-
-		// set a custom shadow that overlays the main content when the drawer opens
-		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-		
-		// set up the drawer's list view with items and click listener
-		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, drawerListItems));
-		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
-		// enable ActionBar app icon to behave as action to toggle nav drawer
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setHomeButtonEnabled(true);
-		
-		// ActionBarDrawerToggle ties together the the proper interactions
-		// between the sliding drawer and the action bar app icon
-		mDrawerToggle = new ActionBarDrawerToggle(
-			this,					/* host Activity */
-			mDrawerLayout,			/* DrawerLayout object */
-			R.drawable.ic_drawer,	/* nav drawer image to replace 'Up' caret */
-			R.string.app_name,		/* "open drawer" description for accessibility */
-			R.string.app_name		/* "close drawer" description for accessibility */
-		){
-			public void onDrawerClosed(View view) {
-				invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-			}
-
-			public void onDrawerOpened(View drawerView) {
-				invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-			}
-		};
-		mDrawerLayout.setDrawerListener(mDrawerToggle);
+		setDrawer();
 	}
 	public static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 
@@ -232,6 +197,15 @@ public class Nyskraning extends Activity {
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// If the nav drawer is open, hide action items related to the content view
 		// TODO er að vísa í opnun_menu sem er í Innskraning
+
+		// check if user is logged in
+		if(Global.currentUser == null) {
+			Global.drawerListItems = new String[] {"Opnunartímar", "Stundatafla"};
+		} else {
+			Global.drawerListItems = new String[] {Global.currentUser, "Opnunartímar", "Stundatafla", "Útskrá"};
+		}
+		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, Global.drawerListItems));
+
 		//boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
 		//menu.findItem(R.id.opnun_menu).setVisible(!drawerOpen);
 		return super.onPrepareOptionsMenu(menu);
@@ -243,7 +217,7 @@ public class Nyskraning extends Activity {
 			mDrawerList.setItemChecked(position, true);
 			mDrawerLayout.closeDrawer(mDrawerList);
 			
-			String str = drawerListItems[position];
+			String str = Global.drawerListItems[position];
 			if (str.equals("Stundatafla")) {
 				Intent i = new Intent(Nyskraning.this, StundataflaActivity.class);
 				i.putExtra("vikudagur", Integer.toString(map.get(vikudagur)));
@@ -252,7 +226,15 @@ public class Nyskraning extends Activity {
 				Intent i = new Intent(Nyskraning.this, Opnunartimar.class);
 				startActivity(i);
 			} else if (str.equals("Útskrá")) {
-				System.out.println("Útskrá!");
+				if (Global.currentUser==null) {
+					Toast.makeText(mContext, "Það gerðist ekkert..", Toast.LENGTH_LONG).show();
+				} else {
+					Global.currentUser = null;
+				}
+			} else if (str.contains("@")) {
+				//Intent i = new Intent(Innskraning.this, UmNotenda.class);
+				//startActivity(i);
+				System.out.println(Global.currentUser);
 			}
 		}
 	}
@@ -278,6 +260,41 @@ public class Nyskraning extends Activity {
 		map.put("Fri", 4);
 		map.put("Sat", 5);
 		map.put("Sun", 6);
+	}
+	
+	public void setDrawer()	{
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_nyskraning);
+		mDrawerList = (ListView) findViewById(R.id.left_drawer_nyskraning);
+
+		// set a custom shadow that overlays the main content when the drawer opens
+		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+		
+		// set up the drawer's list view with items and click listener
+		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, Global.drawerListItems));
+		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+		// enable ActionBar app icon to behave as action to toggle nav drawer
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setHomeButtonEnabled(true);
+		
+		// ActionBarDrawerToggle ties together the the proper interactions
+		// between the sliding drawer and the action bar app icon
+		mDrawerToggle = new ActionBarDrawerToggle(
+			this,                  /* host Activity */
+			mDrawerLayout,         /* DrawerLayout object */
+			R.drawable.ic_drawer,  /* nav drawer image to replace 'Up' caret */
+			R.string.app_name,     /* "open drawer" description for accessibility */
+			R.string.app_name      /* "close drawer" description for accessibility */
+		){
+            public void onDrawerClosed(View view) {
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
 	}
 	 
 }

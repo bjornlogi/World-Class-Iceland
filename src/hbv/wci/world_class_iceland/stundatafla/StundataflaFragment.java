@@ -3,44 +3,22 @@ package hbv.wci.world_class_iceland.stundatafla;
 //import hbv.wci.world_class_iceland.Stundataflagamalt.AsyncExecution;
 
 import hbv.wci.world_class_iceland.R;
-import hbv.wci.world_class_iceland.R.id;
-import hbv.wci.world_class_iceland.R.layout;
 import hbv.wci.world_class_iceland.data.DataSource;
 import hbv.wci.world_class_iceland.data.StundatofluTimi;
-import hbv.wci.world_class_iceland.skraning.Innskraning;
-
-import java.net.UnknownHostException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 
-import android.app.ProgressDialog;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
+
 import android.widget.ExpandableListView;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class StundataflaFragment extends Fragment {
+public class StundataflaFragment extends Fragment implements StundatofluButur{
 	private DataSource mDataSource;
 	private String stod = "";
 	private String tegund = "";
@@ -52,26 +30,25 @@ public class StundataflaFragment extends Fragment {
 	 @Override
 	    public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	            Bundle savedInstanceState) {
-		 	int position = getArguments().getInt("position");
-		 	stod = getArguments().getString("stod");
-		 	tegund = getArguments().getString("tegund");
+		 	
+		 	
 	        rootView = (ViewGroup) inflater.inflate(
 	                R.layout.expandable, container, false);
 	        
-	        expListView = (ExpandableListView) rootView.findViewById(R.id.expandable1);
 	        
-	        akvedaDag(position);
+	        akvedaDag();
 	        mDataSource.open();
 	        if (mDataSource.isEmpty() && getArguments().getString("update")=="0")
 	        	Toast.makeText(getActivity(),"Tengstu netinu til að sjá stundatöfluna", Toast.LENGTH_LONG)
 	        	.show();
 	        else
-	        	synaLista();
+	        	birtaToflu();
 	     	
 	        return rootView;
 	    }
-	 
-	 private void akvedaDag(int position){
+
+	 public void akvedaDag(){
+		 int position = getArguments().getInt("position");
 		 TextView t = (TextView) rootView.findViewById(R.id.opnun_header);
 		 switch(position){
 	        case 0:
@@ -105,8 +82,13 @@ public class StundataflaFragment extends Fragment {
 	        }
 	 }
 	 
-	 void synaLista(){
+	 public void birtaToflu(){
+		 expListView = (ExpandableListView) rootView.findViewById(R.id.expandable1);
+		 
+		 stod = getArguments().getString("stod");
+		 tegund = getArguments().getString("tegund"); 
 		 mDataSource.filter(stod, tegund);
+		 
 		 st = mDataSource.getAllStundatoflutimar();
 	     listAdapter = new ExpandableListAdapter(getActivity(), st.listHeader, st.listChild, st.infoChild);
 		 expListView.setAdapter(listAdapter);

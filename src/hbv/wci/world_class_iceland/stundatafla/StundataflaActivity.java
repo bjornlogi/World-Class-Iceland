@@ -6,8 +6,12 @@ import hbv.wci.world_class_iceland.R.layout;
 import hbv.wci.world_class_iceland.opnunartimar.Opnunartimar;
 import hbv.wci.world_class_iceland.skraning.Innskraning;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import java.util.List;
@@ -47,6 +51,8 @@ public class StundataflaActivity extends FragmentActivity {
 	private ActionBarDrawerToggle mDrawerToggle;
 	
 	private String[] drawerListItems = new String[] {"Notandi", "Opnunartímar", "Stundatafla", "Útskrá"};
+	private String vikudagur;
+	private Map<String,Integer> map;
 
 	/**
 	 * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -67,6 +73,14 @@ public class StundataflaActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_stundatafla);
+		
+		java.util.TimeZone T1 = TimeZone.getTimeZone("GMT"); 
+		SimpleDateFormat DOW = new SimpleDateFormat ("EEE");
+		DOW.setTimeZone(T1);
+		
+		Date date = new Date();
+		vikudagur = DOW.format(date);
+		createMap();
 
 		// Instantiate a ViewPager and a PagerAdapter.
 		mPager = (ViewPager) findViewById(R.id.viewpagermain);
@@ -244,12 +258,9 @@ public class StundataflaActivity extends FragmentActivity {
 			
 			String str = drawerListItems[position];
 			if (str.equals("Stundatafla")) {
-				// gerum ekkert, erum nú þegar í Stundatafla
-				/* 
 				Intent i = new Intent(StundataflaActivity.this, StundataflaActivity.class);
 				i.putExtra("vikudagur", Integer.toString(map.get(vikudagur)));
 				startActivity(i);
-				*/
 			} else if (str.equals("Opnunartímar")){
 				Intent i = new Intent(StundataflaActivity.this, Opnunartimar.class);
 				startActivity(i);
@@ -277,7 +288,8 @@ public class StundataflaActivity extends FragmentActivity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// If the nav drawer is open, hide action items related to the content view
-		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+		
+		//boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
 		//menu.findItem(R.id.opnun_menu).setVisible(!drawerOpen);
 		return super.onPrepareOptionsMenu(menu);
 	}
@@ -296,7 +308,17 @@ public class StundataflaActivity extends FragmentActivity {
 	          return true;
 	    }
 		
-
 		return super.onOptionsItemSelected(item);
+	}
+	
+	private void createMap(){
+		map = new HashMap<String,Integer>();
+		map.put("Mon", 0);
+		map.put("Tue", 1);
+		map.put("Wed", 2);
+		map.put("Thu", 3);
+		map.put("Fri", 4);
+		map.put("Sat", 5);
+		map.put("Sun", 6);
 	}
 }

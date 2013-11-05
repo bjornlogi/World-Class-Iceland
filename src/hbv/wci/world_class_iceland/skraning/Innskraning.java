@@ -72,7 +72,7 @@ public class Innskraning extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_innskraning);
 		
-		java.util.TimeZone T1 = TimeZone.getTimeZone("GMT"); 
+		TimeZone T1 = TimeZone.getTimeZone("GMT"); 
 		SimpleDateFormat DOW = new SimpleDateFormat ("EEE");
 		DOW.setTimeZone(T1);
 		
@@ -143,8 +143,8 @@ public class Innskraning extends Activity {
 		/*
 		 * CREATE DRAWER
 		 */
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-		mDrawerList = (ListView) findViewById(R.id.left_drawer);
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_innskraning);
+		mDrawerList = (ListView) findViewById(R.id.left_drawer_innskraning);
 
 		// set a custom shadow that overlays the main content when the drawer opens
 		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
@@ -175,6 +175,9 @@ public class Innskraning extends Activity {
             }
         };
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
+		/*
+		 * END CREATE DRAWER
+		 */
 		
 	}
 	
@@ -227,8 +230,9 @@ public class Innskraning extends Activity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// If the nav drawer is open, hide action items related to the content view
-		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-		menu.findItem(R.id.opnun_menu).setVisible(!drawerOpen);
+		
+		//boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+		//menu.findItem(R.id.opnun_menu).setVisible(!drawerOpen);
 		return super.onPrepareOptionsMenu(menu);
 	}
 		
@@ -250,20 +254,6 @@ public class Innskraning extends Activity {
 		
 		return s;
 	} 
-
-	/**
-	 * Byr til valmynd fyrir skjainn, hann kemur ur innskraning.xml
-	 * 
-	 * @param menu 
-	 * @return boolean gildi sem segir manni eitthvad
-	 * @see Menu
-	 */
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.menu_innskraning, menu);
-		return true;
-	}
 	
 	/**
 	 * Styrir i hvada Activity verdur kallad fyrir hvern af valmoguleikunum
@@ -278,19 +268,6 @@ public class Innskraning extends Activity {
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
 	          return true;
 	    }
-		
-		switch (item.getItemId()) {
-			case R.id.opnun_menu:
-				Intent j = new Intent(Innskraning.this, Opnunartimar.class);
-				j.putExtra("vikudagur", Integer.toString(map.get(vikudagur)));
-				startActivity(j);
-				break;
-			case R.id.stundatafla_menu:
-				Intent k = new Intent(Innskraning.this, StundataflaActivity.class);
-				k.putExtra("vikudagur", Integer.toString(map.get(vikudagur)));
-				startActivity(k);
-				break;
-		}
 		
 		return super.onOptionsItemSelected(item); 
 	}

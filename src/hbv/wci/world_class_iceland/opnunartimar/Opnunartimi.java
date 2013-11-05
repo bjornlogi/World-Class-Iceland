@@ -4,19 +4,32 @@ import hbv.wci.world_class_iceland.R;
 import hbv.wci.world_class_iceland.R.id;
 import hbv.wci.world_class_iceland.R.layout;
 import hbv.wci.world_class_iceland.data.Stod;
+import hbv.wci.world_class_iceland.stundatafla.StundataflaActivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TimeZone;
 
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 /**
@@ -26,6 +39,14 @@ import android.widget.TextView;
  * @see Activity
  */
 public class Opnunartimi extends Activity {
+	
+	private DrawerLayout mDrawerLayout;
+	private ListView mDrawerList;
+	private ActionBarDrawerToggle mDrawerToggle;
+	
+	private String[] drawerListItems = new String[] {"Notandi", "Opnunartímar", "Stundatafla", "Útskrá"};
+	private String vikudagur;
+	private Map<String,Integer> map;
 	
 	/**
 	 * Birtir skja fyrir ta stod sem valin var.
@@ -46,7 +67,7 @@ public class Opnunartimi extends Activity {
 		TextView titill = (TextView)findViewById(R.id.otimi_titill);
 		titill.setText(stod);
 		
-		java.util.TimeZone T1 = TimeZone.getTimeZone("GMT"); 
+		TimeZone T1 = TimeZone.getTimeZone("GMT"); 
 		SimpleDateFormat klukkan = new SimpleDateFormat ("HH:mm");
 		SimpleDateFormat DOW = new SimpleDateFormat ("EEE");
 		klukkan.setTimeZone(T1);
@@ -56,9 +77,11 @@ public class Opnunartimi extends Activity {
 		String vikudagur = DOW.format(date);
 		String dagur = vikudagur.toString();
 		
-		date = new Date();
-		String klukkanNuna = klukkan.format(new Date());
+		this.vikudagur = DOW.format(date);
+		createMap();
 		
+		date = new Date();
+		String klukkanNuna = klukkan.format(new Date());	
 		
 		//naum i opnunartimana i dag fyrir stodina
 		Stod timarObj = new Stod(stod); 
@@ -66,6 +89,46 @@ public class Opnunartimi extends Activity {
 		birtaErOpid(opnunIDag, klukkanNuna);		
 		birtaMynd(stod);
 		birtaOpnunartima(timarObj);
+		
+		/*
+		 * CREATE DRAWER
+		 */
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_opnunartimi);
+		mDrawerList = (ListView) findViewById(R.id.left_drawer_opnunartimi);
+
+		// set a custom shadow that overlays the main content when the drawer opens
+		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+		
+		// set up the drawer's list view with items and click listener
+		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, drawerListItems));
+		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+		// enable ActionBar app icon to behave as action to toggle nav drawer
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setHomeButtonEnabled(true);
+		
+		// ActionBarDrawerToggle ties together the the proper interactions
+		// between the sliding drawer and the action bar app icon
+		mDrawerToggle = new ActionBarDrawerToggle(
+			this,                  /* host Activity */
+			mDrawerLayout,         /* DrawerLayout object */
+			R.drawable.ic_drawer,  /* nav drawer image to replace 'Up' caret */
+			R.string.app_name,     /* "open drawer" description for accessibility */
+			R.string.app_name      /* "close drawer" description for accessibility */
+		){
+            public void onDrawerClosed(View view) {
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
+		
+		/*
+		 * END CREATE DRAWER
+		 */
 		
 	}
 	
@@ -223,6 +286,73 @@ public class Opnunartimi extends Activity {
 			}
 		}
 		return false;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Drawer toggle button
+		if (mDrawerToggle.onOptionsItemSelected(item)) {
+	          return true;
+	    }
+			
+		return super.onOptionsItemSelected(item); 
+	}
+	
+	/* The click listner for ListView in the navigation drawer */
+	private class DrawerItemClickListener implements ListView.OnItemClickListener {
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			mDrawerList.setItemChecked(position, true);
+			mDrawerLayout.closeDrawer(mDrawerList);
+			
+			String str = drawerListItems[position];
+			if (str.equals("Stundatafla")) {
+				Intent i = new Intent(Opnunartimi.this, StundataflaActivity.class);
+				System.out.println("vikudagur: " + vikudagur);
+				i.putExtra("vikudagur", Integer.toString(map.get(vikudagur)));
+				startActivity(i);
+			} else if (str.equals("Opnunartímar")){
+				Intent i = new Intent(Opnunartimi.this, Opnunartimar.class);
+				startActivity(i);
+			} else if (str.equals("Útskrá")) {
+				System.out.println("Útskrá!");
+			}
+		}
+	}
+	
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		// Sync the toggle state after onRestoreInstanceState has occurred.
+		mDrawerToggle.syncState();
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		// Pass any configuration change to the drawer toggle
+		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
+	
+	/* Called whenever we call invalidateOptionsMenu() */
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		// If the nav drawer is open, hide action items related to the content view
+		
+		//boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+		//menu.findItem(R.id.opnun_menu).setVisible(!drawerOpen);
+		return super.onPrepareOptionsMenu(menu);
+	}
+	
+	private void createMap(){
+		map = new HashMap<String,Integer>();
+		map.put("Mon", 0);
+		map.put("Tue", 1);
+		map.put("Wed", 2);
+		map.put("Thu", 3);
+		map.put("Fri", 4);
+		map.put("Sat", 5);
+		map.put("Sun", 6);
 	}
 	
 }

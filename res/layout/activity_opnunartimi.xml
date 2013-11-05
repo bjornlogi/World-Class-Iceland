@@ -1,78 +1,97 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/RelativeLayout1"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"   
+    android:id="@+id/drawer_layout_opnunartimi"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+	<RelativeLayout 
+	    android:id="@+id/RelativeLayout1"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent" >
+	
+	    <ImageView
+	        android:id="@+id/stod_mynd"
+	        android:layout_width="212dp"
+	        android:layout_height="230dp"
+	        android:layout_alignParentTop="true"
+	        android:layout_centerHorizontal="true"
+	        android:contentDescription="@string/stod_description"
+	        android:src="@drawable/sponginmynd" />
+	
+	     <TextView
+	         android:id="@+id/otimi_titill"
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content"
+	         android:layout_alignParentTop="true"
+	         android:layout_centerHorizontal="true"
+	         android:layout_marginTop="22dp"
+	         android:text="@string/sonsie"
+	         android:textAppearance="?android:attr/textAppearanceLarge" />
+	
+	     <TextView
+	         android:id="@+id/opid"
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content"
+	         android:layout_below="@+id/otimi_titill"
+	         android:layout_centerHorizontal="true"
+	         android:text="Small Text"
+	         android:textAppearance="?android:attr/textAppearanceSmall" />
+	
+	     <TextView
+	         android:id="@+id/opnun_timar1"
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content"
+	         android:layout_alignBaseline="@+id/opnun_dagar1"
+	         android:layout_alignBottom="@+id/opnun_dagar1"
+	         android:layout_marginLeft="20dp"
+	         android:layout_toRightOf="@+id/opnun_dagar1"
+	         android:text="Small Text"
+	         android:textAppearance="?android:attr/textAppearanceSmall" />
+	
+	     <TextView
+	         android:id="@+id/opnun_dagar1"
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content"
+	         android:layout_alignLeft="@+id/opnun_header"
+	         android:layout_alignTop="@+id/opnun_header"
+	         android:layout_marginTop="30dp"
+	         android:text="Small Text"
+	         android:textAppearance="?android:attr/textAppearanceSmall" />
+	
+	     <TextView
+	         android:id="@+id/opnun_header"
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content"
+	         android:layout_alignBottom="@+id/stod_mynd"
+	         android:layout_alignParentLeft="true"
+	         android:layout_marginLeft="10dp"
+	         android:layout_marginBottom="29dp"
+	         android:text="@string/opnunartimar"
+	         android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+	     <TextView
+	         android:id="@+id/skilabod"
+	         android:layout_width="wrap_content"
+	         android:layout_height="wrap_content"
+	         android:layout_alignLeft="@+id/opnun_dagar1"
+	         android:layout_below="@+id/opnun_dagar1"
+	         android:layout_centerInParent="true"
+	         android:layout_centerVertical="true"
+	         android:text="Small Text"
+	         android:textAppearance="?android:attr/textAppearanceSmall" />
+	
+	</RelativeLayout>
 
-    <ImageView
-        android:id="@+id/stod_mynd"
-        android:layout_width="212dp"
-        android:layout_height="230dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:contentDescription="@string/stod_description"
-        android:src="@drawable/sponginmynd" />
-
-     <TextView
-         android:id="@+id/otimi_titill"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignParentTop="true"
-         android:layout_centerHorizontal="true"
-         android:layout_marginTop="22dp"
-         android:text="@string/sonsie"
-         android:textAppearance="?android:attr/textAppearanceLarge" />
-
-     <TextView
-         android:id="@+id/opid"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_below="@+id/otimi_titill"
-         android:layout_centerHorizontal="true"
-         android:text="Small Text"
-         android:textAppearance="?android:attr/textAppearanceSmall" />
-
-     <TextView
-         android:id="@+id/opnun_timar1"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignBaseline="@+id/opnun_dagar1"
-         android:layout_alignBottom="@+id/opnun_dagar1"
-         android:layout_marginLeft="20dp"
-         android:layout_toRightOf="@+id/opnun_dagar1"
-         android:text="Small Text"
-         android:textAppearance="?android:attr/textAppearanceSmall" />
-
-     <TextView
-         android:id="@+id/opnun_dagar1"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignLeft="@+id/opnun_header"
-         android:layout_alignTop="@+id/opnun_header"
-         android:layout_marginTop="30dp"
-         android:text="Small Text"
-         android:textAppearance="?android:attr/textAppearanceSmall" />
-
-     <TextView
-         android:id="@+id/opnun_header"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignBottom="@+id/stod_mynd"
-         android:layout_alignParentLeft="true"
-         android:layout_marginLeft="10dp"
-         android:layout_marginBottom="29dp"
-         android:text="@string/opnunartimar"
-         android:textAppearance="?android:attr/textAppearanceMedium" />
-
-     <TextView
-         android:id="@+id/skilabod"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignLeft="@+id/opnun_dagar1"
-         android:layout_below="@+id/opnun_dagar1"
-         android:layout_centerInParent="true"
-         android:layout_centerVertical="true"
-         android:text="Small Text"
-         android:textAppearance="?android:attr/textAppearanceSmall" />
-
-</RelativeLayout>
+	<ListView
+        android:id="@+id/left_drawer_opnunartimi"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:divider="@color/wcRed"
+        android:dividerHeight="0dp"
+        android:background="@android:color/background_light" />
+	
+</android.support.v4.widget.DrawerLayout>	

@@ -40,7 +40,7 @@ import hbv.wci.world_class_iceland.stundatafla.StundataflaActivity;
  * @author Bjorn
  * @see Activity
  */
-public class Opnunartimi extends Activity {
+public class Opnunartimi extends Activity implements OpnunStodVidmot{
 	private Context mContext = this;
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
@@ -48,6 +48,7 @@ public class Opnunartimi extends Activity {
 	
 	private String vikudagur;
 	private Map<String,Integer> map;
+	private String stod;
 	
 	/**
 	 * Birtir skja fyrir ta stod sem valin var.
@@ -62,32 +63,13 @@ public class Opnunartimi extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_opnunartimi);
 		
-		Intent myIntent= getIntent();
-		String stod = myIntent.getStringExtra("stod");
-	
-		TextView titill = (TextView)findViewById(R.id.otimi_titill);
-		titill.setText(stod);
-		
-		TimeZone T1 = TimeZone.getTimeZone("GMT"); 
-		SimpleDateFormat klukkan = new SimpleDateFormat ("HH:mm");
-		SimpleDateFormat DOW = new SimpleDateFormat ("EEE");
-		klukkan.setTimeZone(T1);
-		DOW.setTimeZone(T1);
-		
-		Date date = new Date();
-		String vikudagur = DOW.format(date);
-		String dagur = vikudagur.toString();
-		
-		this.vikudagur = DOW.format(date);
+		setTitle();
+		setDate();
 		createMap();
-		
-		date = new Date();
-		String klukkanNuna = klukkan.format(new Date());	
-		
 		//naum i opnunartimana i dag fyrir stodina
 		Stod timarObj = new Stod(stod); 
-		String opnunIDag = timarObj.OpnunFyrirDag(dagur);	
-		birtaErOpid(opnunIDag, klukkanNuna);		
+		String opnunIDag = timarObj.OpnunFyrirDag(this.vikudagur);	
+		birtaErOpid(opnunIDag);		
 		birtaMynd(stod);
 		birtaOpnunartima(timarObj);
 		
@@ -96,6 +78,27 @@ public class Opnunartimi extends Activity {
 		 */
 		setDrawer();
 		
+	}
+	
+	/**
+	 * Birtir titilinn, t.e.a.s. hvada stod hefur verid valin og stillir global breytuna stod
+	 */
+	
+	public void setTitle(){
+		Intent myIntent= getIntent();
+		stod = myIntent.getStringExtra("stod");
+	
+		TextView titill = (TextView)findViewById(R.id.otimi_titill);
+		titill.setText(stod);
+	}
+	
+	public void setDate(){
+		TimeZone T1 = TimeZone.getTimeZone("GMT"); 
+		SimpleDateFormat DOW = new SimpleDateFormat ("EEE");
+		
+		DOW.setTimeZone(T1);
+		
+		this.vikudagur = DOW.format(new Date());
 	}
 	
 	/**
@@ -118,7 +121,13 @@ public class Opnunartimi extends Activity {
 	 * @param opnunIDag
 	 * @param klukkanNuna
 	 */
-	public void birtaErOpid (String opnunIDag, String klukkanNuna) {
+	public void birtaErOpid (String opnunIDag) {
+		
+		TimeZone T1 = TimeZone.getTimeZone("GMT"); 
+		SimpleDateFormat klukkan = new SimpleDateFormat ("HH:mm");
+		klukkan.setTimeZone(T1);
+		String klukkanNuna = klukkan.format(new Date());
+		
 		TextView opidTV = (TextView)findViewById(R.id.opid);
 		Boolean opid;
 		
@@ -326,7 +335,7 @@ public class Opnunartimi extends Activity {
 		return super.onPrepareOptionsMenu(menu);
 	}
 	
-	private void createMap(){
+	public void createMap(){
 		map = new HashMap<String,Integer>();
 		map.put("Mon", 0);
 		map.put("Tue", 1);

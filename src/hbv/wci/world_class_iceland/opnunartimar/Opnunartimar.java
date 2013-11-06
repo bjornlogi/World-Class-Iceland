@@ -38,7 +38,7 @@ import java.util.TimeZone;
  * @author Bjorn
  * @see Activity
  */
-public class Opnunartimar extends Activity {
+public class Opnunartimar extends Activity implements OpnunVidmot {
 	private Context mContext = this;
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
@@ -60,14 +60,26 @@ public class Opnunartimar extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_opnunartimar);
 		
+		
+		setDate();
+		createMap();
+
+		setTakkar();
+		
+		setDrawer();
+		
+	}
+	
+	public void setDate(){
 		TimeZone T1 = TimeZone.getTimeZone("GMT"); 
 		SimpleDateFormat DOW = new SimpleDateFormat ("EEE");
 		DOW.setTimeZone(T1);
 		
 		Date date = new Date();
 		vikudagur = DOW.format(date);
-		createMap();
-
+	}
+	
+	public void setTakkar(){
 		Button spong_takki = (Button) this.findViewById(R.id.spong_opnun);
 		Button kringlan_takki = (Button) this.findViewById(R.id.kringlan_opnun);
 		Button laugar_takki = (Button) this.findViewById(R.id.laugar_opnun);
@@ -79,15 +91,13 @@ public class Opnunartimar extends Activity {
 		Button kpv_takki = (Button) this.findViewById(R.id.kop_opnun);
 		Button hr_takki = (Button) this.findViewById(R.id.hr_opnun);
 		
+		
 	 
 		spong_takki.setOnClickListener(new OnClickListener()
 		{
 			public void onClick(View v) 
 			{ 
 				createIntent("Spöngin");
-//				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
-//				j.putExtra("stod","Spöngin");
-//				startActivity(j);
 			}
 		});
 		
@@ -96,9 +106,6 @@ public class Opnunartimar extends Activity {
 			public void onClick(View v) 
 			{ 
 				createIntent("Kringlan");
-//				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
-//				j.putExtra("stod","Kringlan");
-//				startActivity(j);
 			}
 		});
 		
@@ -107,9 +114,6 @@ public class Opnunartimar extends Activity {
 			public void onClick(View v) 
 			{ 
 				createIntent("Laugar");
-//				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
-//				j.putExtra("stod","Laugar");
-//				startActivity(j);
 			}
 		});
 		
@@ -118,9 +122,6 @@ public class Opnunartimar extends Activity {
 			public void onClick(View v) 
 			{ 
 				createIntent("Egilshöll");
-//				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
-//				j.putExtra("stod","Egilshöll");
-//				startActivity(j);
 			}
 		});
 		
@@ -129,9 +130,6 @@ public class Opnunartimar extends Activity {
 			public void onClick(View v) 
 			{ 
 				createIntent("Hafnarfjörður");
-//				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
-//				j.putExtra("stod","Hafnarfjörður");
-//				startActivity(j);
 			}
 		});
 		
@@ -140,9 +138,6 @@ public class Opnunartimar extends Activity {
 			public void onClick(View v) 
 			{ 
 				createIntent("Seltjarnarnes");
-//				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
-//				j.putExtra("stod","Seltjarnarnes");
-//				startActivity(j);
 			}
 		});
 		
@@ -151,9 +146,6 @@ public class Opnunartimar extends Activity {
 			public void onClick(View v) 
 			{ 
 				createIntent("Mosfellsbær");
-//				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
-//				j.putExtra("stod","Mosfellsbær");
-//				startActivity(j);
 			}
 		});
 		
@@ -162,9 +154,6 @@ public class Opnunartimar extends Activity {
 			public void onClick(View v) 
 			{ 
 				createIntent("Ögurhvarf");
-//				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
-//				j.putExtra("stod","Ögurhvarf");
-//				startActivity(j);
 			}
 		});
 		
@@ -173,9 +162,6 @@ public class Opnunartimar extends Activity {
 			public void onClick(View v) 
 			{
 				createIntent("Kópavogur");
-//				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
-//				j.putExtra("stod","Kópavogur");
-//				startActivity(j);
 			}
 		});
 		
@@ -184,17 +170,11 @@ public class Opnunartimar extends Activity {
 			public void onClick(View v) 
 			{
 				createIntent("Háskólinn í Reykjavík");
-//				Intent j = new Intent(Opnunartimar.this, Opnunartimi.class); 
-//				j.putExtra("stod","Háskólinn í Reykjavík");
-//				startActivity(j);
 			}
 		});
-		
-		setDrawer();
-		
 	}
 	
-	private void createIntent(String stod){
+	public void createIntent(String stod){
 		Intent i = new Intent(this, Opnunartimi.class);
 		i.putExtra("stod", stod);
 		i.putExtra("vikudagur", getIntent().getStringExtra("vikudagur"));
@@ -278,7 +258,7 @@ public class Opnunartimar extends Activity {
 		return super.onPrepareOptionsMenu(menu);
 	}
 		
-	private void createMap(){
+	public void createMap(){
 		map = new HashMap<String,Integer>();
 		map.put("Mon", 0);
 		map.put("Tue", 1);

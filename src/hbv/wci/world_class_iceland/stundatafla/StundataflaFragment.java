@@ -1,13 +1,10 @@
 package hbv.wci.world_class_iceland.stundatafla;
 
-//import hbv.wci.world_class_iceland.Stundataflagamalt.AsyncExecution;
 
 import hbv.wci.world_class_iceland.R;
 import hbv.wci.world_class_iceland.data.DataSource;
 import hbv.wci.world_class_iceland.data.StundatofluTimi;
 
-
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;

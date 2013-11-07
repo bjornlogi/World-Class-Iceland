@@ -131,7 +131,7 @@ public class DataSource {
 	/**
 	 * Kostnadarlitid fall sem athugar hvort ad hoptimar se til eda ekki
 	 * 
-	 * @return
+	 * @return true if taflan er tom, false annars
 	 */
 	public boolean isEmpty(){
 		try{
@@ -150,7 +150,7 @@ public class DataSource {
 	 * Skilar Object sem hysir lista og tvaer hakktoflur svo haegt se ad vinna ur gognunum
 	 * og setja i stundatofluna
 	 * 
-	 * @return
+	 * @return StundatofluTimi med videigandi timum
 	 */
 	public StundatofluTimi getAllStundatoflutimar(){
 		listHeader = new ArrayList<String>();
@@ -228,7 +228,7 @@ public class DataSource {
 	 * 
 	 * @param netfang
 	 * @param lykilord
-	 * @return
+	 * @return boolean um hvort rett lykilord var gefid fyrir netfangid
 	 */
 	public boolean checkUser(String netfang, String lykilord) {
 		Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_NOTENDUR, notendurAllColumns, null, null, null, null, null);
@@ -253,7 +253,7 @@ public class DataSource {
 	 * Athugar hvort ad username se til i nyskraningunni tar sem tveir geta ekki verid med tad sama
 	 * 
 	 * @param netfang
-	 * @return
+	 * @return hvort user se til i kerfinu nutegar
 	 */
 	public boolean userExists(String netfang){
 		Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_NOTENDUR, notendurAllColumns, null, null, null, null, null);
@@ -275,8 +275,8 @@ public class DataSource {
 	
 	/**
 	 * Nidurstodur ur vali notendans
-	 * @param stod
-	 * @param tegund
+	 * @param stod sem var valin
+	 * @param tegund sem var valin
 	 */
 	public void filter(String stod, String tegund){
 		filter = new String[2];
@@ -323,7 +323,7 @@ public class DataSource {
 	/**
 	 * Skilar nyjum notenda ef allt gengur upp
 	 * @param cursor
-	 * @return
+	 * @return gildur notandi
 	 */
 	private Notandi cursorToNotandi(Cursor cursor) {
 		return new Notandi(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));

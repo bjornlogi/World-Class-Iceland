@@ -17,7 +17,12 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+/**
+ * Styrir hvad birtist a hverri sidu fyrir sig
+ * 
+ * @author Bjorn
+ *
+ */
 public class StundataflaFragment extends Fragment implements StundatofluButur{
 	private DataSource mDataSource;
 	private String stod = "";
@@ -46,7 +51,10 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 	     	
 	        return rootView;
 	    }
-
+	 
+	 /**
+	  * Finnur ut hvada dag a birta a voldu sidunni
+	  */
 	 public void akvedaDag(){
 		 int position = getArguments().getInt("position");
 		 TextView t = (TextView) rootView.findViewById(R.id.opnun_header);
@@ -81,7 +89,9 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 	        	break;
 	        }
 	 }
-	 
+	 /**
+	  * Birtir videigandi stundatoflu
+	  */
 	 public void birtaToflu(){
 		 expListView = (ExpandableListView) rootView.findViewById(R.id.expandable1);
 		 
@@ -104,7 +114,10 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 	                return true;
 	            }
 	        });
-		 //uncommenta tetta svo ad allir listsar byrja opnadir
+		 /*
+		  * uncommenta tetta svo ad allir listsar byrja opnadir
+		  * 
+		  */
 //		 for (int position = 1; position <= listAdapter.getGroupCount(); position++)
 //			 expListView.expandGroup(position - 1);
 		}

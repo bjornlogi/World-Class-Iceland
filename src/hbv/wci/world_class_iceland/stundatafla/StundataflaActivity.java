@@ -56,13 +56,12 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 	private Map<String,Integer> map;
 
 	/**
-	 * The pager widget, which handles animation and allows swiping horizontally to access previous
-	 * and next wizard steps.
+	 * Pager widget, hondlar animationid og hondlar listenerinn og utfaersluna a "swipe"inu
 	 */
 	private ViewPager mPager;
 
 	/**
-	 * The pager adapter, which provides the pages to the view pager widget.
+	 * Pager adapter, sem birtir stundatofluna
 	 */
 	private PagerAdapter mPagerAdapter;
 	private Spinner spinner1, spinner2;
@@ -75,29 +74,32 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_stundatafla);
 
-		// Instantiate a ViewPager and a PagerAdapter.
 		setPagerAndAdapter();
 		setDate();
 		setSpinners();
-		
-		/*
-		 * CREATE DRAWER
-		 */
 		setDrawer();
 	}
-
+	/**
+	 * Tegar ytt er a innbyggda android til baka takkann fer hann ekki til baka um eina sidu, heldur
+	 * til baka um Intent
+	 */
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
 		
 	}
-	
+	/**
+	 * Stilli pager og adapterinn fyrir stundatofluna
+	 */
 	public void setPagerAndAdapter(){
 		mPager = (ViewPager) findViewById(R.id.viewpagermain);
 		mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
 		mPager.setAdapter(mPagerAdapter);
 	}
 	
+	/**
+	 * Finnur hvada dagur er til ad akveda hvada sidu a ad birta fyrst, t.e. dagurinn i dag
+	 */
 	public void setDate(){
 		
 		java.util.TimeZone T1 = TimeZone.getTimeZone("GMT"); 
@@ -114,7 +116,9 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 		currentPos=7*2+Integer.parseInt(vikudagur);
 		mPager.setCurrentItem(currentPos);//viljum byrja i midjunni  
 	}
-	
+	/**
+	 * Upphafsstillir spinnerana sem eru valmyndin fyrir stundatofluna og setur a ta listener
+	 */
 	public void setSpinners() {
 		spinner1 = (Spinner) findViewById(R.id.spinner1);
 		List<String> list1 = new ArrayList<String>();

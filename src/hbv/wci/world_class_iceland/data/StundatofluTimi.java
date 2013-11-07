@@ -3,6 +3,13 @@ package hbv.wci.world_class_iceland.data;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * Object sem heldur utan um upplysingar um stundatofluna. Med tessum haetti er haegt ad skila lista og
+ * hakktoflum i einu knippi
+ * 
+ * @author Bjorn
+ */
+
 public class StundatofluTimi {
 	
 	public List<String> listHeader;

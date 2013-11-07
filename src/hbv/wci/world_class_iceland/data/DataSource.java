@@ -61,14 +61,19 @@ public class DataSource {
 		MySQLiteHelper.KORT
 	};
 	
-	
+	/**
+	 * Upphafsstillir sem tekur baedi context og dag a strengjaformi
+	 * 
+	 * @param context
+	 * @param dagurInntak
+	 */
 	public DataSource (Context context, String dagurInntak){
 		mSQLiteHelper = new MySQLiteHelper(context);
 		dagur = dagurInntak;
 	}
 	
 	/**
-	 * Upphafsstillir
+	 * Upphafsstillir sem tekur bara context
 	 * 
 	 * @param context
 	 */
@@ -87,6 +92,7 @@ public class DataSource {
 	
 	/**
 	 * Lokar gagnagrunninum
+	 * 
 	 */
 	public void close() {
 		mSQLiteHelper.close();
@@ -112,11 +118,21 @@ public class DataSource {
 		mSQLiteDatabase.insert(MySQLiteHelper.TABLE_HOPTIMAR, null, values);		
 	}
 	
+	/**
+	 * Eydir tofluinni hoptimar ef hun er til. Tad er kallad a tetta fall ef asyncid sem naer i gognin
+	 * haettir af einhverjum astaedum
+	 * 
+	 */
 	public void dropTable(){
 		mSQLiteDatabase.execSQL("DROP table if exists hoptimar");
 		System.out.println("Table dropped");
 	}
 	
+	/**
+	 * Kostnadarlitid fall sem athugar hvort ad hoptimar se til eda ekki
+	 * 
+	 * @return
+	 */
 	public boolean isEmpty(){
 		try{
 			Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_HOPTIMAR, hoptimarAllColumns, null, null, null, null, null);
@@ -130,6 +146,12 @@ public class DataSource {
 		}
 	}
 	
+	/**
+	 * Skilar Object sem hysir lista og tvaer hakktoflur svo haegt se ad vinna ur gognunum
+	 * og setja i stundatofluna
+	 * 
+	 * @return
+	 */
 	public StundatofluTimi getAllStundatoflutimar(){
 		listHeader = new ArrayList<String>();
 		listChild = new HashMap<String, List<String>>();
@@ -202,6 +224,7 @@ public class DataSource {
 	}
 	
 	/**
+	 * Athugar hvort ad user-lykilord comboid se til inni gagnagrunni
 	 * 
 	 * @param netfang
 	 * @param lykilord
@@ -212,10 +235,7 @@ public class DataSource {
 		cursor.moveToFirst();
 		
 		boolean flag=false;
-		int i=0;
 		while (!cursor.isAfterLast()) {
-			// System.out.print("iteration #");
-			// System.out.println(i++);
 			Notandi notandi = cursorToNotandi(cursor);
 			
 			boolean check = notandi.getLykilord().equals(lykilord);
@@ -229,6 +249,12 @@ public class DataSource {
 		return flag;
 	}
 	
+	/**
+	 * Athugar hvort ad username se til i nyskraningunni tar sem tveir geta ekki verid med tad sama
+	 * 
+	 * @param netfang
+	 * @return
+	 */
 	public boolean userExists(String netfang){
 		Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_NOTENDUR, notendurAllColumns, null, null, null, null, null);
 		cursor.moveToFirst();
@@ -295,7 +321,7 @@ public class DataSource {
 	}
 	
 	/**
-	 * 
+	 * Skilar nyjum notenda ef allt gengur upp
 	 * @param cursor
 	 * @return
 	 */

@@ -59,17 +59,17 @@ public class Opnunartimar extends Activity implements OpnunVidmot {
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_opnunartimar);
+			
 		
-		
-		setDate();
-		createMap();
-
-		setTakkar();
-		
+		setTakkar(); 
 		setDrawer();
 		
 	}
 	
+	/**
+	 * Akvardar hvada dagur er i dag
+	 * 
+	 */
 	public void setDate(){
 		TimeZone T1 = TimeZone.getTimeZone("GMT"); 
 		SimpleDateFormat DOW = new SimpleDateFormat ("EEE");
@@ -79,6 +79,10 @@ public class Opnunartimar extends Activity implements OpnunVidmot {
 		vikudagur = DOW.format(date);
 	}
 	
+	/**
+	 * Upphafsstillir takka og setur a ta listener
+	 * 
+	 */
 	public void setTakkar(){
 		Button spong_takki = (Button) this.findViewById(R.id.spong_opnun);
 		Button kringlan_takki = (Button) this.findViewById(R.id.kringlan_opnun);
@@ -174,7 +178,11 @@ public class Opnunartimar extends Activity implements OpnunVidmot {
 		});
 	}
 	
+	/**
+	 * Tar sem oll intent eru a sama formi var taegilast ad bua til fall
+	 */
 	public void createIntent(String stod){
+		setDate();
 		Intent i = new Intent(this, Opnunartimi.class);
 		i.putExtra("stod", stod);
 		i.putExtra("vikudagur", getIntent().getStringExtra("vikudagur"));
@@ -270,6 +278,7 @@ public class Opnunartimar extends Activity implements OpnunVidmot {
 	}
 	
 	public void setDrawer()	{
+		createMap();
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_opnunartimar);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer_opnunartimar);
 

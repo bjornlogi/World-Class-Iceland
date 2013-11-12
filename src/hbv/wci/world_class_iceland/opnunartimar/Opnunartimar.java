@@ -255,9 +255,9 @@ public class Opnunartimar extends Activity implements OpnunVidmot {
 		
 		// check if user is logged in
 		if(Global.currentUser == null) {
-			Global.drawerListItems = new String[] {"Opnunartímar", "Stundatafla"};
+			Global.drawerListItems = new String[] {Global.ST1, Global.OPN};
 		} else {
-			Global.drawerListItems = new String[] {Global.currentUser, "Opnunartímar", "Stundatafla", "Útskrá"};
+			Global.drawerListItems = new String[] {Global.currentUser, Global.ST1, Global.ST2, Global.OPN, Global.UTS};
 		}
 		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, Global.drawerListItems));
 		

@@ -106,12 +106,28 @@ public class DataSource {
 	public void addHoptimi(String[] hoptimi){
 		ContentValues values = new ContentValues();
 		
+		String[] a = hoptimi[5].split(" - ");
+		String b = hoptimi[5];
+		
+		String x="", y="";
+		if(a[0].length()==4) {
+			// t.d. ef a[0]=="6:30"
+			x = "0" + a[0];
+		}
+		if(a[1].length()==4) {
+			y = "0" + a[1];
+		}
+		if( x!="" || y!="" ) {
+			b = x + " - " + y; 
+		}
+		
+		
 		values.put(MySQLiteHelper.NAFN, hoptimi[0]);
 		values.put(MySQLiteHelper.STOD, hoptimi[1]);
 		values.put(MySQLiteHelper.SALUR, hoptimi[2]);
 		values.put(MySQLiteHelper.TJALFARI, hoptimi[3]);
 		values.put(MySQLiteHelper.TEGUND, hoptimi[4]);
-		values.put(MySQLiteHelper.KLUKKAN, hoptimi[5]);
+		values.put(MySQLiteHelper.KLUKKAN, b);
 		values.put(MySQLiteHelper.TIMI, hoptimi[6]);
 		values.put(MySQLiteHelper.DAGUR, hoptimi[7]);
 		values.put(MySQLiteHelper.LOKAD, hoptimi[8]);

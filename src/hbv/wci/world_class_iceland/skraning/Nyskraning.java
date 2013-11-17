@@ -110,7 +110,8 @@ public class Nyskraning extends Activity {
 						public void onClick(View v) {
 							dialog.dismiss();
 							
-							mDataSource.addUser(new String[]{netfang.getText().toString(),lykilord.getText().toString(),kennitala.getText().toString(),"nei","nei"});			
+							Global.currentUser = netfang.getText().toString();
+							mDataSource.addUser(new String[]{netfang.getText().toString(),lykilord.getText().toString(),kennitala.getText().toString(),"nei","nei"});
 							Intent j = new Intent(Nyskraning.this, StundataflaActivity.class);
 							j.putExtra("vikudagur", Integer.toString(map.get(vikudagur)));
 							startActivity(j);
@@ -218,23 +219,29 @@ public class Nyskraning extends Activity {
 			mDrawerLayout.closeDrawer(mDrawerList);
 			
 			String str = Global.drawerListItems[position];
-			if (str.equals("Stundatafla")) {
+			if (str.equals(Global.ST1)) {
 				Intent i = new Intent(Nyskraning.this, StundataflaActivity.class);
-				i.putExtra("vikudagur", Integer.toString(map.get(vikudagur)));
+				i.putExtra("vikudagur", Integer.toString(map.get(Global.dayOfWeek)));
 				startActivity(i);
-			} else if (str.equals("Opnunartímar")){
+			} else if (str.equals(Global.ST2)){
+				/*
+				Intent i = new Intent(Nyskraning.this, ?.class);
+				i.putExtra("vikudagur", Integer.toString(map.get(Global.dayOfWeek)));
+				startActivity(i);
+				*/
+			} else if (str.equals(Global.OPN)){
 				Intent i = new Intent(Nyskraning.this, Opnunartimar.class);
 				startActivity(i);
-			} else if (str.equals("Útskrá")) {
-				if (Global.currentUser==null) {
-					Toast.makeText(mContext, "Það gerðist ekkert..", Toast.LENGTH_LONG).show();
-				} else {
-					Global.currentUser = null;
-				}
+			} else if (str.equals(Global.UTS)) {
+				Global.currentUser = null;
+				//mDrawerToggle.syncState();
+				
+				Intent i = new Intent(Nyskraning.this, Innskraning.class);
+				i.putExtra("vikudagur", Integer.toString(map.get(Global.dayOfWeek)));
+				startActivity(i);
 			} else if (str.contains("@")) {
-				//Intent i = new Intent(Innskraning.this, UmNotenda.class);
+				//Intent i = new Intent(Nyskraning.this, UmNotenda.class);
 				//startActivity(i);
-				System.out.println(Global.currentUser);
 			}
 		}
 	}

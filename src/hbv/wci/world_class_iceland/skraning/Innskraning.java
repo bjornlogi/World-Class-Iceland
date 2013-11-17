@@ -162,23 +162,29 @@ public class Innskraning extends Activity {
 			mDrawerLayout.closeDrawer(mDrawerList);
 			
 			String str = Global.drawerListItems[position];
-			if (str.equals("Stundatafla")) {
+			if (str.equals(Global.ST1)) {
 				Intent i = new Intent(Innskraning.this, StundataflaActivity.class);
-				i.putExtra("vikudagur", Integer.toString(map.get(vikudagur)));
+				i.putExtra("vikudagur", Integer.toString(map.get(Global.dayOfWeek)));
 				startActivity(i);
-			} else if (str.equals("Opnunartímar")){
+			} else if (str.equals(Global.ST2)){
+				/*
+				Intent i = new Intent(Innskraning.this, ?.class);
+				i.putExtra("vikudagur", Integer.toString(map.get(Global.dayOfWeek)));
+				startActivity(i);
+				*/
+			} else if (str.equals(Global.OPN)){
 				Intent i = new Intent(Innskraning.this, Opnunartimar.class);
 				startActivity(i);
-			} else if (str.equals("Útskrá")) {
-				if (Global.currentUser==null) {
-					Toast.makeText(mContext, "Það gerðist ekkert..", Toast.LENGTH_LONG).show();
-				} else {
-					Global.currentUser = null;
-				}
+			} else if (str.equals(Global.UTS)) {
+				Global.currentUser = null;
+				//mDrawerToggle.syncState();
+				
+				Intent i = new Intent(Innskraning.this, Innskraning.class);
+				i.putExtra("vikudagur", Integer.toString(map.get(Global.dayOfWeek)));
+				startActivity(i);
 			} else if (str.contains("@")) {
 				//Intent i = new Intent(Innskraning.this, UmNotenda.class);
 				//startActivity(i);
-				System.out.println(Global.currentUser);
 			}
 		}
 	}

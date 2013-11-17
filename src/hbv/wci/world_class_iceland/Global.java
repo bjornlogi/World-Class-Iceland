@@ -10,20 +10,49 @@ public class Global {
 	public static final String ST2 = "Mín stundatafla";
 	public static final String OPN = "Opnunartímar";
 	public static final String UTS = "Útskrá";
-	
 	public static String[] drawerListItems = new String[] {ST1, OPN};
-	
 	public static String currentUser;
 	
-	public static int vikudagur = updateDay();
-	public static int updateDay() {
+	public static String dayOfWeek = initDay();
+	private static String initDay() {
 		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"), Locale.UK);
-		System.out.println(cal.get(Calendar.DAY_OF_WEEK));
-		return cal.get(Calendar.DAY_OF_WEEK); 
+		
+		int day = cal.get(Calendar.DAY_OF_WEEK);
+		String dagur = "";
+		switch (day) {
+			case Calendar.SUNDAY: dagur="Sun"; break;
+			case Calendar.MONDAY:  dagur="Mon"; break;
+			case Calendar.TUESDAY: dagur="Tue"; break;
+			case Calendar.WEDNESDAY: dagur="Wed"; break;
+			case Calendar.THURSDAY: dagur="Thu"; break;
+			case Calendar.FRIDAY: dagur="Fri"; break;
+			case Calendar.SATURDAY: dagur="Sat"; break;
+		}
+		
+		return dagur;
+		
+	}
+	public static void updateDay() {
+		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"), Locale.UK);
+		
+		int day = cal.get(Calendar.DAY_OF_WEEK);
+		String dagur = "";
+		switch (day) {
+			case Calendar.SUNDAY: dagur="Sun"; break;
+			case Calendar.MONDAY:  dagur="Mon"; break;
+			case Calendar.TUESDAY: dagur="Tue"; break;
+			case Calendar.WEDNESDAY: dagur="Wed"; break;
+			case Calendar.THURSDAY: dagur="Thu"; break;
+			case Calendar.FRIDAY: dagur="Fri"; break;
+			case Calendar.SATURDAY: dagur="Sat"; break;
+		}
+		
+		dayOfWeek = dagur;
 	}
 	
-	public static HashMap<String, Integer> map = createMap();
-	private static HashMap<String, Integer> createMap(){
+	
+	public static HashMap<String, Integer> map = initMap();
+	private static HashMap<String, Integer> initMap(){
 		map = new HashMap<String,Integer>();
 		map.put("Mon", 0);
 		map.put("Tue", 1);

@@ -3,6 +3,8 @@ package hbv.wci.world_class_iceland.opnunartimar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -229,10 +231,15 @@ public class Opnunartimar extends Activity implements OpnunVidmot {
 				startActivity(i);
 			} else if (str.equals(Global.UTS)) {
 				Global.currentUser = null;
+				Global.currentUserID = null;
+				SharedPreferences pref = mContext.getApplicationContext().getSharedPreferences("login", 0); // 0 - for private mode
+				Editor editor = pref.edit();
+				editor.clear();
+				editor.commit();
 				//mDrawerToggle.syncState();
 				
 				Intent i = new Intent(Opnunartimar.this, Innskraning.class);
-				i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
+				//i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
 			} else if (str.contains("@")) {
 				//Intent i = new Intent(??.this, UmNotenda.class);

@@ -260,7 +260,6 @@ public class DataSource {
 			c.moveToFirst();
 			editor.putLong("_id", c.getLong(0)); 
 			editor.putString("netfang", c.getString(1));
-			editor.putString("lykilord", c.getString(2));
 			System.out.println("3");
 			editor.commit();
 		} catch (Exception e){

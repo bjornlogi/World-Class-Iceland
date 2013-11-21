@@ -2,6 +2,8 @@ package hbv.wci.world_class_iceland.stundatafla;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -279,10 +281,14 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 				startActivity(i);
 			} else if (str.equals(Global.UTS)) {
 				Global.currentUser = null;
-				//mDrawerToggle.syncState();
+				Global.currentUserID = null;
+				SharedPreferences pref = mContext.getApplicationContext().getSharedPreferences("login", 0); // 0 - for private mode
+				Editor editor = pref.edit();
+				editor.clear();
+				editor.commit();
 				
 				Intent i = new Intent(StundataflaActivity.this, Innskraning.class);
-				i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
+				//i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
 			} else if (str.contains("@")) {
 				//Intent i = new Intent(??.this, UmNotenda.class);

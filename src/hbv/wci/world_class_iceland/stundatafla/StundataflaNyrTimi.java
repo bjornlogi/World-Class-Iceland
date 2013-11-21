@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
@@ -18,12 +19,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Configuration;
+
+
 
 import hbv.wci.world_class_iceland.Global;
 import hbv.wci.world_class_iceland.R;
@@ -37,13 +42,16 @@ import hbv.wci.world_class_iceland.skraning.Innskraning;
 import hbv.wci.world_class_iceland.stundatafla.StundataflaActivity;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
 
 
 public class StundataflaNyrTimi extends Activity {
@@ -53,8 +61,11 @@ public class StundataflaNyrTimi extends Activity {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
+	private Spinner spinner;
+	private String timiDags = "Tími dags";
 	
-	private String vikudagur;
+	
+//	private String vikudagur;
 	private Map<String,Integer> map;
 	
 	@Override
@@ -62,13 +73,14 @@ public class StundataflaNyrTimi extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_nyrtimi);
 		
-		java.util.TimeZone T1 = TimeZone.getTimeZone("GMT"); 
-		SimpleDateFormat DOW = new SimpleDateFormat ("EEE");
-		DOW.setTimeZone(T1);
-		
-		Date date = new Date();
-		vikudagur = DOW.format(date);
+//		java.util.TimeZone T1 = TimeZone.getTimeZone("GMT"); 
+//		SimpleDateFormat DOW = new SimpleDateFormat ("EEE");
+//		DOW.setTimeZone(T1);
+//		
+//		Date date = new Date();
+//		vikudagur = DOW.format(date);
 		createMap();
+		setSpinners();
 		
 		final EditText name = (EditText) findViewById(R.id.nafnNyrTimi);
 		final Button nySkra = (Button) findViewById(R.id.nySkraTima);
@@ -79,7 +91,6 @@ public class StundataflaNyrTimi extends Activity {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
                 Calendar mcurrentTime = Calendar.getInstance();
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mcurrentTime.get(Calendar.MINUTE);
@@ -174,23 +185,29 @@ public class StundataflaNyrTimi extends Activity {
 		
 		setDrawer();
 	}
-
+	/**
+	 * Upphafsstillir spinnerana sem eru valmyndin fyrir stundatofluna og setur a ta listener
+	 */
+	public void setSpinners() {
+		spinner = (Spinner) findViewById(R.id.spinner);
+		List<String> list1 = new ArrayList<String>();
+		list1.add("Tími dags");
+		list1.add("Morguntími");
+		list1.add("Hádegistími");
+		list1.add("Síðdegistími");
+		list1.add("Kvöldtími");
+		ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list1);
+		dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_item);
+		spinner.setAdapter(dataAdapter1);		
+	}
+	
 	public static boolean isNotEmpty(String name){
 		return !name.isEmpty();	
 	}
+	
+	
+	
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	

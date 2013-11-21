@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+
 public class Global {
 	public static final String ST1 = "Almenn stundatafla";
 	public static final String ST2 = "Mín stundatafla";
@@ -12,6 +15,8 @@ public class Global {
 	public static final String UTS = "Útskrá";
 	public static String[] drawerListItems = new String[] {ST1, OPN};
 	public static String currentUser;
+	public static Long currentUserID;
+	public static Editor editor;
 	
 	public static String dayOfWeek = initDay();
 	private static String initDay() {

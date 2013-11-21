@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.net.ConnectivityManager;
@@ -70,7 +71,6 @@ public class Innskraning extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_innskraning);
-		
 		TimeZone T1 = TimeZone.getTimeZone("GMT"); 
 		SimpleDateFormat DOW = new SimpleDateFormat ("EEE");
 		DOW.setTimeZone(T1);
@@ -79,12 +79,17 @@ public class Innskraning extends Activity {
 		vikudagur = DOW.format(date);
 		createMap();
 		
-		mDataSource = new DataSource(mContext);
-		mDataSource.open();
 		
-		if (mDataSource.isEmpty() && isNetworkAvailable())
-        	new AsyncExecution().execute("http://www.worldclass.is/heilsuraekt/stundaskra");
-			
+		
+		SharedPreferences pref = mContext.getApplicationContext().getSharedPreferences("login", 0);
+		if (pref.getLong("_id", -1) != -1){
+			Global.currentUser = pref.getString("netfang", "-1");
+			Intent i = new Intent(Innskraning.this, StundataflaActivity.class);
+			i.putExtra("vikudagur", Integer.toString(map.get(vikudagur)));
+			startActivity(i);
+		}
+		
+		
 		
 		final EditText netfangInntak = (EditText) findViewById(R.id.netfangInntak);
 		final EditText lykilordInntak = (EditText) findViewById(R.id.lykilordInntakNr3);
@@ -98,7 +103,7 @@ public class Innskraning extends Activity {
 				String netfang = netfangInntak.getText().toString();
 				String lykilord = lykilordInntak.getText().toString();
 				
-				boolean flag = mDataSource.checkUser(netfang, lykilord);
+				boolean flag = mDataSource.checkUser(netfang, lykilord, mContext);
 				
 				if(flag) {
 					Global.currentUser = netfang;
@@ -292,126 +297,6 @@ public class Innskraning extends Activity {
             }
         };
 		mDrawerLayout.setDrawerListener(mDrawerToggle);
-	}
-	
-	 /**
-	 * Skrapar gogn af vef og setur inn i gagnagrunn ef hann er ekki til stadar.
-	 * 
-	 * @author Bjorn
-	 * @see AsyncTask
-	 */
-	public class AsyncExecution extends AsyncTask<String, Integer, String>{
-		ProgressDialog progressDialog;
-		/**
-		 * Fall sem er keyrt a undan Async verkinu.
-		 * 
-		 */
-		@Override
-		protected void onPreExecute() {
-			progressDialog= ProgressDialog.show(mContext, "Hleð niður gögnum","Hinkraðu augnablik", true);
-			super.onPreExecute();
-		}
-		
-		/**
-		 * Skrapar gogn af vef og setur inn i gagnagrunn i bakgrunns traedi.
-		 * 
-		 * @param params URL a sidunni sem sott er gogn af. 
-		 */
-		@Override
-		protected String doInBackground(String... params) {
-			String url=params[0];
-				try { 
-					Document doc = Jsoup.connect(url).get();
-					Elements tableElements = doc.select("table");
-			
-					
-					Elements tableClassesElements = tableElements.select(":not(thead) tr");
-					String timar[] = {"", "morgun", "", "hadegi", "", "siddegi", "", "kvold"};
-					String dagar[] = {"Man", "Tri", "Mid", "Fim", "Fos", "Lau", "Sun"};
-					
-					for (int i = 0; i < tableClassesElements.size(); i++) {
-						Element row = tableClassesElements.get(i);
-						Elements rowItems = row.select("td");
-						String timi = timar[i];
-						
-						for (int j = 0; j < rowItems.size(); j++) {
-							String dagur = dagar[j];
-							Element list = rowItems.get(j);
-							Elements listItems = list.select("li"); 
-							
-							for (int k = 0; k < listItems.size(); k++){
-								String hopTimi[] = new String[9];
-								Element links = listItems.get(k);
-								hopTimi[0] = links.select("a").text();
-								hopTimi[1] = links.select(".stod").text();
-								hopTimi[2] = links.select(".salur").text();
-								hopTimi[3] = links.select(".tjalfari").text();
-								hopTimi[4] = links.select(".tegund").text();
-								hopTimi[5] = links.select(".time").text();
-								hopTimi[6] = timi;
-								hopTimi[7] = dagur;
-								Elements lokad = links.select(".locked");
-								
-								
-								if (lokad.text() != "")
-									hopTimi[8] = lokad.attr("title");
-								else
-									hopTimi[8] = " ";
-								mDataSource.addHoptimi(hopTimi);
-								
-							}
-						}
-					}
-				}
-				catch ( UnknownHostException e ) {
-//					TextView t = (TextView) rootView.findViewById(R.id.opnun_header);
-//					t.setTextColor(Color.RED);
-//					t.setText("Ekki náðist samband við vefþjón");
-					//Toast.makeText(mContext,"Ekki náði tenging við vefþjón",Toast.LENGTH_LONG).show();
-					System.out.println("Ekki náðist samband við vefþjón");
-				}
-				catch ( Exception e){
-//					TextView t = (TextView) rootView.findViewById(R.id.opnun_header);
-//					t.setTextColor(Color.RED);
-//					t.setText("Villa kom upp við að ná tengingu við vefþjón");
-					//Toast.makeText(mContext,"Villa kom upp við að ná tengingu við vefþjón",Toast.LENGTH_LONG).show();
-					System.out.println("Villa kom upp við að ná tengingu við vefþjón");
-				}
-				return "All Done!";
-		}
-			
-		/**
-		 * Kallad reglulega a tetta fall medan a keyrslunni stendur.
-		 * 
-		 * @param values
-		 */
-		@Override
-		protected void onProgressUpdate(Integer... values) {
-			super.onProgressUpdate(values);
-		}
-		
-		/**
-		 * Ef haett er vid keyrsluna adur en hun er fullklarud, ta keyra tetta fall
-		 * 
-		 * @see android.os.AsyncTask#onCancelled()
-		 */
-		@Override
-		protected void onCancelled() {
-			mDataSource.dropTable();
-			super.onCancelled();
-		}
-	
-		/**
-		 * Tegar buid er ad hlada inn asynchronous verkinu, keyrir tetta fall sem birtir
-		 * gognin i listanum.
-		 * 
-		 * @param result
-		 */
-		@Override
-		protected void onPostExecute(String result) {
-			progressDialog.dismiss();
-			super.onPostExecute(result);
-		}
 	}
 
 }

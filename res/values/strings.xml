@@ -44,4 +44,5 @@
     <string name="skraNyjanTima">Skrá tíma</string>
     <string name="nafn">Nafn tímans</string>
  	<string name="nyrTimiKlukkan">Tímasetning</string>
+ 	<string name="lysingNyrTimi">Lýsing</string>
 </resources>

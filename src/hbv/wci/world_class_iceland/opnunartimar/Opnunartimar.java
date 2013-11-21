@@ -279,6 +279,10 @@ public class Opnunartimar extends Activity implements OpnunVidmot {
 		//menu.findItem(R.id.opnun_menu).setVisible(!drawerOpen);
 		return super.onPrepareOptionsMenu(menu);
 	}
+	
+	@Override
+	public void onBackPressed() {
+	}
 		
 	public void createMap(){
 		map = new HashMap<String,Integer>();

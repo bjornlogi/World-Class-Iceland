@@ -106,7 +106,6 @@ public class Innskraning extends Activity {
 				mDataSource = new DataSource(mContext);
 				mDataSource.open();
 				boolean flag = mDataSource.checkUser(netfang, lykilord, mContext);
-				System.out.println("10");
 				if(flag) {
 					Global.currentUser = netfang;
 					
@@ -236,6 +235,10 @@ public class Innskraning extends Activity {
 		//boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
 		//menu.findItem(R.id.opnun_menu).setVisible(!drawerOpen);
 		return super.onPrepareOptionsMenu(menu);
+	}
+	
+	@Override
+	public void onBackPressed() {
 	}
 		
 	private void createMap(){

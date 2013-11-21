@@ -41,5 +41,7 @@
     <string name="rangt">Rangt netfang og/eða lykilorð</string>
     
     <string name="velja">Velja</string>
- 
+    <string name="skraNyjanTima">Skrá tíma</string>
+    <string name="nafn">Nafn tímans</string>
+ 	<string name="nyrTimiKlukkan">Tímasetning</string>
 </resources>

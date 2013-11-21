@@ -101,19 +101,8 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 	 * Finnur hvada dagur er til ad akveda hvada sidu a ad birta fyrst, t.e. dagurinn i dag
 	 */
 	public void setDate(){
-		
-		java.util.TimeZone T1 = TimeZone.getTimeZone("GMT"); 
-		SimpleDateFormat DOW = new SimpleDateFormat ("EEE");
-		DOW.setTimeZone(T1);
-		
-		Date date = new Date();
-		vikudagur = DOW.format(date);
-		createMap();
-		
-		
-		Intent myIntent= getIntent();
-		String vikudagur = myIntent.getStringExtra("vikudagur");
-		currentPos=7*2+Integer.parseInt(vikudagur);
+		String vikudagur = Global.dayOfWeek;
+		currentPos=7*2+Global.map.get(vikudagur);
 		mPager.setCurrentItem(currentPos);//viljum byrja i midjunni  
 	}
 	/**

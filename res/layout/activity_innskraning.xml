@@ -94,6 +94,18 @@
 						android:text="@string/nySkra" />
 					
 				</LinearLayout>
+				<Button
+						android:id="@+id/skraNyjanTima"
+						android:layout_width="120dip"
+						android:layout_height="35dip"
+						android:layout_marginTop="30dip"
+						android:layout_marginLeft="20dip"
+						android:paddingLeft="5dip"
+						android:paddingRight="5dip"
+						android:background="@drawable/rounded_edittext"
+						android:textColor="@color/wcRed"
+						android:textStyle="bold"
+						android:text="@string/skraNyjanTima" />
 			</LinearLayout>
 		</ScrollView>
 	</FrameLayout>

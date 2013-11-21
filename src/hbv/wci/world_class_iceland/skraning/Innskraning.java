@@ -104,7 +104,7 @@ public class Innskraning extends Activity {
 					Global.currentUser = netfang;
 					
 					Intent i = new Intent(Innskraning.this, StundataflaActivity.class);
-					i.putExtra("vikudagur", Integer.toString(map.get(vikudagur)));
+					i.putExtra("vikudagur", Integer.toString(Global.map.get(vikudagur)));
 					startActivity(i);
 				} else {
 					final Dialog dialog = new Dialog(mContext);
@@ -175,12 +175,12 @@ public class Innskraning extends Activity {
 			String str = Global.drawerListItems[position];
 			if (str.equals(Global.ST1)) {
 				Intent i = new Intent(Innskraning.this, StundataflaActivity.class);
-				i.putExtra("vikudagur", Integer.toString(map.get(Global.dayOfWeek)));
+				i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
 			} else if (str.equals(Global.ST2)){
 				/*
 				Intent i = new Intent(Innskraning.this, ?.class);
-				i.putExtra("vikudagur", Integer.toString(map.get(Global.dayOfWeek)));
+				i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
 				*/
 			} else if (str.equals(Global.OPN)){
@@ -191,7 +191,7 @@ public class Innskraning extends Activity {
 				//mDrawerToggle.syncState();
 				
 				Intent i = new Intent(Innskraning.this, Innskraning.class);
-				i.putExtra("vikudagur", Integer.toString(map.get(Global.dayOfWeek)));
+				i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
 			} else if (str.contains("@")) {
 				//Intent i = new Intent(Innskraning.this, UmNotenda.class);

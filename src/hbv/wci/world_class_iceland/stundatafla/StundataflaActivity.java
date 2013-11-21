@@ -101,8 +101,7 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 	 * Finnur hvada dagur er til ad akveda hvada sidu a ad birta fyrst, t.e. dagurinn i dag
 	 */
 	public void setDate(){
-		String vikudagur = Global.dayOfWeek;
-		currentPos=7*2+Global.map.get(vikudagur);
+		currentPos=7*2+Global.map.get(Global.dayOfWeek);
 		mPager.setCurrentItem(currentPos);//viljum byrja i midjunni  
 	}
 	/**
@@ -267,12 +266,12 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 			String str = Global.drawerListItems[position];
 			if (str.equals(Global.ST1)) {
 				Intent i = new Intent(StundataflaActivity.this, StundataflaActivity.class);
-				i.putExtra("vikudagur", Integer.toString(map.get(Global.dayOfWeek)));
+				i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
 			} else if (str.equals(Global.ST2)){
 				/*
 				Intent i = new Intent(Opnunartimar.this, ?.class);
-				i.putExtra("vikudagur", Integer.toString(map.get(Global.dayOfWeek)));
+				i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
 				*/
 			} else if (str.equals(Global.OPN)){
@@ -283,7 +282,7 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 				//mDrawerToggle.syncState();
 				
 				Intent i = new Intent(StundataflaActivity.this, Innskraning.class);
-				i.putExtra("vikudagur", Integer.toString(map.get(Global.dayOfWeek)));
+				i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
 			} else if (str.contains("@")) {
 				//Intent i = new Intent(??.this, UmNotenda.class);

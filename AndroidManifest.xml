@@ -50,7 +50,8 @@
             android:screenOrientation="portrait" ></activity>
         <activity 
             android:name="hbv.wci.world_class_iceland.stundatafla.StundataflaNyrTimi"
-            android:screenOrientation="portrait" ></activity>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" ></activity>
         <activity 
             android:name=".Expandable"
             android:screenOrientation="portrait" ></activity>

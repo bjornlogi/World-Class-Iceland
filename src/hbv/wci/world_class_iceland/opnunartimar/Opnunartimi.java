@@ -284,12 +284,12 @@ public class Opnunartimi extends Activity implements OpnunStodVidmot{
 			String str = Global.drawerListItems[position];
 			if (str.equals(Global.ST1)) {
 				Intent i = new Intent(Opnunartimi.this, StundataflaActivity.class);
-				i.putExtra("vikudagur", Integer.toString(map.get(Global.dayOfWeek)));
+				i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
 			} else if (str.equals(Global.ST2)){
 				/*
 				Intent i = new Intent(Opnunartimi.this, ?.class);
-				i.putExtra("vikudagur", Integer.toString(map.get(Global.dayOfWeek)));
+				i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
 				*/
 			} else if (str.equals(Global.OPN)){
@@ -300,7 +300,7 @@ public class Opnunartimi extends Activity implements OpnunStodVidmot{
 				//mDrawerToggle.syncState();
 				
 				Intent i = new Intent(Opnunartimi.this, Innskraning.class);
-				i.putExtra("vikudagur", Integer.toString(map.get(Global.dayOfWeek)));
+				i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
 			} else if (str.contains("@")) {
 				//Intent i = new Intent(Opnunartimi.this, UmNotenda.class);

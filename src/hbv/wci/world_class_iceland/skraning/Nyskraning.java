@@ -113,7 +113,7 @@ public class Nyskraning extends Activity {
 							Global.currentUser = netfang.getText().toString();
 							mDataSource.addUser(new String[]{netfang.getText().toString(),lykilord.getText().toString(),kennitala.getText().toString(),"nei","nei"});
 							Intent j = new Intent(Nyskraning.this, StundataflaActivity.class);
-							j.putExtra("vikudagur", Integer.toString(map.get(vikudagur)));
+							j.putExtra("vikudagur", Integer.toString(Global.map.get(vikudagur)));
 							startActivity(j);
 						}
 					});
@@ -221,12 +221,12 @@ public class Nyskraning extends Activity {
 			String str = Global.drawerListItems[position];
 			if (str.equals(Global.ST1)) {
 				Intent i = new Intent(Nyskraning.this, StundataflaActivity.class);
-				i.putExtra("vikudagur", Integer.toString(map.get(Global.dayOfWeek)));
+				i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
 			} else if (str.equals(Global.ST2)){
 				/*
 				Intent i = new Intent(Nyskraning.this, ?.class);
-				i.putExtra("vikudagur", Integer.toString(map.get(Global.dayOfWeek)));
+				i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
 				*/
 			} else if (str.equals(Global.OPN)){
@@ -237,7 +237,7 @@ public class Nyskraning extends Activity {
 				//mDrawerToggle.syncState();
 				
 				Intent i = new Intent(Nyskraning.this, Innskraning.class);
-				i.putExtra("vikudagur", Integer.toString(map.get(Global.dayOfWeek)));
+				i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
 			} else if (str.contains("@")) {
 				//Intent i = new Intent(Nyskraning.this, UmNotenda.class);

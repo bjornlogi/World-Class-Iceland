@@ -1,0 +1,325 @@
+package hbv.wci.world_class_iceland.stundatafla;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.app.TimePickerDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.Typeface;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.TimePicker;
+import android.widget.Toast;
+import android.app.Dialog;
+import android.content.Context;
+import android.content.res.Configuration;
+
+import hbv.wci.world_class_iceland.Global;
+import hbv.wci.world_class_iceland.R;
+import hbv.wci.world_class_iceland.R.drawable;
+import hbv.wci.world_class_iceland.R.id;
+import hbv.wci.world_class_iceland.R.layout;
+import hbv.wci.world_class_iceland.R.string;
+import hbv.wci.world_class_iceland.data.DataSource;
+import hbv.wci.world_class_iceland.opnunartimar.Opnunartimar;
+import hbv.wci.world_class_iceland.skraning.Innskraning;
+import hbv.wci.world_class_iceland.stundatafla.StundataflaActivity;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TimeZone;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+
+public class StundataflaNyrTimi extends Activity {
+
+	private DataSource mDataSource;
+	public Context mContext = this;
+	private DrawerLayout mDrawerLayout;
+	private ListView mDrawerList;
+	private ActionBarDrawerToggle mDrawerToggle;
+	
+	private String vikudagur;
+	private Map<String,Integer> map;
+	
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_nyrtimi);
+		
+		java.util.TimeZone T1 = TimeZone.getTimeZone("GMT"); 
+		SimpleDateFormat DOW = new SimpleDateFormat ("EEE");
+		DOW.setTimeZone(T1);
+		
+		Date date = new Date();
+		vikudagur = DOW.format(date);
+		createMap();
+		
+		final EditText name = (EditText) findViewById(R.id.nafnNyrTimi);
+		final Button nySkra = (Button) findViewById(R.id.nySkraTima);
+		final Button timasetning = (Button) findViewById(R.id.NyrTimiKlukkan);
+		final Context context = this;
+		
+		timasetning.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // TODO Auto-generated method stub
+                Calendar mcurrentTime = Calendar.getInstance();
+                int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = mcurrentTime.get(Calendar.MINUTE);
+                TimePickerDialog mTimePicker;
+                mTimePicker = new TimePickerDialog(StundataflaNyrTimi.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                    	String selectedMinuteString = Integer.toString(selectedMinute);
+                    	String selectedHourString = Integer.toString(selectedHour);
+                    	if(selectedMinute<10)
+                    		selectedMinuteString = '0' + Integer.toString(selectedMinute);
+                    	if(selectedHour<10)
+                    		selectedHourString = '0' + Integer.toString(selectedHour);
+                        timasetning.setText( "" + selectedHourString + ":" + selectedMinuteString);
+                    }
+                }, hour, minute, true);
+                mTimePicker.setTitle("Select Time");
+                mTimePicker.show();
+
+            }
+        });
+		
+		nySkra.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				mDataSource = new DataSource(mContext);
+				mDataSource.open();
+
+				// TODO ef gefid upp netfang, lykilord og ytt a nyskra, baeta vid gognum inn i nyskraningar inputin
+				//svo ekki turfi ad skrifa aftur
+				Boolean noEmptyField = isNotEmpty(name.getText().toString());
+				if (noEmptyField)
+				{
+					final Dialog dialog = new Dialog(context);
+					dialog.setContentView(R.layout.dialog_nyskra);
+					dialog.setCanceledOnTouchOutside(false);
+					dialog.setTitle("Til hamingju");
+		 
+					// set the custom dialog components - text, image and button
+					TextView text = (TextView) dialog.findViewById(R.id.text);
+					String info ="Þú ert nú skráður í kerfið. Upplýsingar þínar:";
+					info += "\nVinsamlegast ýttu á 'OK' til að samþykkja upplýsingarnar.";
+											
+					text.setText(info);
+					
+					Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+					// if button is clicked, close the custom dialog
+					dialogButton.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							dialog.dismiss();
+							
+//							Global.currentUser = name.getText().toString();
+//							mDataSource.addUser(new String[]{name.getText().toString(),lykilord.getText().toString(),kennitala.getText().toString(),"nei","nei"});
+//							Intent j = new Intent(StundataflaNyrTimi.this, StundataflaActivity.class);
+//							j.putExtra("vikudagur", Integer.toString(map.get(vikudagur)));
+//							startActivity(j);
+						}
+					});
+		 
+					dialog.show();
+					
+				}			
+				else{
+					final Dialog dialog = new Dialog(context);
+					dialog.setContentView(R.layout.dialog_nyskra);
+					dialog.setCanceledOnTouchOutside(false);
+					dialog.setTitle("Villa");
+		 
+					// set the custom dialog components - text, image and button
+					TextView text = (TextView) dialog.findViewById(R.id.text);
+					String villa ="Vinsamlegast veldu nafn á tímann!";
+					
+								
+					text.setText(villa);
+					
+					
+					Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+					// if button is clicked, close the custom dialog
+					dialogButton.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							dialog.dismiss();
+						}
+					});
+					dialog.show();
+					//Toast.makeText(StundataflaNyrTimi.this, R.string.rangt, Toast.LENGTH_LONG).show();
+				}
+									
+			}
+		});
+		
+		setDrawer();
+	}
+
+	public static boolean isNotEmpty(String name){
+		return !name.isEmpty();	
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		// Sync the toggle state after onRestoreInstanceState has occurred.
+		mDrawerToggle.syncState();
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		// Pass any configuration change to the drawer toggle
+		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
+	
+	/* Called whenever we call invalidateOptionsMenu() */
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		// If the nav drawer is open, hide action items related to the content view
+		// TODO er að vísa í opnun_menu sem er í Innskraning
+
+		// check if user is logged in
+		if(Global.currentUser == null) {
+			Global.drawerListItems = new String[] {Global.ST1, Global.OPN};
+		} else {
+			Global.drawerListItems = new String[] {Global.currentUser, Global.ST1, Global.ST2, Global.OPN, Global.UTS};
+		}
+		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, Global.drawerListItems));
+
+		//boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+		//menu.findItem(R.id.opnun_menu).setVisible(!drawerOpen);
+		return super.onPrepareOptionsMenu(menu);
+	}
+	
+	private class DrawerItemClickListener implements ListView.OnItemClickListener {
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			mDrawerList.setItemChecked(position, true);
+			mDrawerLayout.closeDrawer(mDrawerList);
+			
+			String str = Global.drawerListItems[position];
+			if (str.equals(Global.ST1)) {
+				Intent i = new Intent(StundataflaNyrTimi.this, StundataflaActivity.class);
+				i.putExtra("vikudagur", Integer.toString(map.get(Global.dayOfWeek)));
+				startActivity(i);
+			} else if (str.equals(Global.ST2)){
+				/*
+				Intent i = new Intent(StundataflaNyrTimi.this, ?.class);
+				i.putExtra("vikudagur", Integer.toString(map.get(Global.dayOfWeek)));
+				startActivity(i);
+				*/
+			} else if (str.equals(Global.OPN)){
+				Intent i = new Intent(StundataflaNyrTimi.this, Opnunartimar.class);
+				startActivity(i);
+			} else if (str.equals(Global.UTS)) {
+				Global.currentUser = null;
+				//mDrawerToggle.syncState();
+				
+				Intent i = new Intent(StundataflaNyrTimi.this, Innskraning.class);
+				i.putExtra("vikudagur", Integer.toString(map.get(Global.dayOfWeek)));
+				startActivity(i);
+			} else if (str.contains("@")) {
+				//Intent i = new Intent(StundataflaNyrTimi.this, UmNotenda.class);
+				//startActivity(i);
+			}
+		}
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Pass the event to ActionBarDrawerToggle, if it returns
+		// true, then it has handled the app icon touch event
+		if (mDrawerToggle.onOptionsItemSelected(item)) {
+			return true;
+		}
+		// Handle your other action bar items...
+
+		return super.onOptionsItemSelected(item);
+	}
+	
+	private void createMap(){
+		map = new HashMap<String,Integer>();
+		map.put("Mon", 0);
+		map.put("Tue", 1);
+		map.put("Wed", 2);
+		map.put("Thu", 3);
+		map.put("Fri", 4);
+		map.put("Sat", 5);
+		map.put("Sun", 6);
+	}
+	
+	public void setDrawer()	{
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_nyskraning);
+		mDrawerList = (ListView) findViewById(R.id.left_drawer_nyskraning);
+
+		// set a custom shadow that overlays the main content when the drawer opens
+		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+		
+		// set up the drawer's list view with items and click listener
+		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, Global.drawerListItems));
+		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+		// enable ActionBar app icon to behave as action to toggle nav drawer
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setHomeButtonEnabled(true);
+		
+		// ActionBarDrawerToggle ties together the the proper interactions
+		// between the sliding drawer and the action bar app icon
+		mDrawerToggle = new ActionBarDrawerToggle(
+			this,                  /* host Activity */
+			mDrawerLayout,         /* DrawerLayout object */
+			R.drawable.ic_drawer,  /* nav drawer image to replace 'Up' caret */
+			R.string.app_name,     /* "open drawer" description for accessibility */
+			R.string.app_name      /* "close drawer" description for accessibility */
+		){
+            public void onDrawerClosed(View view) {
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
+	}
+	 
+}

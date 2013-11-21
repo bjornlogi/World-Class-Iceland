@@ -20,6 +20,7 @@ import android.util.Log;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
  
@@ -247,22 +248,16 @@ public class DataSource {
 	 * @return boolean um hvort rett lykilord var gefid fyrir netfangid
 	 */
 	public boolean checkUser(String netfang, String lykilord) {
-		Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_NOTENDUR, notendurAllColumns, null, null, null, null, null);
-		cursor.moveToFirst();
-		
-		boolean flag=false;
-		while (!cursor.isAfterLast()) {
-			Notandi notandi = cursorToNotandi(cursor);
-			
-			boolean check = notandi.getLykilord().equals(lykilord);
-			check = check && notandi.getNetfang().equals(netfang);
-			flag = flag || check;
-			
-			cursor.moveToNext();
+		String sql = "SELECT _id FROM notendur WHERE netfang = ? AND lykilord = ?";
+		Cursor c = mSQLiteDatabase.rawQuery(sql,  new String[] {netfang, lykilord});	
+		try{
+			// skilar exception ef id er ekki til
+			c.moveToFirst();
+			c.getLong(0); 
+			return true;
+		} catch (Exception e){
+			return false;
 		}
-		cursor.close();
-		
-		return flag;
 	}
 	
 	/**

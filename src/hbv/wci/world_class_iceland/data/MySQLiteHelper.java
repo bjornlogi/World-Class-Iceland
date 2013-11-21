@@ -31,6 +31,10 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	public static final String STADFEST = "stadfest";
 	public static final String KORT = "kort";
 	
+	public static final String TABLE_NOTENDATIMAR = "notendatimar";
+	public static final String USERID = "uid";
+	public static final String HOPTIMIID = "htid";
+	
 	
 	private static final String DATABASE_NAME = "worldclass.db";
 	private static final int DATABASE_VERSION = 62;
@@ -54,13 +58,14 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		createTable(db, TABLE_HOPTIMAR);
 		createTable(db, TABLE_NOTENDUR);
+		createTable(db, TABLE_NOTENDATIMAR);
 	}
 	
 	private void createTable(SQLiteDatabase db, String name) {
 		// Database creation sql statement
 		String CREATE_TABLE;
 		if (name == TABLE_HOPTIMAR) {
-			CREATE_TABLE = "create table " + TABLE_HOPTIMAR + "( " 
+			CREATE_TABLE = "create table " + name + "( " 
 					+ COLUMN_ID		+  	" integer primary key autoincrement, "
 					+ NAFN        	+	" TEXT, "
 					+ STOD          +	" TEXT, "
@@ -73,7 +78,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 		            + LOKAD		    +	" TEXT ) ";
 			db.execSQL(CREATE_TABLE);
 		} else if (name == TABLE_NOTENDUR) {
-			CREATE_TABLE = "create table if not exists " + TABLE_NOTENDUR + "( " 
+			CREATE_TABLE = "create table if not exists " + name + "( " 
 					+ COLUMN_ID	+	" integer primary key autoincrement, "
 					+ NETFANG	+	" TEXT, "
 					+ LYKILORD	+	" TEXT, "
@@ -81,6 +86,11 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 		            + KENNITALA +	" TEXT, "
 		            + KORT		+	" TEXT ) ";
 			db.execSQL(CREATE_TABLE);
+		} else if (name == TABLE_NOTENDATIMAR) {
+			CREATE_TABLE = "create table if not exists " + name + "( "
+					+ USERID + "integer,"
+					+ HOPTIMIID + "integer," +
+					" PRIMARY KEY("+USERID+","+HOPTIMIID+") )";
 		}
 		
 	}
@@ -95,8 +105,6 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		db.execSQL("DROP TABLE IF EXISTS "+TABLE_HOPTIMAR);
-		//viljum halda i users, er tad ekki?
-		//db.execSQL("DROP TABLE IF EXISTS users");
 		onCreate(db);
 	}
 	

@@ -29,6 +29,7 @@ import hbv.wci.world_class_iceland.data.DataSource;
 import hbv.wci.world_class_iceland.opnunartimar.Opnunartimar;
 import hbv.wci.world_class_iceland.R;
 import hbv.wci.world_class_iceland.stundatafla.StundataflaActivity;
+import hbv.wci.world_class_iceland.stundatafla.StundataflaNyrTimi;
 import hbv.wci.world_class_iceland.Global;
 
 import java.net.UnknownHostException;
@@ -88,6 +89,7 @@ public class Innskraning extends Activity {
 		final EditText netfangInntak = (EditText) findViewById(R.id.netfangInntak);
 		final EditText lykilordInntak = (EditText) findViewById(R.id.lykilordInntakNr3);
 		final Button skraInn = (Button) findViewById(R.id.skraInnTakki);
+		final Button skraNyjanTima = (Button) findViewById(R.id.skraNyjanTima);
 		
 		lykilordInntak.setTypeface(Typeface.SANS_SERIF);
 		
@@ -136,6 +138,15 @@ public class Innskraning extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent j = new Intent(Innskraning.this, Nyskraning.class);
+				startActivity(j);
+			}
+		});
+		
+		
+		skraNyjanTima.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent j = new Intent(Innskraning.this, StundataflaNyrTimi.class);
 				startActivity(j);
 			}
 		});

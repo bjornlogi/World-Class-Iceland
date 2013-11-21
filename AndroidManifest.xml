@@ -49,8 +49,12 @@
             android:name="hbv.wci.world_class_iceland.stundatafla.StundataflaActivity"
             android:screenOrientation="portrait" ></activity>
         <activity 
+            android:name="hbv.wci.world_class_iceland.stundatafla.StundataflaNyrTimi"
+            android:screenOrientation="portrait" ></activity>
+        <activity 
             android:name=".Expandable"
             android:screenOrientation="portrait" ></activity>
+        
     </application>
 
 </manifest>

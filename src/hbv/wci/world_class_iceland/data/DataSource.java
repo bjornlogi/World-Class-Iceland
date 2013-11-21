@@ -250,18 +250,18 @@ public class DataSource {
 	 * @return boolean um hvort rett lykilord var gefid fyrir netfangid
 	 */
 	public boolean checkUser(String netfang, String lykilord, Context ctx) {
+		try{
+			System.out.println("2");
 		String sql = "SELECT _id,netfang,lykilord FROM notendur WHERE netfang = ? AND lykilord = ?";
 		Cursor c = mSQLiteDatabase.rawQuery(sql,  new String[] {netfang, lykilord});
 		SharedPreferences pref = ctx.getApplicationContext().getSharedPreferences("login", 0); // 0 - for private mode
 		Editor editor = pref.edit();
-		
-		
-		try{
 			// skilar exception ef id er ekki til
 			c.moveToFirst();
 			editor.putLong("_id", c.getLong(0)); 
 			editor.putString("netfang", c.getString(1));
 			editor.putString("lykilord", c.getString(2));
+			System.out.println("3");
 			editor.commit();
 		} catch (Exception e){
 			return false;

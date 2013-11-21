@@ -32,7 +32,6 @@ public class StartUpScreen extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_startupscreen);
-		System.out.println("blabla");
 		pref = mContext.getApplicationContext().getSharedPreferences("login", 0);
 		if (databaseExists() && isUserLoggedIn()){
 			Global.currentUser = pref.getString("netfang", "-1");
@@ -40,6 +39,7 @@ public class StartUpScreen extends Activity {
 		}
 		else if (!isUserLoggedIn() && databaseExists()){
 			createIntent("Innskraning");
+			mDataSource.close();
 		}
 	}
 	
@@ -152,17 +152,9 @@ public class StartUpScreen extends Activity {
 					}
 				}
 				catch ( UnknownHostException e ) {
-//					TextView t = (TextView) rootView.findViewById(R.id.opnun_header);
-//					t.setTextColor(Color.RED);
-//					t.setText("Ekki náðist samband við vefþjón");
-					//Toast.makeText(mContext,"Ekki náði tenging við vefþjón",Toast.LENGTH_LONG).show();
 					System.out.println("Ekki náðist samband við vefþjón");
 				}
 				catch ( Exception e){
-//					TextView t = (TextView) rootView.findViewById(R.id.opnun_header);
-//					t.setTextColor(Color.RED);
-//					t.setText("Villa kom upp við að ná tengingu við vefþjón");
-					//Toast.makeText(mContext,"Villa kom upp við að ná tengingu við vefþjón",Toast.LENGTH_LONG).show();
 					System.out.println("Villa kom upp við að ná tengingu við vefþjón");
 				}
 				return "All Done!";
@@ -203,6 +195,7 @@ public class StartUpScreen extends Activity {
 				createIntent("StundataflaActivity");
 			} else {
 				createIntent("Innskraning");
+				mDataSource.close();
 			}
 			super.onPostExecute(result);
 		}

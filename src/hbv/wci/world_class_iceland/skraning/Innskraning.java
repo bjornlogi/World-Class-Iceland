@@ -100,11 +100,13 @@ public class Innskraning extends Activity {
 		
 		skraInn.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
+				
 				String netfang = netfangInntak.getText().toString();
 				String lykilord = lykilordInntak.getText().toString();
-				
+				mDataSource = new DataSource(mContext);
+				mDataSource.open();
 				boolean flag = mDataSource.checkUser(netfang, lykilord, mContext);
-				
+				System.out.println("10");
 				if(flag) {
 					Global.currentUser = netfang;
 					

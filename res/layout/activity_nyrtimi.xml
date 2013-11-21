@@ -50,19 +50,46 @@
 					android:id="@+id/NyrTimiKlukkan"
 					android:layout_width="120dip"
 					android:layout_height="35dip"
-					android:layout_marginTop="30dip"
+					android:layout_marginTop="20dip"
 					android:paddingLeft="5dip"
 					android:paddingRight="5dip"
 					android:background="@drawable/rounded_edittext"
 					android:textColor="@color/wcRed"
 					android:textStyle="bold"
 					android:text="@string/nyrTimiKlukkan" />
+				
+				<Spinner
+		            android:id="@+id/spinner"
+		            android:layout_marginTop="20dip"
+		            android:layout_width="175dp"
+		            android:layout_height="wrap_content"
+		            android:background="@drawable/rounded_edittext"
+		            android:textStyle="bold"
+		            android:textColor="#ffffff"
+		            android:layout_marginRight="5dp"/>
+				
+				<EditText
+					android:id="@+id/lysingNyrTimi"
+					android:inputType="textMultiLine"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="20dip"
+					android:paddingLeft="5dip"
+					android:paddingRight="5dip"
+					android:ems="10"
+					android:gravity="top"
+					android:hint="@string/lysingNyrTimi"
+					android:lines="5"
+					android:background="@drawable/rounded_edittext"
+					android:typeface="sans"
+					android:textColor="@color/wcRed"
+					android:textColorHint="@color/wcRed" />
 								
 				<Button
 					android:id="@+id/nySkraTima"
 					android:layout_width="120dip"
 					android:layout_height="35dip"
-					android:layout_marginTop="30dip"
+					android:layout_marginTop="20dip"
 					android:paddingLeft="5dip"
 					android:paddingRight="5dip"
 					android:background="@drawable/rounded_edittext"

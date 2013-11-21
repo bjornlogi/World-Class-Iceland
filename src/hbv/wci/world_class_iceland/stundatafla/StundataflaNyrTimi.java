@@ -83,8 +83,9 @@ public class StundataflaNyrTimi extends Activity {
 		setSpinners();
 		
 		final EditText name = (EditText) findViewById(R.id.nafnNyrTimi);
-		final Button nySkra = (Button) findViewById(R.id.nySkraTima);
 		final Button timasetning = (Button) findViewById(R.id.NyrTimiKlukkan);
+		final EditText lysing = (EditText) findViewById(R.id.lysingNyrTimi);
+		final Button nySkra = (Button) findViewById(R.id.nySkraTima);
 		final Context context = this;
 		
 		timasetning.setOnClickListener(new View.OnClickListener() {
@@ -119,9 +120,12 @@ public class StundataflaNyrTimi extends Activity {
 				mDataSource = new DataSource(mContext);
 				mDataSource.open();
 
-				// TODO ef gefid upp netfang, lykilord og ytt a nyskra, baeta vid gognum inn i nyskraningar inputin
-				//svo ekki turfi ad skrifa aftur
-				Boolean noEmptyField = isNotEmpty(name.getText().toString());
+				Boolean noEmptyField = isNotEmpty(name.getText().toString(), timasetning.getText().toString(), String.valueOf(spinner.getSelectedItem()));
+				
+				Boolean nameError = isName(name.getText().toString());
+				Boolean timasetningError = isTimasetning(timasetning.getText().toString());
+				Boolean spinnerError = isSpinner(String.valueOf(spinner.getSelectedItem()));
+								
 				if (noEmptyField)
 				{
 					final Dialog dialog = new Dialog(context);
@@ -131,8 +135,8 @@ public class StundataflaNyrTimi extends Activity {
 		 
 					// set the custom dialog components - text, image and button
 					TextView text = (TextView) dialog.findViewById(R.id.text);
-					String info ="Þú ert nú skráður í kerfið. Upplýsingar þínar:";
-					info += "\nVinsamlegast ýttu á 'OK' til að samþykkja upplýsingarnar.";
+					String info ="Tíminn þinn verður skráður í þína stundatöflu.";
+					info += "\nVinsamlegast ýttu á 'OK' til að samþykkja.";
 											
 					text.setText(info);
 					
@@ -162,9 +166,14 @@ public class StundataflaNyrTimi extends Activity {
 		 
 					// set the custom dialog components - text, image and button
 					TextView text = (TextView) dialog.findViewById(R.id.text);
-					String villa ="Vinsamlegast veldu nafn á tímann!";
-					
-								
+					String villa ="Vinsamlegast fylltu út í alla reiti!";
+					if(nameError)
+						villa+="\nNafn tíma er tómt";
+					if(timasetningError)
+						villa+="\nTímasetning er ekki valin";
+					if(spinnerError)
+						villa+="\nTími dags er ekki valinn";
+												
 					text.setText(villa);
 					
 					
@@ -201,11 +210,21 @@ public class StundataflaNyrTimi extends Activity {
 		spinner.setAdapter(dataAdapter1);		
 	}
 	
-	public static boolean isNotEmpty(String name){
-		return !name.isEmpty();	
+	public static boolean isNotEmpty(String nameString, String timasetningString, String spinnerString){
+		return !nameString.isEmpty() && !timasetningString.equals("Tímasetning") && !spinnerString.equals("Tími dags");	
 	}
 	
+	public static boolean isName(String nameString){
+		return nameString.isEmpty();	
+	}
 	
+	public static boolean isTimasetning(String timasetningString){
+		return timasetningString.equals("Tímasetning");
+	}
+	
+	public static boolean isSpinner(String spinnerString){
+		return spinnerString.equals("Tími dags");
+	}
 	
 
 	

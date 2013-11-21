@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="public" additionalparam="-encoding UTF-8 -charset UTF-8 -docencoding UTF-8 " author="true" classpath="libs/android-support-v4.jar:libs/jtds-1.3.1.jar:libs/jsoup-1.7.2.jar:/Users/Bjorn/Downloads/adt-bundle-mac-x86_64-20130729/sdk/platforms/android-18/android.jar" destdir="doc" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" source="1.6" sourcefiles="src/hbv/wci/world_class_iceland/stundatafla/StundataflaFragment.java" sourcepath="gen:src" splitindex="true" use="true" version="true"/>
+    </target>
+</project>
+
+<!-- Nota tetta i Ant til ad generate javadoc -->

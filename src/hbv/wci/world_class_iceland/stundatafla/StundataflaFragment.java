@@ -1,16 +1,23 @@
 package hbv.wci.world_class_iceland.stundatafla;
 
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import hbv.wci.world_class_iceland.Global;
 import hbv.wci.world_class_iceland.R;
 import hbv.wci.world_class_iceland.data.DataSource;
 import hbv.wci.world_class_iceland.data.StundatofluTimi;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,8 +50,9 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 	        if (mDataSource.isEmpty() && getArguments().getString("update")=="0")
 	        	Toast.makeText(getActivity(),"Tengstu netinu til að sjá stundatöfluna", Toast.LENGTH_LONG)
 	        	.show();
-	        else
+	        else{
 	        	birtaToflu();
+	        }
 	     	
 	        return rootView;
 	    }
@@ -89,28 +97,42 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 	 /**
 	  * Birtir videigandi stundatoflu
 	  */
+
 	 public void birtaToflu(){
 		 expListView = (ExpandableListView) rootView.findViewById(R.id.expandable1);
-		 
 		 stod = getArguments().getString("stod");
 		 tegund = getArguments().getString("tegund"); 
 		 mDataSource.filter(stod, tegund);
 		 
 		 st = mDataSource.getAllStundatoflutimar();
-	     listAdapter = new ExpandableListAdapter(getActivity(), st.listHeader, st.listChild, st.infoChild);
-		 expListView.setAdapter(listAdapter);
-		 expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+		 if (st.isEmpty()){
 			 
-	            public boolean onChildClick(ExpandableListView parent, View v,
-	                    int groupPosition, int childPosition, long id) {
-	                final String selected = (String) listAdapter.getChild(
-	                        groupPosition, childPosition);
-	                Toast.makeText(getActivity(), selected, Toast.LENGTH_LONG)
-	                        .show();
-	 
-	                return true;
-	            }
-	        });
+			 listAdapter = new ExpandableListAdapter(getActivity(), st.listHeader, st.listChild, st.infoChild){
+		    	 @Override
+		    	 public boolean isChildSelectable(int groupPosition, int childPosition){
+		    		 return false;
+		    	 }
+		     };
+		     expListView.setAdapter(listAdapter);
+		 }
+		 else{
+			 listAdapter = new ExpandableListAdapter(getActivity(), st.listHeader, st.listChild, st.infoChild);
+			 expListView.setAdapter(listAdapter);
+			 expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+				 
+		            public boolean onChildClick(ExpandableListView parent, View v,
+		                    int groupPosition, int childPosition, long id) {
+		                final String selected = (String) listAdapter.getChild(
+		                        groupPosition, childPosition);
+		                SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("login", 0);
+		                Long userID = pref.getLong("_id", -1);
+		                Toast.makeText(getActivity(), selected + "\nUserID is " + userID, Toast.LENGTH_LONG)
+		                        .show();
+		 
+		                return true;
+		            }
+		        });
+		 }
 		 /*
 		  * uncommenta tetta svo ad allir listsar byrja opnadir
 		  * 
@@ -118,5 +140,14 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 //		 for (int position = 1; position <= listAdapter.getGroupCount(); position++)
 //			 expListView.expandGroup(position - 1);
 		}
+	 
+//	 private void isEmptyMessage(){
+//		List<String> header = new ArrayList<String>();
+//		HashMap <String, List<String>> messageMap = new HashMap<String, List<String>>();
+//		String message ="Enginn tími fannst."; 
+//		header.add(message);
+//		messageMap.put(header.get(0), "Því miður fannst enginn tími fyrir ofangreind leitarskilyrði");
+//	 };
+	 
 	 
 }

@@ -24,5 +24,9 @@ public class StundatofluTimi {
 		infoChild = infoChildData;
 		
 	}
+	
+	public boolean isEmpty(){
+		return listHeader.get(0) == "Enginn tími fannst";
+	}
 
 }

@@ -9,5 +9,5 @@ public interface Stundatafla {
 	void setPagerAndAdapter();
 	void setDate();
 	void setSpinners();
-	void setDrawer();	
+	void setDrawer();
 }

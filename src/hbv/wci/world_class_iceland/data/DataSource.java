@@ -180,6 +180,7 @@ public class DataSource {
 		List<String> hadegistimar = new ArrayList<String>();
 		List<String> siddegistimar = new ArrayList<String>();
 		List<String> kvoldtimar = new ArrayList<String>();
+		List<String> nothingFound = new ArrayList<String>();
 		
 		Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_HOPTIMAR, hoptimarAllColumns, null, null, null, null, null);
 		cursor.moveToFirst();
@@ -202,6 +203,7 @@ public class DataSource {
 				cursor.moveToNext();
 			}		
 		}
+		cursor.close();
 		
 		int i = 0;
 		if (!morguntimar.isEmpty()){
@@ -221,8 +223,20 @@ public class DataSource {
 			listChild.put(listHeader.get(i), kvoldtimar);
 		}
 		
-		cursor.close();
+		if (noHoptimar(morguntimar,hadegistimar,siddegistimar,kvoldtimar)){
+			listHeader.add("Enginn tími fannst");
+			nothingFound.add("Því miður fannst enginn tími undir gefnum leitarskilyrðum$id-1");
+			infoChild.put("id-1", "Þú getur prófað að breyta þeim eða skoða annan dag.");
+			listChild.put(listHeader.get(0), nothingFound);
+		}
+		
+		
 		return new StundatofluTimi(listHeader, listChild,infoChild);
+	}
+	
+	public boolean noHoptimar(List<String> mt, List<String> ht, List<String> st, List<String> kt)
+	{
+		return mt.isEmpty() && ht.isEmpty() && st.isEmpty() && kt.isEmpty();
 	}
 	
 	/**
@@ -251,7 +265,6 @@ public class DataSource {
 	 */
 	public boolean checkUser(String netfang, String lykilord, Context ctx) {
 		try{
-			System.out.println("2");
 		String sql = "SELECT _id,netfang,lykilord FROM notendur WHERE netfang = ? AND lykilord = ?";
 		Cursor c = mSQLiteDatabase.rawQuery(sql,  new String[] {netfang, lykilord});
 		SharedPreferences pref = ctx.getApplicationContext().getSharedPreferences("login", 0); // 0 - for private mode
@@ -260,7 +273,6 @@ public class DataSource {
 			c.moveToFirst();
 			editor.putLong("_id", c.getLong(0)); 
 			editor.putString("netfang", c.getString(1));
-			System.out.println("3");
 			editor.commit();
 		} catch (Exception e){
 			return false;

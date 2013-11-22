@@ -13,36 +13,24 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View.OnClickListener;
 import android.view.View;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import hbv.wci.world_class_iceland.opnunartimar.Opnunartimar;
-import hbv.wci.world_class_iceland.R.id;
-import hbv.wci.world_class_iceland.R.layout;
 import hbv.wci.world_class_iceland.Global;
 import hbv.wci.world_class_iceland.R;
 import hbv.wci.world_class_iceland.skraning.Innskraning;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.TimeZone;
 
 public class StundataflaActivity extends FragmentActivity implements Stundatafla {
 	/**
@@ -53,10 +41,6 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
-	
-	private String vikudagur;
-	private Map<String,Integer> map;
-
 	/**
 	 * Pager widget, hondlar animationid og hondlar listenerinn og utfaersluna a "swipe"inu
 	 */
@@ -237,6 +221,7 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 			Bundle bdl = new Bundle(3);
 			bdl.putInt("position", position%7);
 			bdl.putInt("update", i++);
+			bdl.putBoolean("isCurrent", position == mPager.getCurrentItem());
 			bdl.putString("stod", stod);
 			bdl.putString("tegund", tegund);
 			return bdl;
@@ -249,7 +234,7 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 		public int getItemPosition(Object item) {
 			return POSITION_NONE;
 		}
-
+		
 		@Override
 		public int getCount() {
 			return NUM_PAGES;
@@ -342,16 +327,5 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 	    }
 		
 		return super.onOptionsItemSelected(item);
-	}
-	
-	private void createMap(){
-		map = new HashMap<String,Integer>();
-		map.put("Mon", 0);
-		map.put("Tue", 1);
-		map.put("Wed", 2);
-		map.put("Thu", 3);
-		map.put("Fri", 4);
-		map.put("Sat", 5);
-		map.put("Sun", 6);
 	}
 }

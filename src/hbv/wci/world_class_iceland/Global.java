@@ -16,7 +16,8 @@ public class Global {
 	public static final String ST2 = "Mín stundatafla";
 	public static final String OPN = "Opnunartímar";
 	public static final String UTS = "Útskrá";
-	public static String[] drawerListItems = new String[] {ST1, OPN};
+	public static final String INS = "Innskráning";
+	public static String[] drawerListItems = new String[] {ST1, OPN, INS};
 	public static String currentUser;
 	public static Long currentUserID;
 	//public static SharedPreferences pref = this.getApplicationContext().getSharedPreferences("login", 0);

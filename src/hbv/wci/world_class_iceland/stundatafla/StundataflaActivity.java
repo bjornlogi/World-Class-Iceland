@@ -1,5 +1,6 @@
 package hbv.wci.world_class_iceland.stundatafla;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,8 +22,10 @@ import android.view.View;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import hbv.wci.world_class_iceland.opnunartimar.Opnunartimar;
 import hbv.wci.world_class_iceland.Global;
@@ -37,7 +40,7 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 	 * The number of pages (wizard steps) to show in this demo.
 	 */
 	private static final int NUM_PAGES = 7*5; //til ad "wrappa" stundatöflunni
-	private Context mContext = this;
+	public Context mContext = this;
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
@@ -242,7 +245,7 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 			return NUM_PAGES;
 		}
 	}
-	
+		
 	/* The click listner for ListView in the navigation drawer */
 	private class DrawerItemClickListener implements ListView.OnItemClickListener {
 		@Override
@@ -275,6 +278,9 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 				Intent i = new Intent(StundataflaActivity.this, Innskraning.class);
 				//i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
+			} else if (str.equals(Global.INS)) {
+				Intent i = new Intent(StundataflaActivity.this, Innskraning.class);
+				startActivity(i);
 			} else if (str.contains("@")) {
 				//Intent i = new Intent(??.this, UmNotenda.class);
 				//startActivity(i);
@@ -300,10 +306,9 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// If the nav drawer is open, hide action items related to the content view
-		
 		// check if user is logged in
 		if(Global.currentUser == null) {
-			Global.drawerListItems = new String[] {Global.ST1, Global.OPN};
+			Global.drawerListItems = new String[] {Global.ST1, Global.OPN, Global.INS};
 		} else {
 			Global.drawerListItems = new String[] {Global.currentUser, Global.ST1, Global.ST2, Global.OPN, Global.UTS};
 		}
@@ -330,4 +335,6 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 		
 		return super.onOptionsItemSelected(item);
 	}
+	
+	
 }

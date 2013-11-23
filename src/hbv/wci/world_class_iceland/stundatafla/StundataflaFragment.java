@@ -1,12 +1,18 @@
 package hbv.wci.world_class_iceland.stundatafla;
 
+import java.util.Calendar;
+
 import hbv.wci.world_class_iceland.Global;
 import hbv.wci.world_class_iceland.R;
 import hbv.wci.world_class_iceland.data.DataSource;
 import hbv.wci.world_class_iceland.data.StundatofluTimi;
 
+import android.app.AlarmManager;
 import android.app.Dialog;
+import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -36,6 +42,7 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 	private ViewGroup rootView;
 	private StundatofluTimi st;
 	private Context mContext = getActivity();
+	private PendingIntent pendingIntent;
 	
 	@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -163,7 +170,18 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 							// bæta
 							//dialog.dismiss();
 							
+							Intent myIntent = new Intent(getActivity(), AminningService.class);
+							pendingIntent = PendingIntent.getService(getActivity(), 0, myIntent, 0);
+
+							AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Service.ALARM_SERVICE);
+
+							Calendar calendar = Calendar.getInstance();
+							calendar.setTimeInMillis(System.currentTimeMillis());
+							calendar.add(Calendar.SECOND, 5);
 							
+							alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+							Toast.makeText(getActivity(), "Start Alarm", Toast.LENGTH_LONG).show();
+
 						}
 					});
 		 

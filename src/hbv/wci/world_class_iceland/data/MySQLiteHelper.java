@@ -34,10 +34,11 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	public static final String TABLE_NOTENDATIMAR = "notendatimar";
 	public static final String USERID = "uid";
 	public static final String HOPTIMIID = "htid";
+	public static final String AMINNING = "aminning";
 	
 	
 	private static final String DATABASE_NAME = "worldclass.db";
-	private static final int DATABASE_VERSION = 65;
+	private static final int DATABASE_VERSION = 66;
 	
 	/**
 	 * Tengir gagnagrunninn vid forritid
@@ -98,6 +99,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 		            + KLUKKAN       +	" TEXT, "
 		            + TIMI          +	" TEXT, "
 		            + DAGUR         +	" TEXT, "
+		            + AMINNING      +	" TEXT, "
 					+ " PRIMARY KEY("+USERID+", "+HOPTIMIID+") )";
 			db.execSQL(CREATE_TABLE);
 		}

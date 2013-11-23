@@ -1,7 +1,6 @@
 package hbv.wci.world_class_iceland;
 
 import hbv.wci.world_class_iceland.R;
-import hbv.wci.world_class_iceland.R.layout;
 import hbv.wci.world_class_iceland.data.DataSource;
 import hbv.wci.world_class_iceland.skraning.Innskraning;
 import hbv.wci.world_class_iceland.stundatafla.StundataflaActivity;
@@ -43,6 +42,7 @@ public class StartUpScreen extends Activity {
 			mDataSource.close();
 		}
 		else if (!databaseExists() && isNetworkAvailable()){
+			System.out.print("ble");
 			new AsyncExecution().execute("http://www.worldclass.is/heilsuraekt/stundaskra");
 		}
 	}
@@ -79,7 +79,7 @@ public class StartUpScreen extends Activity {
 //        	new AsyncExecution().execute("http://www.worldclass.is/heilsuraekt/stundaskra");
 //        	return false;
 //		}
-		return mDataSource.isEmpty();
+		return !mDataSource.isEmpty();
 	}
 	
 	/*

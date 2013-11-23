@@ -8,6 +8,8 @@ import java.util.TimeZone;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 public class Global {
 	public static final String ST1 = "Almenn stundatafla";
@@ -56,8 +58,12 @@ public class Global {
 		return pref.getString("netfang", "-1");
 	}
 	
-	public static void setUser(){
-		
+	public static void setUser(Context ctx, Long _id, String netfang){
+		SharedPreferences pref = ctx.getApplicationContext().getSharedPreferences("login", 0); // 0 - for private mode
+		Editor editor = pref.edit();
+		editor.putLong("_id", _id); 
+		editor.putString("netfang", netfang);
+		editor.commit();
 	}
 	
 	public static void updateDay() {

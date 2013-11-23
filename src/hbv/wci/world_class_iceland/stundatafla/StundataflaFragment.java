@@ -131,7 +131,8 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 					final Dialog dialog = new Dialog(getActivity());
 					dialog.setContentView(R.layout.dialog_min_stundatafla);
 					dialog.setCanceledOnTouchOutside(true);
-					dialog.setTitle( selected.split("$")[0] );
+					String[] split = selected.split("$");
+					dialog.setTitle( split[0] );
 				 
 							// set the custom dialog components - text, image and button
 					TextView text = (TextView) dialog.findViewById(R.id.text_eyda);
@@ -140,7 +141,7 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 					
 					TextView text2 = (TextView) dialog.findViewById(R.id.text_aminning);
 					String info2 = "Viltu áminningu áður en tíminn byrjar?";					
-					text.setText(info2);
+					text2.setText(info2);
 				
 					Button dialogButton = (Button) dialog.findViewById(R.id.dialog_eyda);
 					// if button is clicked, close the custom dialog

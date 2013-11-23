@@ -25,7 +25,6 @@ import android.os.Bundle;
 public class StartUpScreen extends Activity {
 	private DataSource mDataSource;
 	public Context mContext = this;
-	SharedPreferences pref;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +41,6 @@ public class StartUpScreen extends Activity {
 			mDataSource.close();
 		}
 		else if (!hoptimarExists() && isNetworkAvailable()){
-			System.out.print("ble");
 			new AsyncExecution().execute("http://www.worldclass.is/heilsuraekt/stundaskra");
 		}
 	}

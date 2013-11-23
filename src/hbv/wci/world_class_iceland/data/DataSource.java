@@ -139,7 +139,7 @@ public class DataSource {
 		mSQLiteDatabase.insert(MySQLiteHelper.TABLE_HOPTIMAR, null, values);		
 	}
 	
-	public void addNotendatimi(){
+	public void addNotendatimi(Long userID){
 		
 	}
 	

@@ -1,10 +1,6 @@
 package hbv.wci.world_class_iceland.stundatafla;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import hbv.wci.world_class_iceland.Global;
 import hbv.wci.world_class_iceland.R;
 import hbv.wci.world_class_iceland.data.DataSource;
@@ -20,11 +16,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+
 /**
  * Styrir hvad birtist a hverri sidu fyrir sig
  * 
@@ -39,6 +36,7 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 	private ExpandableListView expListView;
 	private ViewGroup rootView;
 	private StundatofluTimi st;
+	private Context mContext = getActivity();
 	
 	 @Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -126,7 +124,8 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 					SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("login", 0);
 					Long userID = pref.getLong("_id", -1);
 					//Toast.makeText(getActivity(), selected + "\nUserID is " + userID, Toast.LENGTH_LONG).show();
-					
+					if (Global.isUserLoggedIn(mContext))
+						mDataSource.addNotendatimi(Global.getUsersID(mContext));
 					
 					final Dialog dialog = new Dialog(getActivity());
 					dialog.setContentView(R.layout.dialog_min_stundatafla);

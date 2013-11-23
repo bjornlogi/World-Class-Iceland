@@ -127,7 +127,7 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 					
 					//Toast.makeText(getActivity(), selected + "\nUserID is " + userID, Toast.LENGTH_LONG).show();
 					//System.out.println(Global.isUserLoggedIn(getActivity()));
-					int uid = (int)(long)Global.getUsersID(getActivity());
+					int uid = Global.getUsersID(getActivity());
 					int htid = Integer.parseInt(selected.substring(getMoney+3));
 					
 					if (Global.isUserLoggedIn(getActivity()) && mDataSource.notendatimiExists(uid, htid))

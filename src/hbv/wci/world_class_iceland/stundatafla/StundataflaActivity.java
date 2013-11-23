@@ -256,7 +256,7 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 			String str = Global.drawerListItems[position];
 			if (str.equals(Global.ST1)) {
 				Intent i = new Intent(StundataflaActivity.this, StundataflaActivity.class);
-				i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
+				//i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
 			} else if (str.equals(Global.ST2)){
 				/*
@@ -269,7 +269,7 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 				startActivity(i);
 			} else if (str.equals(Global.UTS)) {
 				Global.currentUser = null;
-				Global.currentUserID = null;
+				Global.currentUserID = -1;
 				SharedPreferences pref = mContext.getApplicationContext().getSharedPreferences("login", 0); // 0 - for private mode
 				Editor editor = pref.edit();
 				editor.clear();

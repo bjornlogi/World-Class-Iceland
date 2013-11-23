@@ -231,7 +231,7 @@ public class Opnunartimar extends Activity implements OpnunVidmot {
 				startActivity(i);
 			} else if (str.equals(Global.UTS)) {
 				Global.currentUser = null;
-				Global.currentUserID = null;
+				Global.currentUserID = -1;
 				SharedPreferences pref = mContext.getApplicationContext().getSharedPreferences("login", 0); // 0 - for private mode
 				Editor editor = pref.edit();
 				editor.clear();

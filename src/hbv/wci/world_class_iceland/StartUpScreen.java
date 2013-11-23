@@ -17,6 +17,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -50,7 +51,7 @@ public class StartUpScreen extends Activity {
 		if (destination == "StundataflaActivity")
 			i = new Intent(StartUpScreen.this, StundataflaActivity.class);
 		else i = new Intent(StartUpScreen.this, Innskraning.class);
-		i.putExtra("vikudagur", Integer.toString(0));
+		//i.putExtra("vikudagur", Integer.toString(0));
 		startActivity(i);
 	}
 	

@@ -19,7 +19,7 @@ public class Global {
 	public static final String INS = "Innskráning";
 	public static String[] drawerListItems = new String[] {ST1, OPN, INS};
 	public static String currentUser;
-	public static Long currentUserID;
+	public static int currentUserID;
 	//public static SharedPreferences pref = this.getApplicationContext().getSharedPreferences("login", 0);
 	public static Editor editor;
 	public Global mContext = this;
@@ -46,12 +46,12 @@ public class Global {
 	
 	public static boolean isUserLoggedIn(Context ctx){
 		SharedPreferences pref = ctx.getApplicationContext().getSharedPreferences("login", 0);
-		return pref.getLong("_id", -1) != -1;
+		return pref.getInt("_id", -1) != -1;
 	}
 	
-	public static Long getUsersID(Context ctx){
+	public static int getUsersID(Context ctx){
 		SharedPreferences pref = ctx.getApplicationContext().getSharedPreferences("login", 0);
-		return pref.getLong("_id", -1);
+		return pref.getInt("_id", -1);
 	}
 	
 	public static String getUsersEmail(Context ctx){
@@ -59,10 +59,10 @@ public class Global {
 		return pref.getString("netfang", "-1");
 	}
 	
-	public static void setUser(Context ctx, Long _id, String netfang){
+	public static void setUser(Context ctx, int _id, String netfang){
 		SharedPreferences pref = ctx.getApplicationContext().getSharedPreferences("login", 0); // 0 - for private mode
 		Editor editor = pref.edit();
-		editor.putLong("_id", _id); 
+		editor.putInt("_id", _id); 
 		editor.putString("netfang", netfang);
 		editor.commit();
 	}

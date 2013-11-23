@@ -56,14 +56,6 @@ public class Nyskraning extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_nyskraning);
 		
-		java.util.TimeZone T1 = TimeZone.getTimeZone("GMT"); 
-		SimpleDateFormat DOW = new SimpleDateFormat ("EEE");
-		DOW.setTimeZone(T1);
-		
-		Date date = new Date();
-		vikudagur = DOW.format(date);
-		createMap();
-		
 		final EditText netfang = (EditText) findViewById(R.id.netfangInntak2);
 		final EditText lykilord = (EditText) findViewById(R.id.lykilordInntakNr1);
 		final EditText lykilord2 = (EditText) findViewById(R.id.lykilordInntakNr2);
@@ -111,9 +103,8 @@ public class Nyskraning extends Activity {
 							dialog.dismiss();
 							
 							Global.currentUser = netfang.getText().toString();
-							mDataSource.addUser(new String[]{netfang.getText().toString(),lykilord.getText().toString(),kennitala.getText().toString(),"nei","nei"});
+							mDataSource.addUser(new String[]{netfang.getText().toString(),lykilord.getText().toString(),kennitala.getText().toString(),"nei","nei"}, mContext);
 							Intent j = new Intent(Nyskraning.this, StundataflaActivity.class);
-							j.putExtra("vikudagur", Integer.toString(Global.map.get(vikudagur)));
 							startActivity(j);
 						}
 					});

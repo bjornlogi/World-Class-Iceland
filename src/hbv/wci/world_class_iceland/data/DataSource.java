@@ -160,7 +160,6 @@ public class DataSource {
 		values.put(MySQLiteHelper.TIMI, info[6]);
 		values.put(MySQLiteHelper.DAGUR, info[7]);
 		mSQLiteDatabase.insert(MySQLiteHelper.TABLE_NOTENDATIMAR, null, values);
-		System.out.println("added");
 	}
 	
 	public String[] getHoptimarInfo (int htid){
@@ -290,7 +289,7 @@ public class DataSource {
 	 * 
 	 * @param user 
 	 */
-	public void addUser(String[] user) {
+	public void addUser(String[] user, Context ctx) {
 		ContentValues values = new ContentValues();
 		
 		values.put(MySQLiteHelper.NETFANG, user[0]);
@@ -298,8 +297,8 @@ public class DataSource {
 		values.put(MySQLiteHelper.KENNITALA, user[2]);
 		values.put(MySQLiteHelper.STADFEST, user[3]);
 		values.put(MySQLiteHelper.KORT, user[4]);
-		
 		mSQLiteDatabase.insert(MySQLiteHelper.TABLE_NOTENDUR, null, values);	
+		checkUser(user[0], user[1], ctx);
 	}
 	
 	/**
@@ -310,16 +309,15 @@ public class DataSource {
 	 * @return boolean um hvort rett lykilord var gefid fyrir netfangid
 	 */
 	public boolean checkUser(String netfang, String lykilord, Context ctx) {
-		String sql = "SELECT _id,netfang,lykilord FROM notendur WHERE netfang = ? AND lykilord = ?";
-		Cursor c = mSQLiteDatabase.rawQuery(sql,  new String[] {netfang, lykilord});
 		
 		try{
+			String sql = "SELECT _id,netfang,lykilord FROM notendur WHERE netfang = ? AND lykilord = ?";
+			Cursor c = mSQLiteDatabase.rawQuery(sql,  new String[] {netfang, lykilord});
 			c.moveToFirst();	
+			Global.setUser(ctx, (int)(long)c.getLong(0), c.getString(1));
 		} catch (Exception e){
 			return false;
 		}
-		
-		Global.setUser(ctx, c.getLong(0), c.getString(1));
 		return true;
 	}
 	
@@ -330,14 +328,14 @@ public class DataSource {
 	 * @return hvort user se til i kerfinu nutegar
 	 */
 	public boolean userExists(String netfang){
-		String sql = "SELECT _id FROM notendur WHERE netfang = ?";
-		Cursor c = mSQLiteDatabase.rawQuery(sql,  new String[] {netfang});
 		try{
-			c.moveToFirst();	
+			String sql = "SELECT _id FROM notendur WHERE netfang = ?";
+			Cursor c = mSQLiteDatabase.rawQuery(sql,  new String[] {netfang});
+			//System.out.println();
+			return c.moveToFirst();	
 		} catch (Exception e){
 			return false;
 		}
-		return true;
 	}
 	
 	/**

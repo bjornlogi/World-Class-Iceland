@@ -199,6 +199,9 @@ public class Innskraning extends Activity {
 				Intent i = new Intent(Innskraning.this, Innskraning.class);
 				i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
+			} else if (str.equals(Global.INS)) {
+				Intent i = new Intent(Innskraning.this, Innskraning.class);
+				startActivity(i);
 			} else if (str.contains("@")) {
 				//Intent i = new Intent(Innskraning.this, UmNotenda.class);
 				//startActivity(i);
@@ -226,7 +229,7 @@ public class Innskraning extends Activity {
 		// If the nav drawer is open, hide action items related to the content view
 		// check if user is logged in
 		if(Global.currentUser == null) {
-			Global.drawerListItems = new String[] {Global.ST1, Global.OPN};
+			Global.drawerListItems = new String[] {Global.ST1, Global.OPN, Global.INS};
 		} else {
 			Global.drawerListItems = new String[] {Global.currentUser, Global.ST1, Global.ST2, Global.OPN, Global.UTS};
 		}

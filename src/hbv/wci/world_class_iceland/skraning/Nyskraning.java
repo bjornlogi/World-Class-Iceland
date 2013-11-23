@@ -197,16 +197,14 @@ public class Nyskraning extends Activity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		// If the nav drawer is open, hide action items related to the content view
-		// TODO er að vísa í opnun_menu sem er í Innskraning
-
 		// check if user is logged in
 		if(Global.currentUser == null) {
-			Global.drawerListItems = new String[] {Global.ST1, Global.OPN};
+			Global.drawerListItems = new String[] {Global.ST1, Global.OPN, Global.INS};
 		} else {
 			Global.drawerListItems = new String[] {Global.currentUser, Global.ST1, Global.ST2, Global.OPN, Global.UTS};
 		}
 		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, Global.drawerListItems));
-
+		
 		//boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
 		//menu.findItem(R.id.opnun_menu).setVisible(!drawerOpen);
 		return super.onPrepareOptionsMenu(menu);
@@ -238,6 +236,9 @@ public class Nyskraning extends Activity {
 				
 				Intent i = new Intent(Nyskraning.this, Innskraning.class);
 				i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
+				startActivity(i);
+			} else if (str.equals(Global.INS)) {
+				Intent i = new Intent(Nyskraning.this, Innskraning.class);
 				startActivity(i);
 			} else if (str.contains("@")) {
 				//Intent i = new Intent(Nyskraning.this, UmNotenda.class);

@@ -1,6 +1,5 @@
 package hbv.wci.world_class_iceland.stundatafla;
 
-
 import hbv.wci.world_class_iceland.Global;
 import hbv.wci.world_class_iceland.R;
 import hbv.wci.world_class_iceland.data.DataSource;
@@ -21,7 +20,6 @@ import android.widget.CheckBox;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 /**
  * Styrir hvad birtist a hverri sidu fyrir sig

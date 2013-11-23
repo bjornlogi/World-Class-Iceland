@@ -32,14 +32,18 @@ public class StartUpScreen extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_startupscreen);
-		pref = mContext.getApplicationContext().getSharedPreferences("login", 0);
-		if (databaseExists() && isUserLoggedIn()){
+		
+		if (databaseExists() && Global.isUserLoggedIn(mContext)){
 			Global.currentUser = pref.getString("netfang", "-1");
 			createIntent("StundataflaActivity");
+			mDataSource.close();
 		}
-		else if (!isUserLoggedIn() && databaseExists()){
+		else if (!Global.isUserLoggedIn(mContext) && databaseExists()){
 			createIntent("Innskraning");
 			mDataSource.close();
+		}
+		else if (!databaseExists() && isNetworkAvailable()){
+			new AsyncExecution().execute("http://www.worldclass.is/heilsuraekt/stundaskra");
 		}
 	}
 	
@@ -52,15 +56,15 @@ public class StartUpScreen extends Activity {
 		startActivity(i);
 	}
 	
-	private boolean isUserLoggedIn(){
-		Long userID = pref.getLong("_id", -1);
-		if (userID == -1)
-			return false;
-		else{
-			Global.currentUserID = userID;
-			return true;
-		}
-	}
+//	private boolean isUserLoggedIn(){
+//		Long userID = pref.getLong("_id", -1);
+//		if (userID == -1)
+//			return false;
+//		else{
+//			Global.currentUserID = userID;
+//			return true;
+//		}
+//	}
 	
 	/**
 	 * Kannar hvort ad gagnagrunnur se til, ef ekki ta byr hann til nytt async og skilar false
@@ -70,12 +74,12 @@ public class StartUpScreen extends Activity {
 	private boolean databaseExists(){
 		mDataSource = new DataSource(mContext);
 		mDataSource.open();
-		
-		if (mDataSource.isEmpty() && isNetworkAvailable()){
-        	new AsyncExecution().execute("http://www.worldclass.is/heilsuraekt/stundaskra");
-        	return false;
-		}
-		return true;
+//		
+//		if ( && isNetworkAvailable()){
+//        	new AsyncExecution().execute("http://www.worldclass.is/heilsuraekt/stundaskra");
+//        	return false;
+//		}
+		return mDataSource.isEmpty();
 	}
 	
 	/*
@@ -190,13 +194,12 @@ public class StartUpScreen extends Activity {
 		@Override
 		protected void onPostExecute(String result) {
 			progressDialog.dismiss();
-			if (isUserLoggedIn()){
-				Global.currentUser = pref.getString("netfang", "-1");
+			if (Global.isUserLoggedIn(mContext)){
 				createIntent("StundataflaActivity");
 			} else {
-				createIntent("Innskraning");
-				mDataSource.close();
+				createIntent("Innskraning");		
 			}
+			mDataSource.close();
 			super.onPostExecute(result);
 		}
 	}

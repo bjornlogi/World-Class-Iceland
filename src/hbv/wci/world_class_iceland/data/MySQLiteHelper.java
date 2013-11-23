@@ -37,7 +37,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	
 	
 	private static final String DATABASE_NAME = "worldclass.db";
-	private static final int DATABASE_VERSION = 64;
+	private static final int DATABASE_VERSION = 65;
 	
 	/**
 	 * Tengir gagnagrunninn vid forritid
@@ -88,9 +88,17 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 			db.execSQL(CREATE_TABLE);
 		} else if (name == TABLE_NOTENDATIMAR) {
 			CREATE_TABLE = "create table if not exists " + name + "( "
-					+ USERID + " integer,"
-					+ HOPTIMIID + " integer," +
-					" PRIMARY KEY("+USERID+", "+HOPTIMIID+") )";
+					+ USERID 		+ 	" integer,"
+					+ HOPTIMIID 	+ 	" integer,"
+					+ NAFN        	+	" TEXT, "
+					+ STOD          +	" TEXT, "
+		            + SALUR         +	" TEXT, "
+		            + TJALFARI      +	" TEXT, "
+		            + TEGUND        +	" TEXT, "
+		            + KLUKKAN       +	" TEXT, "
+		            + TIMI          +	" TEXT, "
+		            + DAGUR         +	" TEXT, "
+					+ " PRIMARY KEY("+USERID+", "+HOPTIMIID+") )";
 			db.execSQL(CREATE_TABLE);
 		}
 		

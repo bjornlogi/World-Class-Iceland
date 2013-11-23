@@ -71,6 +71,8 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 	 */
 	@Override
 	public void onBackPressed() {
+		if (Global.isUserLoggedIn(this))
+			super.onBackPressed();
 	}
 	/**
 	 * Stilli pager og adapterinn fyrir stundatofluna

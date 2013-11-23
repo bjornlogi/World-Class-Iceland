@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 
@@ -16,7 +17,9 @@ public class Global {
 	public static String[] drawerListItems = new String[] {ST1, OPN};
 	public static String currentUser;
 	public static Long currentUserID;
+	//public static SharedPreferences pref = this.getApplicationContext().getSharedPreferences("login", 0);
 	public static Editor editor;
+	public Global mContext = this;
 	
 	public static String dayOfWeek = initDay();
 	private static String initDay() {
@@ -37,6 +40,26 @@ public class Global {
 		return dagur;
 		
 	}
+	
+	public static boolean isUserLoggedIn(Context ctx){
+		SharedPreferences pref = ctx.getApplicationContext().getSharedPreferences("login", 0);
+		return pref.getLong("_id", -1) == -1;
+	}
+	
+	public static Long getUsersID(Context ctx){
+		SharedPreferences pref = ctx.getApplicationContext().getSharedPreferences("login", 0);
+		return pref.getLong("_id", -1);
+	}
+	
+	public static String getUsersEmail(Context ctx){
+		SharedPreferences pref = ctx.getApplicationContext().getSharedPreferences("login", 0);
+		return pref.getString("netfang", "-1");
+	}
+	
+	public static void setUser(){
+		
+	}
+	
 	public static void updateDay() {
 		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"), Locale.UK);
 		

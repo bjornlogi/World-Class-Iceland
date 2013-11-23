@@ -11,6 +11,7 @@ import hbv.wci.world_class_iceland.data.DataSource;
 import hbv.wci.world_class_iceland.data.StundatofluTimi;
 
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -149,5 +150,20 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 //		messageMap.put(header.get(0), "Því miður fannst enginn tími fyrir ofangreind leitarskilyrði");
 //	 };
 	 
-	 
+	 private class MyAsyncTask extends AsyncTask<Void, Void, Void> {
+		 private StundatofluTimi st;
+
+	     protected Void doInBackground(Void... params) {
+	    	 mDataSource.filter(stod, tegund);
+			 st = mDataSource.getAllStundatoflutimar();
+	    	 
+	    	 return null;
+	     }  
+	     
+	     @Override
+	     protected void onPostExecute(Void results) {
+	    	 //synaLista(st);
+	    	 //birtaLista();
+	     }
+	}
 }

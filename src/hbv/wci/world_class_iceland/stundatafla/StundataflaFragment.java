@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -140,7 +141,7 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 					text.setText(info);
 					
 					TextView text2 = (TextView) dialog.findViewById(R.id.text_aminning);
-					String info2 = "Viltu áminningu áður en tíminn byrjar?";					
+					String info2 = "Viltu áminningu?";					
 					text2.setText(info2);
 				
 					Button dialogButton = (Button) dialog.findViewById(R.id.dialog_eyda);
@@ -152,11 +153,26 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 							dialog.dismiss();
 						}
 					});
+					
+					CheckBox checkbox_aminning = (CheckBox) dialog.findViewById(R.id.checkbox_aminning);
+					checkbox_aminning.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							// bæta
+							//dialog.dismiss();
+							
+							
+						}
+					});
 		 
 					dialog.show();
 					
+					
+					
 					return true;
 				}
+				
+				
 			});
 		}
 		/*
@@ -166,6 +182,8 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 //		for (int position = 1; position <= listAdapter.getGroupCount(); position++)
 //			expListView.expandGroup(position - 1);
 	}
+	
+	
 
 	private class MyAsyncTask extends AsyncTask<Void, Void, Void> {
 		private StundatofluTimi st;

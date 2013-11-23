@@ -44,6 +44,7 @@ public class DataSource {
 	List<String> listHeader;
 	HashMap<String, List<String>> listChild;
 	HashMap<String, String> infoChild;
+	private Context ctx;
 	
 	private String[] hoptimarAllColumns = {
 		MySQLiteHelper.COLUMN_ID,
@@ -66,6 +67,20 @@ public class DataSource {
 		MySQLiteHelper.KORT
 	};
 	
+	private String[] notendatimarAllColumns = {
+			MySQLiteHelper.USERID,
+			MySQLiteHelper.HOPTIMIID,
+			MySQLiteHelper.NAFN,
+			MySQLiteHelper.STOD,
+			MySQLiteHelper.SALUR,
+			MySQLiteHelper.TJALFARI,
+			MySQLiteHelper.TEGUND,
+			MySQLiteHelper.KLUKKAN,
+			MySQLiteHelper.TIMI,
+			MySQLiteHelper.DAGUR,
+			MySQLiteHelper.AMINNING
+		};
+	
 	/**
 	 * Upphafsstillir sem tekur baedi context og dag a strengjaformi
 	 * 
@@ -73,6 +88,7 @@ public class DataSource {
 	 * @param dagurInntak
 	 */
 	public DataSource (Context context, String dagurInntak){
+		this.ctx = context;
 		mSQLiteHelper = new MySQLiteHelper(context);
 		dagur = dagurInntak;
 	}
@@ -83,6 +99,7 @@ public class DataSource {
 	 * @param context
 	 */
 	public DataSource (Context context) {
+		this.ctx = context;
 		mSQLiteHelper = new MySQLiteHelper(context);
 	}
 	
@@ -210,6 +227,87 @@ public class DataSource {
 		}
 	}
 	
+	public StundatofluTimi getAllStundataflanMinTimi(Context mContext){
+		listHeader = new ArrayList<String>();
+		listChild = new HashMap<String, List<String>>();
+		infoChild = new HashMap<String,String>();
+		
+		//List<List<String>> dagar = new ArrayList<List<String>>(Context cotx);
+		//dagar.add(0, new ArrayList<String>());
+		//dagar.get(0);
+		//Listi fyrir hvern dag
+		List<String> man = new ArrayList<String>();
+		List<String> tri = new ArrayList<String>();
+		List<String> mid = new ArrayList<String>();
+		List<String> fim = new ArrayList<String>();
+		List<String> fos = new ArrayList<String>();
+		List<String> lau = new ArrayList<String>();
+		List<String> sun = new ArrayList<String>();
+		
+		//String sql = "SELECT * FROM notendatimar WHERE uid = ?";
+		//Cursor cursor = mSQLiteDatabase.rawQuery(sql,  new String[] {Integer.toString(Global.getUsersID(mContext))});
+		//HashMap<String, Integer> map = Global.mapIS;
+		
+		Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_NOTENDATIMAR, notendatimarAllColumns, null, null, null, null, null);
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			//TODO gera tetta med lykkju ef haegt, t.d. bua til fylki af listum
+			//Hoptimar hoptimi = cursorToHoptimar(cursor);
+			//dagar.get(map.get(cursor.getString(9))).add(cursor.getString(2)+"$id"+cursor.getString(1));
+			//dagar[map.get(cursor.getString(9))].add(cursor.getString(2)+"$id"+cursor.getString(1));
+			if (cursor.getString(9).equals("Man"))
+				man.add(cursor.getString(2)+"$id"+cursor.getString(1));
+			else if (cursor.getString(9).equals("Tri"))
+				tri.add(cursor.getString(2)+"$id"+cursor.getString(1));
+			else if (cursor.getString(9).equals("Mid"))
+				mid.add(cursor.getString(2)+"$id"+cursor.getString(1));
+			else if (cursor.getString(9).equals("Fim"))
+				fim.add(cursor.getString(2)+"$id"+cursor.getString(1));
+			else if (cursor.getString(9).equals("Fos"))
+				fos.add(cursor.getString(2)+"$id"+cursor.getString(1));
+			else if (cursor.getString(9).equals("Lau"))
+				lau.add(cursor.getString(2)+"$id"+cursor.getString(1));
+			else
+				sun.add(cursor.getString(2) +"$id"+cursor.getString(1));
+			
+			infoChild.put("id"+cursor.getString(1), "Kemur bradum");
+			cursor.moveToNext();
+		}
+		cursor.close();
+		
+		int i = 0;
+		if (!man.isEmpty()){
+			listHeader.add("Mánudagur");
+			listChild.put(listHeader.get(i++), man);
+		}
+		if (!tri.isEmpty()){
+			listHeader.add("Þriðjudagur");
+			listChild.put(listHeader.get(i++), tri);
+		}
+		if (!mid.isEmpty()){
+			listHeader.add("Miðvikudagur");
+			listChild.put(listHeader.get(i++), mid);
+		}
+		if (!fim.isEmpty()){
+			listHeader.add("Fimmtudagur");
+			listChild.put(listHeader.get(i), fim);
+		}
+		if (!fos.isEmpty()){
+			listHeader.add("Föstudagur");
+			listChild.put(listHeader.get(i++), fos);
+		}
+		if (!lau.isEmpty()){
+			listHeader.add("Laugardagur");
+			listChild.put(listHeader.get(i++), lau);
+		}
+		if (!sun.isEmpty()){
+			listHeader.add("Sunnudagur");
+			listChild.put(listHeader.get(i), sun);
+		}
+		
+		return new StundatofluTimi(listHeader, listChild,infoChild);
+	}
+	
 	/**
 	 * Skilar Object sem hysir lista og tvaer hakktoflur svo haegt se ad vinna ur gognunum
 	 * og setja i stundatofluna
@@ -234,11 +332,11 @@ public class DataSource {
 			if(cursor.getLong(0) != 0) {
 				Hoptimar hoptimi = cursorToHoptimar(cursor);
 				if(hoptimi !=null) {
-					if (cursor.getString(7).equals("morgun"))
+					if (hoptimi.getTimi().equals("morgun"))
 						morguntimar.add(cursor.getString(1)+"$id"+cursor.getString(0));
-					else if (cursor.getString(7).equals("hadegi"))
+					else if (hoptimi.getTimi().equals("hadegi"))
 						hadegistimar.add(cursor.getString(1)+"$id"+cursor.getString(0));
-					else if (cursor.getString(7).equals("siddegi"))
+					else if (hoptimi.getTimi().equals("siddegi"))
 						siddegistimar.add(cursor.getString(1)+"$id"+cursor.getString(0));
 					else
 						kvoldtimar.add(cursor.getString(1)+"$id"+cursor.getString(0));

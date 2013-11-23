@@ -99,7 +99,7 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 	 */
 
 	public void birtaToflu(){
-		expListView = (ExpandableListView) rootView.findViewById(R.id.expandable1);
+		expListView = (ExpandableListView) rootView.findViewById(R.id.stundataflan);
 		stod = getArguments().getString("stod");
 		tegund = getArguments().getString("tegund"); 
 		mDataSource.filter(stod, tegund);

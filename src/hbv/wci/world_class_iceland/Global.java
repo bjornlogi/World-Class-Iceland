@@ -99,4 +99,18 @@ public class Global {
 		
 		return map;
 	}
+	
+	public static HashMap<String, Integer> mapIS = initMapIS();
+	private static HashMap<String, Integer> initMapIS(){
+		map = new HashMap<String,Integer>();
+		map.put("Man", 0);
+		map.put("Tri", 1);
+		map.put("Mid", 2);
+		map.put("Fim", 3);
+		map.put("Fos", 4);
+		map.put("Lau", 5);
+		map.put("Sun", 6);
+		
+		return map;
+	}
 }

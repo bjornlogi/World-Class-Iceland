@@ -32,16 +32,16 @@ public class StartUpScreen extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_startupscreen);
 		
-		if (databaseExists() && Global.isUserLoggedIn(mContext)){
+		if (hoptimarExists() && Global.isUserLoggedIn(mContext)){
 			Global.currentUser = pref.getString("netfang", "-1");
 			createIntent("StundataflaActivity");
 			mDataSource.close();
 		}
-		else if (!Global.isUserLoggedIn(mContext) && databaseExists()){
+		else if (!Global.isUserLoggedIn(mContext) && hoptimarExists()){
 			createIntent("Innskraning");
 			mDataSource.close();
 		}
-		else if (!databaseExists() && isNetworkAvailable()){
+		else if (!hoptimarExists() && isNetworkAvailable()){
 			System.out.print("ble");
 			new AsyncExecution().execute("http://www.worldclass.is/heilsuraekt/stundaskra");
 		}
@@ -71,7 +71,7 @@ public class StartUpScreen extends Activity {
 	 * 
 	 * @return hvort gagnagrunnur se til
 	 */
-	private boolean databaseExists(){
+	private boolean hoptimarExists(){
 		mDataSource = new DataSource(mContext);
 		mDataSource.open();
 //		

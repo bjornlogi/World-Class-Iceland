@@ -40,7 +40,7 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 	private ViewGroup rootView;
 	private StundatofluTimi st;
 	
-	 @Override
+	@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 		 
@@ -60,13 +60,13 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 			return rootView;
 		}
 	 
-	 /**
-	  * Finnur ut hvada dag a birta a voldu sidunni
-	  */
-	 public void akvedaDag(){
-		 int position = getArguments().getInt("position");
-		 TextView t = (TextView) rootView.findViewById(R.id.opnun_header);
-		 switch(position){
+	/**
+	 * Finnur ut hvada dag a birta a voldu sidunni
+	 */
+	public void akvedaDag(){
+		int position = getArguments().getInt("position");
+		TextView t = (TextView) rootView.findViewById(R.id.opnun_header);
+		switch(position){
 			case 0:
 				t.setText("Mánudagur");
 				mDataSource = new DataSource(getActivity(), "Man");
@@ -96,12 +96,12 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 				mDataSource = new DataSource(getActivity(), "Sun");
 				break;
 			}
-	 }
-	 /**
-	  * Birtir videigandi stundatoflu
-	  */
+	}
+	/**
+	 * Birtir videigandi stundatoflu
+	 */
 
-	 public void birtaToflu(){
+	public void birtaToflu(){
 		expListView = (ExpandableListView) rootView.findViewById(R.id.expandable1);
 		stod = getArguments().getString("stod");
 		tegund = getArguments().getString("tegund"); 
@@ -131,10 +131,10 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 					final Dialog dialog = new Dialog(getActivity());
 					dialog.setContentView(R.layout.dialog_min_stundatafla);
 					dialog.setCanceledOnTouchOutside(true);
-					String[] split = selected.split("$");
-					dialog.setTitle( split[0] );
+					int getMoney = selected.indexOf("$");
+					dialog.setTitle( selected.substring(0, getMoney) );
 				 
-							// set the custom dialog components - text, image and button
+					// set the custom dialog components - text, image and button
 					TextView text = (TextView) dialog.findViewById(R.id.text_eyda);
 					String info = "Viltu eyða tímanum úr þinni stundatöflu?";					
 					text.setText(info);
@@ -159,28 +159,28 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 				}
 			});
 		}
-		 /*
-		  * uncommenta tetta svo ad allir listsar byrja opnadir
-		  * 
-		  */
-//		 for (int position = 1; position <= listAdapter.getGroupCount(); position++)
-//			 expListView.expandGroup(position - 1);
+		/*
+		 * uncommenta tetta svo ad allir listsar byrja opnadir
+		 * 
+		 */
+//		for (int position = 1; position <= listAdapter.getGroupCount(); position++)
+//			expListView.expandGroup(position - 1);
 	}
-	 
-	 private class MyAsyncTask extends AsyncTask<Void, Void, Void> {
-		 private StundatofluTimi st;
 
-	     protected Void doInBackground(Void... params) {
-	    	 mDataSource.filter(stod, tegund);
-			 st = mDataSource.getAllStundatoflutimar();
-	    	 
-	    	 return null;
-	     }  
-	     
-	     @Override
-	     protected void onPostExecute(Void results) {
-	    	 //synaLista(st);
-	    	 //birtaLista();
-	     }
+	private class MyAsyncTask extends AsyncTask<Void, Void, Void> {
+		private StundatofluTimi st;
+
+		protected Void doInBackground(Void... params) {
+			mDataSource.filter(stod, tegund);
+			st = mDataSource.getAllStundatoflutimar();
+
+			return null;
+		}  
+
+		@Override
+		protected void onPostExecute(Void results) {
+			//synaLista(st);
+			//birtaLista();
+		}
 	}
 }

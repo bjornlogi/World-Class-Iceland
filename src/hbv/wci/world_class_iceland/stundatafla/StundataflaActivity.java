@@ -90,8 +90,7 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 	 * Finnur hvada dagur er til ad akveda hvada sidu a ad birta fyrst, t.e. dagurinn i dag
 	 */
 	public void setDate(){
-		//currentPos=7*2+Global.map.get(Global.dayOfWeek);
-		currentPos = 18;
+		currentPos = 7*2 + Global.map.get(Global.dayOfWeek);
 		mPager.setCurrentItem(currentPos);//viljum byrja i midjunni  
 	}
 	/**

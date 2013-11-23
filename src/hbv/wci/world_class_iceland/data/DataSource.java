@@ -1,6 +1,8 @@
 package hbv.wci.world_class_iceland.data;
 
 
+import hbv.wci.world_class_iceland.Global;
+
 import java.util.ArrayList;
 
 import java.util.HashMap;
@@ -264,20 +266,16 @@ public class DataSource {
 	 * @return boolean um hvort rett lykilord var gefid fyrir netfangid
 	 */
 	public boolean checkUser(String netfang, String lykilord, Context ctx) {
-		try{
 		String sql = "SELECT _id,netfang,lykilord FROM notendur WHERE netfang = ? AND lykilord = ?";
 		Cursor c = mSQLiteDatabase.rawQuery(sql,  new String[] {netfang, lykilord});
-		SharedPreferences pref = ctx.getApplicationContext().getSharedPreferences("login", 0); // 0 - for private mode
-		Editor editor = pref.edit();
-			// skilar exception ef id er ekki til
-			c.moveToFirst();
-			editor.putLong("_id", c.getLong(0)); 
-			editor.putString("netfang", c.getString(1));
-			editor.commit();
+		
+		try{
+			c.moveToFirst();	
 		} catch (Exception e){
 			return false;
 		}
-		//System.out.println(pref.getLong("_id", 0));
+		
+		Global.setUser(ctx, c.getLong(0), c.getString(1));
 		return true;
 	}
 	
@@ -288,21 +286,29 @@ public class DataSource {
 	 * @return hvort user se til i kerfinu nutegar
 	 */
 	public boolean userExists(String netfang){
-		Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_NOTENDUR, notendurAllColumns, null, null, null, null, null);
-		cursor.moveToFirst();
-		
-		boolean flag=false;
-
-		while (!cursor.isAfterLast()) {
-			Notandi notandi = cursorToNotandi(cursor);
-			
-			boolean userExists = notandi.getNetfang().equals(netfang);			
-			cursor.moveToNext();
-			if(userExists)
-				flag = true;
+		String sql = "SELECT _id FROM notendur WHERE netfang = ?";
+		Cursor c = mSQLiteDatabase.rawQuery(sql,  new String[] {netfang});
+		try{
+			c.moveToFirst();	
+		} catch (Exception e){
+			return false;
 		}
-		cursor.close();		
-		return flag;
+		return true;
+//		Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_NOTENDUR, notendurAllColumns, null, null, null, null, null);
+//		cursor.moveToFirst();
+//		
+//		boolean flag=false;
+//
+//		while (!cursor.isAfterLast()) {
+//			Notandi notandi = cursorToNotandi(cursor);
+//			
+//			boolean userExists = notandi.getNetfang().equals(netfang);			
+//			cursor.moveToNext();
+//			if(userExists)
+//				flag = true;
+//		}
+//		cursor.close();		
+//		return flag;
 	}
 	
 	/**

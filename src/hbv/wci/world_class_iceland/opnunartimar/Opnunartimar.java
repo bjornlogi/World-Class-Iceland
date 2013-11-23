@@ -284,6 +284,8 @@ public class Opnunartimar extends Activity implements OpnunVidmot {
 	
 	@Override
 	public void onBackPressed() {
+		if (Global.isUserLoggedIn(this))
+			super.onBackPressed();
 	}
 		
 	public void createMap(){

@@ -5,8 +5,11 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 public class Global {
 	public static final String ST1 = "Almenn stundatafla";
@@ -17,7 +20,9 @@ public class Global {
 	public static String[] drawerListItems = new String[] {ST1, OPN, INS};
 	public static String currentUser;
 	public static Long currentUserID;
+	//public static SharedPreferences pref = this.getApplicationContext().getSharedPreferences("login", 0);
 	public static Editor editor;
+	public Global mContext = this;
 	
 	public static String dayOfWeek = initDay();
 	private static String initDay() {
@@ -38,6 +43,30 @@ public class Global {
 		return dagur;
 		
 	}
+	
+	public static boolean isUserLoggedIn(Context ctx){
+		SharedPreferences pref = ctx.getApplicationContext().getSharedPreferences("login", 0);
+		return pref.getLong("_id", -1) == -1;
+	}
+	
+	public static Long getUsersID(Context ctx){
+		SharedPreferences pref = ctx.getApplicationContext().getSharedPreferences("login", 0);
+		return pref.getLong("_id", -1);
+	}
+	
+	public static String getUsersEmail(Context ctx){
+		SharedPreferences pref = ctx.getApplicationContext().getSharedPreferences("login", 0);
+		return pref.getString("netfang", "-1");
+	}
+	
+	public static void setUser(Context ctx, Long _id, String netfang){
+		SharedPreferences pref = ctx.getApplicationContext().getSharedPreferences("login", 0); // 0 - for private mode
+		Editor editor = pref.edit();
+		editor.putLong("_id", _id); 
+		editor.putString("netfang", netfang);
+		editor.commit();
+	}
+	
 	public static void updateDay() {
 		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"), Locale.UK);
 		

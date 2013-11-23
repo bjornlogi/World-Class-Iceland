@@ -167,14 +167,6 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 //			 expListView.expandGroup(position - 1);
 	}
 	 
-//	 private void isEmptyMessage(){
-//		List<String> header = new ArrayList<String>();
-//		HashMap <String, List<String>> messageMap = new HashMap<String, List<String>>();
-//		String message ="Enginn tími fannst."; 
-//		header.add(message);
-//		messageMap.put(header.get(0), "Því miður fannst enginn tími fyrir ofangreind leitarskilyrði");
-//	 };
-	 
 	 private class MyAsyncTask extends AsyncTask<Void, Void, Void> {
 		 private StundatofluTimi st;
 

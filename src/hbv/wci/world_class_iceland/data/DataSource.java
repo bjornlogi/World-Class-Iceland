@@ -139,6 +139,10 @@ public class DataSource {
 		mSQLiteDatabase.insert(MySQLiteHelper.TABLE_HOPTIMAR, null, values);		
 	}
 	
+	public void addNotendatimi(){
+		
+	}
+	
 	/**
 	 * Eydir tofluinni hoptimar ef hun er til. Tad er kallad a tetta fall ef asyncid sem naer i gognin
 	 * haettir af einhverjum astaedum
@@ -146,7 +150,6 @@ public class DataSource {
 	 */
 	public void dropTable(){
 		mSQLiteDatabase.execSQL("DROP table if exists hoptimar");
-		System.out.println("Table dropped");
 	}
 	
 	/**

@@ -33,7 +33,7 @@ public class StartUpScreen extends Activity {
 		setContentView(R.layout.activity_startupscreen);
 		
 		if (hoptimarExists() && Global.isUserLoggedIn(mContext)){
-			Global.currentUser = pref.getString("netfang", "-1");
+			Global.currentUser = Global.getUsersEmail(mContext);
 			createIntent("StundataflaActivity");
 			mDataSource.close();
 		}

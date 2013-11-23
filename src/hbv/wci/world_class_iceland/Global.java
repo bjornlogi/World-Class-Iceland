@@ -46,7 +46,7 @@ public class Global {
 	
 	public static boolean isUserLoggedIn(Context ctx){
 		SharedPreferences pref = ctx.getApplicationContext().getSharedPreferences("login", 0);
-		return pref.getLong("_id", -1) == -1;
+		return pref.getLong("_id", -1) != -1;
 	}
 	
 	public static Long getUsersID(Context ctx){

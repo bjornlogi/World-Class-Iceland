@@ -139,8 +139,49 @@ public class DataSource {
 		mSQLiteDatabase.insert(MySQLiteHelper.TABLE_HOPTIMAR, null, values);		
 	}
 	
-	public void addNotendatimi(Long userID){
+	public boolean notendatimiExists(int userID, int hoptimiID){
+		String sql = "SELECT uid FROM notendatimar WHERE uid = ? AND htid = ?";
+		Cursor c = mSQLiteDatabase.rawQuery(sql,  new String[] {Integer.toString(userID), Integer.toString(hoptimiID)});
+		return !c.moveToFirst();
+	}
+	
+	public void addNotendatimi(int userID, int hoptimiID){
+		ContentValues values = new ContentValues();
+		String[] info = getHoptimarInfo(hoptimiID);
 		
+		values.put("uid", userID);
+		values.put("htid", hoptimiID);
+		values.put(MySQLiteHelper.NAFN, info[0]);
+		values.put(MySQLiteHelper.STOD, info[1]);
+		values.put(MySQLiteHelper.SALUR, info[2]);
+		values.put(MySQLiteHelper.TJALFARI, info[3]);
+		values.put(MySQLiteHelper.TEGUND, info[4]);
+		values.put(MySQLiteHelper.KLUKKAN, info[5]);
+		values.put(MySQLiteHelper.TIMI, info[6]);
+		values.put(MySQLiteHelper.DAGUR, info[7]);
+		mSQLiteDatabase.insert(MySQLiteHelper.TABLE_NOTENDATIMAR, null, values);
+		System.out.println("added");
+	}
+	
+	public String[] getHoptimarInfo (int htid){
+		String sql = "SELECT * FROM hoptimar WHERE _id = ?";
+		Cursor c = mSQLiteDatabase.rawQuery(sql,  new String[] {Integer.toString(htid)});
+		try{
+			c.moveToFirst();
+			return new String[]{
+					c.getString(1),
+					c.getString(2),
+					c.getString(3),
+					c.getString(4),
+					c.getString(5),
+					c.getString(6),
+					c.getString(7),
+					c.getString(8)
+			};
+		}
+		catch(Exception e){
+			return null;
+		}
 	}
 	
 	/**
@@ -297,21 +338,6 @@ public class DataSource {
 			return false;
 		}
 		return true;
-//		Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_NOTENDUR, notendurAllColumns, null, null, null, null, null);
-//		cursor.moveToFirst();
-//		
-//		boolean flag=false;
-//
-//		while (!cursor.isAfterLast()) {
-//			Notandi notandi = cursorToNotandi(cursor);
-//			
-//			boolean userExists = notandi.getNetfang().equals(netfang);			
-//			cursor.moveToNext();
-//			if(userExists)
-//				flag = true;
-//		}
-//		cursor.close();		
-//		return flag;
 	}
 	
 	/**

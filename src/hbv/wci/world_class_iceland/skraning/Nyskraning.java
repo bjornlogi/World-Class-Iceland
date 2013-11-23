@@ -99,7 +99,7 @@ public class Nyskraning extends Activity {
 					String info ="Þú ert nú skráður í kerfið. Upplýsingar þínar:";
 					info += "\nnetfang: " + netfang.getText().toString();
 					info += "\nkennitala: " + kennitala.getText().toString();
-					info += "\nVinsamlegast ýttu á 'OK' til að samþykkja upplýsingarnar.";
+					info += "\nVinsamlegast ýttu á 'OK' til að halda áfram.";
 											
 					text.setText(info);
 					

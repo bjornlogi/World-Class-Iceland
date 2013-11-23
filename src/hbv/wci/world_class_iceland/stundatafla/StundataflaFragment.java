@@ -121,17 +121,22 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 			expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 					 
 				public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+					
 					final String selected = (String) listAdapter.getChild(groupPosition, childPosition);
-					SharedPreferences pref = getActivity().getApplicationContext().getSharedPreferences("login", 0);
-					Long userID = pref.getLong("_id", -1);
+					int getMoney = selected.indexOf("$");
+					
 					//Toast.makeText(getActivity(), selected + "\nUserID is " + userID, Toast.LENGTH_LONG).show();
-					if (Global.isUserLoggedIn(mContext))
-						mDataSource.addNotendatimi(Global.getUsersID(mContext));
+					//System.out.println(Global.isUserLoggedIn(getActivity()));
+					int uid = (int)(long)Global.getUsersID(getActivity());
+					int htid = Integer.parseInt(selected.substring(getMoney+3));
+					
+					if (Global.isUserLoggedIn(getActivity()) && mDataSource.notendatimiExists(uid, htid))
+						mDataSource.addNotendatimi(uid, htid);
 					
 					final Dialog dialog = new Dialog(getActivity());
 					dialog.setContentView(R.layout.dialog_min_stundatafla);
 					dialog.setCanceledOnTouchOutside(true);
-					int getMoney = selected.indexOf("$");
+					
 					dialog.setTitle( selected.substring(0, getMoney) );
 				 
 					// set the custom dialog components - text, image and button

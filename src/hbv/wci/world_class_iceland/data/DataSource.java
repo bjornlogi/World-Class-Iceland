@@ -251,9 +251,9 @@ public class DataSource {
 		Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_NOTENDATIMAR, notendatimarAllColumns, null, null, null, null, null);
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
-			int userID = (int)(long) cursor.getLong(0);
-			if (userID != Global.getUsersID(mContext))
-				break;
+			//int userID = (int)(long) cursor.getLong(0);
+			//if (userID != Global.getUsersID(mContext))
+				//break;
 			//TODO gera tetta med lykkju ef haegt, t.d. bua til fylki af listum
 			//Hoptimar hoptimi = cursorToHoptimar(cursor);
 			//dagar.get(map.get(cursor.getString(9))).add(cursor.getString(2)+"$id"+cursor.getString(1));

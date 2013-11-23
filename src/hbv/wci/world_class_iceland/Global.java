@@ -8,8 +8,6 @@ import java.util.TimeZone;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 
 public class Global {
 	public static final String ST1 = "Almenn stundatafla";

@@ -109,6 +109,6 @@ public class Global {
 		mapIS.put("Lau", 5);
 		mapIS.put("Sun", 6);
 		
-		return map;
+		return mapIS;
 	}
 }

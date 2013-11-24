@@ -1,6 +1,7 @@
 package hbv.wci.world_class_iceland.stundatafla;
 
 import java.util.Calendar;
+import java.util.List;
 
 import hbv.wci.world_class_iceland.Global;
 import hbv.wci.world_class_iceland.R;
@@ -40,8 +41,9 @@ public class StundataflanMin extends Activity {
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private ExpandableListAdapter listAdapter;
-	DataSource data = new DataSource(this);
+	private DataSource data = new DataSource(this);
 	private PendingIntent pendingIntent;
+	public StundatofluTimi st;
 
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +54,7 @@ public class StundataflanMin extends Activity {
 		setOnButtonClickedListener();
 		data.open();
 		
-		StundatofluTimi st = data.getAllStundataflanMinTimi(this);
+		st = data.getAllStundataflanMinTimi(mContext);
 		
 		ExpandableListView expListView = (ExpandableListView) findViewById(R.id.stundataflan);
 		listAdapter = new ExpandableListAdapter(this, st.listHeader, st.listChild, st.infoChild);
@@ -68,9 +70,6 @@ public class StundataflanMin extends Activity {
 				//System.out.println(Global.isUserLoggedIn(getActivity()));
 				int uid = Global.getUsersID(mContext);
 				int htid = Integer.parseInt(selected.substring(getMoney+3));
-				
-				if (Global.isUserLoggedIn(mContext) && data.notendatimiExists(uid, htid))
-					data.addNotendatimi(uid, htid);
 				
 				final Dialog dialog = new Dialog(mContext);
 				dialog.setContentView(R.layout.dialog_min_stundatafla);
@@ -107,9 +106,28 @@ public class StundataflanMin extends Activity {
 
 						AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Service.ALARM_SERVICE);
 
+						int getMoney2 = selected.indexOf("$");
+						String id = selected.substring(getMoney2+1,selected.length());
+						String info_time = st.infoChild.get(id);
+						String[] s = info_time.split(" - ");
+						String hour = s[0].split(":")[0];
+						String min = s[0].split(":")[1];						
+						
+						String[] uppl = data.getHoptimarInfo(Integer.parseInt(selected.substring(getMoney2+3,selected.length())));						
+						
+						int weekDay = Global.mapIS.get(uppl[7]);
+						weekDay += 2;
+						if (weekDay == 8) weekDay = 1;
+						
+						System.out.println(weekDay);
+						
 						Calendar calendar = Calendar.getInstance();
-						calendar.setTimeInMillis(System.currentTimeMillis());
-						calendar.add(Calendar.SECOND, 5);
+						
+						calendar.set(Calendar.DAY_OF_WEEK, weekDay);
+						//calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour));
+						//calendar.set(Calendar.MINUTE, Integer.parseInt(min));
+						calendar.set(Calendar.HOUR_OF_DAY, 14);
+						calendar.set(Calendar.MINUTE, 54);
 						
 						alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 						Toast.makeText(mContext, "Áminning hefur verið skráð", Toast.LENGTH_LONG).show();

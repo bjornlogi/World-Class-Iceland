@@ -86,6 +86,7 @@ public class StundataflaNyrTimi extends Activity {
 		final Button timasetning = (Button) findViewById(R.id.NyrTimiKlukkan);
 		final EditText lysing = (EditText) findViewById(R.id.lysingNyrTimi);
 		final Button nySkra = (Button) findViewById(R.id.nySkraTima);
+		final Spinner spinner = (Spinner) findViewById(R.id.spinner);
 		final Context context = this;
 		
 		timasetning.setOnClickListener(new View.OnClickListener() {
@@ -205,7 +206,7 @@ public class StundataflaNyrTimi extends Activity {
 		list1.add("Hádegistími");
 		list1.add("Síðdegistími");
 		list1.add("Kvöldtími");
-		ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, list1);
+		ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this, R.layout.spinner_item, list1);
 		dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_item);
 		spinner.setAdapter(dataAdapter1);		
 	}

@@ -17,6 +17,7 @@ public class AminningService extends Service {
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		// Toast.makeText(this, "MyAlarmService.onCreate()", Toast.LENGTH_LONG).show();
+		makeNotification();
 	}
 
 	@Override

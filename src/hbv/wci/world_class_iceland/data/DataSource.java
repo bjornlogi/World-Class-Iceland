@@ -232,9 +232,10 @@ public class DataSource {
 		listChild = new HashMap<String, List<String>>();
 		infoChild = new HashMap<String,String>();
 		
-		//List<List<String>> dagar = new ArrayList<List<String>>(Context cotx);
-		//dagar.add(0, new ArrayList<String>());
-		//dagar.get(0);
+		List<List<String>> dagar = new ArrayList<List<String>>();
+		for (int i = 0; i < 7; i++)
+			dagar.add(i, new ArrayList<String>());
+
 		//Listi fyrir hvern dag
 		List<String> man = new ArrayList<String>();
 		List<String> tri = new ArrayList<String>();
@@ -250,10 +251,13 @@ public class DataSource {
 		
 		Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_NOTENDATIMAR, notendatimarAllColumns, null, null, null, null, null);
 		cursor.moveToFirst();
+		System.out.println(cursor.getLong(0));
 		while (!cursor.isAfterLast()) {
-			//int userID = (int)(long) cursor.getLong(0);
-			//if (userID != Global.getUsersID(mContext))
-				//break;
+			int userID = (int)(long) cursor.getLong(0);
+			if (userID != Global.getUsersID(mContext)){
+				cursor.moveToNext();
+				continue;
+			}
 			//TODO gera tetta med lykkju ef haegt, t.d. bua til fylki af listum
 			//Hoptimar hoptimi = cursorToHoptimar(cursor);
 			//dagar.get(map.get(cursor.getString(9))).add(cursor.getString(2)+"$id"+cursor.getString(1));
@@ -335,16 +339,17 @@ public class DataSource {
 			if(cursor.getLong(0) != 0) {
 				Hoptimar hoptimi = cursorToHoptimar(cursor);
 				if(hoptimi !=null) {
+					System.out.println(hoptimi.getTimi());
 					if (hoptimi.getTimi().equals("morgun"))
-						morguntimar.add(cursor.getString(1)+"$id"+cursor.getString(0));
+						morguntimar.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
 					else if (hoptimi.getTimi().equals("hadegi"))
-						hadegistimar.add(cursor.getString(1)+"$id"+cursor.getString(0));
+						hadegistimar.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
 					else if (hoptimi.getTimi().equals("siddegi"))
-						siddegistimar.add(cursor.getString(1)+"$id"+cursor.getString(0));
+						siddegistimar.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
 					else
-						kvoldtimar.add(cursor.getString(1)+"$id"+cursor.getString(0));
+						kvoldtimar.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
 					
-					infoChild.put("id"+cursor.getString(0), hoptimi.toString());
+					infoChild.put("id"+hoptimi.getmId(), hoptimi.toString());
 				}
 				cursor.moveToNext();
 			}		
@@ -478,8 +483,8 @@ public class DataSource {
 			hoptimi.setTjalfari(cursor.getString(4));
 			hoptimi.setTegund(cursor.getString(5));
 			hoptimi.setKlukkan(cursor.getString(6));
-			hoptimi.setTimi(cursor.getString(7));
 			hoptimi.setDagur(cursor.getString(8));
+			hoptimi.setTimi(cursor.getString(7));
 			hoptimi.setLokad(cursor.getString(9));
 			return hoptimi;
 		}	

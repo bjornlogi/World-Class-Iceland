@@ -35,6 +35,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	public static final String USERID = "uid";
 	public static final String HOPTIMIID = "htid";
 	public static final String AMINNING = "aminning";
+	public static final String ISEINKA = "isEinkatimi";
 	
 	
 	private static final String DATABASE_NAME = "worldclass.db";
@@ -100,7 +101,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 		            + TIMI          +	" TEXT, "
 		            + DAGUR         +	" TEXT, "
 		            + AMINNING      +	" TEXT, "
-					+ " PRIMARY KEY("+USERID+", "+HOPTIMIID+") )";
+		            + ISEINKA 		+	" TEXT, "
+					+ " PRIMARY KEY("+USERID+", "+HOPTIMIID+","+ ISEINKA + ") )";
 			db.execSQL(CREATE_TABLE);
 		}
 		

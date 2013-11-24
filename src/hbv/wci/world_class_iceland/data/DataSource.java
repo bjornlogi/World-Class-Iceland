@@ -160,7 +160,7 @@ public class DataSource {
 		return c.moveToFirst();
 	}
 	
-	public void addNotendatimi(int userID, int hoptimiID){
+	public void addNotendatimi(int userID, int hoptimiID, String isEinka){
 		ContentValues values = new ContentValues();
 		String[] info = getHoptimarInfo(hoptimiID);
 		

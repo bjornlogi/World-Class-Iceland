@@ -1,5 +1,7 @@
 package hbv.wci.world_class_iceland.stundatafla;
 
+import java.util.Calendar;
+
 import hbv.wci.world_class_iceland.Global;
 import hbv.wci.world_class_iceland.R;
 import hbv.wci.world_class_iceland.data.DataSource;
@@ -7,6 +9,10 @@ import hbv.wci.world_class_iceland.data.StundatofluTimi;
 import hbv.wci.world_class_iceland.opnunartimar.Opnunartimar;
 import hbv.wci.world_class_iceland.skraning.Innskraning;
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.Dialog;
+import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -21,30 +27,106 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class StundataflanMin extends Activity {
 	public Context mContext = this;
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
-	
+	private ExpandableListAdapter listAdapter;
+	DataSource data = new DataSource(this);
+	private PendingIntent pendingIntent;
+
+
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_stundataflanmin);
 		
 		setDrawer();
 		
-		DataSource data = new DataSource(this);
 		data.open();
 		
 		StundatofluTimi st = data.getAllStundataflanMinTimi(this);
 		
 		ExpandableListView expListView = (ExpandableListView) findViewById(R.id.stundataflan);
-		ExpandableListAdapter listAdapter;
 		listAdapter = new ExpandableListAdapter(this, st.listHeader, st.listChild, st.infoChild);
 		expListView.setAdapter(listAdapter);
+		expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+			 
+			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+				
+				final String selected = (String) listAdapter.getChild(groupPosition, childPosition);
+				int getMoney = selected.indexOf("$");
+				
+				//Toast.makeText(getActivity(), selected + "\nUserID is " + userID, Toast.LENGTH_LONG).show();
+				//System.out.println(Global.isUserLoggedIn(getActivity()));
+				int uid = Global.getUsersID(mContext);
+				int htid = Integer.parseInt(selected.substring(getMoney+3));
+				
+				if (Global.isUserLoggedIn(mContext) && data.notendatimiExists(uid, htid))
+					data.addNotendatimi(uid, htid);
+				
+				final Dialog dialog = new Dialog(mContext);
+				dialog.setContentView(R.layout.dialog_min_stundatafla);
+				dialog.setCanceledOnTouchOutside(true);
+				
+				dialog.setTitle( selected.substring(0, getMoney) );
+			 
+				// set the custom dialog components - text, image and button
+				TextView text = (TextView) dialog.findViewById(R.id.text_eyda);
+				String info = "Viltu eyða tímanum úr þinni stundatöflu?";					
+				text.setText(info);
+				
+				TextView text2 = (TextView) dialog.findViewById(R.id.text_aminning);
+				String info2 = "Viltu áminningu?";					
+				text2.setText(info2);
+			
+				Button dialogButton = (Button) dialog.findViewById(R.id.dialog_eyda);
+				// if button is clicked, close the custom dialog
+				dialogButton.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						dialog.dismiss();
+					}
+				});
+				
+				CheckBox checkbox_aminning = (CheckBox) dialog.findViewById(R.id.checkbox_aminning);
+				checkbox_aminning.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						dialog.dismiss();
+						
+						Intent myIntent = new Intent(mContext, AminningService.class);
+						pendingIntent = PendingIntent.getService(mContext, 0, myIntent, 0);
+
+						AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Service.ALARM_SERVICE);
+
+						Calendar calendar = Calendar.getInstance();
+						calendar.setTimeInMillis(System.currentTimeMillis());
+						calendar.add(Calendar.SECOND, 5);
+						
+						alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+						Toast.makeText(mContext, "Áminning hefur verið skráð", Toast.LENGTH_LONG).show();
+
+					}
+				});
+	 
+				dialog.show();
+				
+				
+				
+				return true;
+			}
+			
+			
+		});
+		
 	}
 	
 	public void setDrawer()	{

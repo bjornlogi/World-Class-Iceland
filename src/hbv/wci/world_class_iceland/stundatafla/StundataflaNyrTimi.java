@@ -72,13 +72,6 @@ public class StundataflaNyrTimi extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_nyrtimi);
-		
-//		java.util.TimeZone T1 = TimeZone.getTimeZone("GMT"); 
-//		SimpleDateFormat DOW = new SimpleDateFormat ("EEE");
-//		DOW.setTimeZone(T1);
-//		
-//		Date date = new Date();
-//		vikudagur = DOW.format(date);
 		createMap();
 		setSpinners();
 		
@@ -109,7 +102,7 @@ public class StundataflaNyrTimi extends Activity {
                         timasetning.setText( "" + selectedHourString + ":" + selectedMinuteString);
                     }
                 }, hour, minute, true);
-                mTimePicker.setTitle("Select Time");
+                mTimePicker.setTitle("Veldu tíma");
                 mTimePicker.show();
 
             }
@@ -120,80 +113,80 @@ public class StundataflaNyrTimi extends Activity {
 			public void onClick(View v) {
 				mDataSource = new DataSource(mContext);
 				mDataSource.open();
-
+				String nafn = name.getText().toString();
 				Boolean noEmptyField = isNotEmpty(name.getText().toString(), timasetning.getText().toString(), String.valueOf(spinner.getSelectedItem()));
 				
-				Boolean nameError = isName(name.getText().toString());
+				Boolean nameError = isName(nafn);
 				Boolean timasetningError = isTimasetning(timasetning.getText().toString());
 				Boolean spinnerError = isSpinner(String.valueOf(spinner.getSelectedItem()));
 								
 				if (noEmptyField)
 				{
-					final Dialog dialog = new Dialog(context);
-					dialog.setContentView(R.layout.dialog_nyskra);
-					dialog.setCanceledOnTouchOutside(false);
-					dialog.setTitle("Til hamingju");
-		 
-					// set the custom dialog components - text, image and button
-					TextView text = (TextView) dialog.findViewById(R.id.text);
-					String info ="Tíminn þinn verður skráður í þína stundatöflu.";
-					info += "\nVinsamlegast ýttu á 'OK' til að samþykkja.";
-											
-					text.setText(info);
-					
-					Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
-					// if button is clicked, close the custom dialog
-					dialogButton.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							dialog.dismiss();
-							
-//							Global.currentUser = name.getText().toString();
-//							mDataSource.addUser(new String[]{name.getText().toString(),lykilord.getText().toString(),kennitala.getText().toString(),"nei","nei"});
-//							Intent j = new Intent(StundataflaNyrTimi.this, StundataflaActivity.class);
-//							j.putExtra("vikudagur", Integer.toString(map.get(vikudagur)));
-//							startActivity(j);
-						}
-					});
-		 
-					dialog.show();
+					showSuccessDialog();
 					
 				}			
 				else{
-					final Dialog dialog = new Dialog(context);
-					dialog.setContentView(R.layout.dialog_nyskra);
-					dialog.setCanceledOnTouchOutside(false);
-					dialog.setTitle("Villa");
-		 
-					// set the custom dialog components - text, image and button
-					TextView text = (TextView) dialog.findViewById(R.id.text);
-					String villa ="Vinsamlegast fylltu út í alla reiti!";
-					if(nameError)
-						villa+="\nNafn tíma er tómt";
-					if(timasetningError)
-						villa+="\nTímasetning er ekki valin";
-					if(spinnerError)
-						villa+="\nTími dags er ekki valinn";
-												
-					text.setText(villa);
-					
-					
-					Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
-					// if button is clicked, close the custom dialog
-					dialogButton.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							dialog.dismiss();
-						}
-					});
-					dialog.show();
-					//Toast.makeText(StundataflaNyrTimi.this, R.string.rangt, Toast.LENGTH_LONG).show();
+					showFailureDialog(nameError, timasetningError, spinnerError);
 				}
 									
 			}
 		});
 		
 		setDrawer();
+	}
+	
+	public void showSuccessDialog(){
+		final Dialog dialog = new Dialog(mContext);
+		dialog.setContentView(R.layout.dialog_nyskra);
+		dialog.setCanceledOnTouchOutside(false);
+		dialog.setTitle("Til hamingju");
+		// set the custom dialog components - text, image and button
+		TextView text = (TextView) dialog.findViewById(R.id.text);
+		String info ="Tíminn þinn verður skráður í þína stundatöflu.";
+		info += "\nVinsamlegast ýttu á 'OK' til að halda áfram.";
+								
+		text.setText(info);
+		
+		Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+		// if button is clicked, close the custom dialog
+		dialogButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+
+		dialog.show();
+	}
+	
+	public void showFailureDialog(Boolean nameError, Boolean timasetningError, Boolean spinnerError){
+		final Dialog dialog = new Dialog(mContext);
+		dialog.setContentView(R.layout.dialog_nyskra);
+		dialog.setCanceledOnTouchOutside(false);
+		dialog.setTitle("Villa");
+
+		// set the custom dialog components - text, image and button
+		TextView text = (TextView) dialog.findViewById(R.id.text);
+		String villa ="Vinsamlegast fylltu út í alla reiti!";
+		if(nameError)
+			villa+="\nNafn tíma er tómt";
+		if(timasetningError)
+			villa+="\nTímasetning er ekki valin";
+		if(spinnerError)
+			villa+="\nTími dags er ekki valinn";
+									
+		text.setText(villa);
+		
+		
+		Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+		// if button is clicked, close the custom dialog
+		dialogButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+		dialog.show();
 	}
 	/**
 	 * Upphafsstillir spinnerana sem eru valmyndin fyrir stundatofluna og setur a ta listener

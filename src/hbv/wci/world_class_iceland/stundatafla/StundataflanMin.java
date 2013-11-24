@@ -51,7 +51,7 @@ public class StundataflanMin extends Activity {
 		setContentView(R.layout.activity_stundataflanmin);
 		
 		setDrawer();
-		
+		setOnButtonClickedListener();
 		data.open();
 		
 		st = data.getAllStundataflanMinTimi(mContext);
@@ -145,6 +145,17 @@ public class StundataflanMin extends Activity {
 			
 		});
 		
+	}
+	
+	private void setOnButtonClickedListener(){
+		final Button skraNyjanTima = (Button) findViewById(R.id.skraNyjanTima);
+		skraNyjanTima.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent j = new Intent(StundataflanMin.this, StundataflaNyrTimi.class);
+				startActivity(j);
+			}
+		});
 	}
 	
 	public void setDrawer()	{

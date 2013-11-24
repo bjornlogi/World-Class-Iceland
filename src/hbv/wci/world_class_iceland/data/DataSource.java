@@ -255,9 +255,7 @@ public class DataSource {
 		while (!c.isAfterLast()) {
 			Hoptimar hoptimi = cursorToMinnTimi(c);
 			//TODO gera tetta med lykkju ef haegt, t.d. bua til fylki af listum
-			//Hoptimar hoptimi = cursorToHoptimar(cursor);
-			//dagar.get(map.get(cursor.getString(9))).add(cursor.getString(2)+"$id"+cursor.getString(1));
-			//dagar[map.get(cursor.getString(9))].add(cursor.getString(2)+"$id"+cursor.getString(1));
+			
 			if (hoptimi.getDagur().equals("Man"))
 				man.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
 			else if (hoptimi.getDagur().equals("Tri"))
@@ -293,7 +291,7 @@ public class DataSource {
 		}
 		if (!fim.isEmpty()){
 			listHeader.add("Fimmtudagur");
-			listChild.put(listHeader.get(i), fim);
+			listChild.put(listHeader.get(i++), fim);
 		}
 		if (!fos.isEmpty()){
 			listHeader.add("Föstudagur");

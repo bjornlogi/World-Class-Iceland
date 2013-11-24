@@ -142,7 +142,7 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 						info = "Tímanum var bætt í Mín Stundatafla.";
 					
 					if (Global.isUserLoggedIn(getActivity()) && !mDataSource.notendatimiExists(uid, htid))
-						mDataSource.addNotendatimi(uid, htid, "false");
+						mDataSource.addNotendatimi(uid, htid);
 					
 					final Dialog dialog = new Dialog(getActivity());
 					dialog.setContentView(R.layout.dialog_nyskra);

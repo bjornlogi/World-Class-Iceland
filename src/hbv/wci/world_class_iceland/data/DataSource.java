@@ -160,7 +160,11 @@ public class DataSource {
 		return c.moveToFirst();
 	}
 	
-	public void addNotendatimi(int userID, int hoptimiID, String isEinka){
+	public void addEinkatimi(String nafnTima, String timasetningTima, String weekday, String descr){
+		String sql = "SELECT htid FROM notendatimar WHERE in (SELECT )";
+	}
+	
+	public void addNotendatimi(int userID, int hoptimiID){
 		ContentValues values = new ContentValues();
 		String[] info = getHoptimarInfo(hoptimiID);
 		
@@ -174,6 +178,8 @@ public class DataSource {
 		values.put(MySQLiteHelper.KLUKKAN, info[5]);
 		values.put(MySQLiteHelper.TIMI, info[6]);
 		values.put(MySQLiteHelper.DAGUR, info[7]);
+		values.put(MySQLiteHelper.AMINNING, "false");
+		values.put(MySQLiteHelper.ISEINKA, "false");
 		mSQLiteDatabase.insert(MySQLiteHelper.TABLE_NOTENDATIMAR, null, values);
 	}
 	

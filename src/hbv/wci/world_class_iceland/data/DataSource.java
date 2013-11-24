@@ -163,6 +163,7 @@ public class DataSource {
 	public void addEinkatimi(String name, String time, String weekday, String descr){
 		String sql = "select max(htid) from notendatimar where isEinkatimi = 'true'";
 		Cursor c = mSQLiteDatabase.rawQuery(sql,null);
+		System.out.println(weekday);
 		int htid;
 		if (!c.moveToFirst())
 			htid = 0;

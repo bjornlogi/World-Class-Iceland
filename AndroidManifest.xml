@@ -64,7 +64,9 @@
         <activity 
             android:name=".Expandable"
             android:screenOrientation="portrait" ></activity>
-          
-    </application>
+        
+        <service 
+            android:name="hbv.wci.world_class_iceland.stundatafla.AminningService" ></service>	
+	</application>
 
 </manifest>

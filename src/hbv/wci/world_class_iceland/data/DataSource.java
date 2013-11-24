@@ -213,9 +213,9 @@ public class DataSource {
 		String sql = "SELECT aminning FROM notendatimar WHERE htid = ?";
 		Cursor c = mSQLiteDatabase.rawQuery(sql,  new String[] {id});
 		c.moveToFirst();
-		System.out.println(c.getLong(0));
+		String a = Long.toString(c.getLong(0));
 		c.close();
-		return "bla";
+		return a;
 	}
 	
 	public String[] getHoptimarInfo (int htid){

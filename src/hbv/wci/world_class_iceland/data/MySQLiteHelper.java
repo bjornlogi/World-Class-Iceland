@@ -39,7 +39,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	
 	
 	private static final String DATABASE_NAME = "worldclass.db";
-	private static final int DATABASE_VERSION = 67;
+	private static final int DATABASE_VERSION = 68;
 	
 	/**
 	 * Tengir gagnagrunninn vid forritid
@@ -119,6 +119,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		db.execSQL("DROP TABLE IF EXISTS "+TABLE_HOPTIMAR);
+		db.execSQL("DROP TABLE IF EXISTS "+TABLE_NOTENDATIMAR);
 		onCreate(db);
 	}
 	

@@ -52,7 +52,7 @@ public class Global {
 		input = input.replaceAll("ð","d");
 		input = input.replaceAll("á", "a");
 		input = input.replaceAll("ö","o");
-		return input.substring(0, 2);
+		return input.substring(0, 3);
 	}
 	
 	public static int getUsersID(Context ctx){

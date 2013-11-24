@@ -97,16 +97,17 @@ public class StundataflanMin extends Activity {
 				});
 				
 				checkbox_aminning = (CheckBox) dialog.findViewById(R.id.checkbox_aminning);
-				if(data.getAminning(selected.substring(getMoney+3)).equals("false")) {
-					checkbox_aminning.setChecked(false);
+				//System.out.println(data.getAminning(selected.substring(getMoney+3)));
+				
+				if(data.getAminning(selected.substring(getMoney+3)).equals("true")) {
+					checkbox_aminning.setChecked(true);
 				}
 				else {
-					checkbox_aminning.setChecked(true);
+					checkbox_aminning.setChecked(false);
 				}
 				checkbox_aminning.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						dialog.dismiss();
 						
 						Intent myIntent = new Intent(mContext, AminningService.class);
 						pendingIntent = PendingIntent.getService(mContext, 0, myIntent, 0);
@@ -143,14 +144,16 @@ public class StundataflanMin extends Activity {
 						
 						calendar.add(Calendar.SECOND, 5);
 						
-						alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-						Toast.makeText(mContext, "Áminning hefur verið skráð", Toast.LENGTH_LONG).show();
+						
 						
 						if (checkbox_aminning.isChecked()) {
 							data.updateAminning("true", selected.substring(getMoney2+3,selected.length()));
+							alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+							Toast.makeText(mContext, "Áminning hefur verið skráð", Toast.LENGTH_LONG).show();
 						}
 						else {
 							data.updateAminning("false", selected.substring(getMoney2+3,selected.length()));
+							Toast.makeText(mContext, "Áminning hefur verið afskráð", Toast.LENGTH_LONG).show();
 						}
 
 					}

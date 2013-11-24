@@ -135,7 +135,13 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 					int uid = Global.getUsersID(getActivity());
 					int htid = Integer.parseInt(selected.substring(getMoney+3));
 					
-					if (Global.isUserLoggedIn(getActivity()) && mDataSource.notendatimiExists(uid, htid))
+					String info;
+					if(mDataSource.notendatimiExists(uid, htid))
+						info = "Tíminn er þegar til staðar í Mín Stundatafla.";
+					else
+						info = "Tímanum var bætt í Mín Stundatafla.";
+					
+					if (Global.isUserLoggedIn(getActivity()) && !mDataSource.notendatimiExists(uid, htid))
 						mDataSource.addNotendatimi(uid, htid);
 					
 					final Dialog dialog = new Dialog(getActivity());
@@ -146,7 +152,7 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 				 
 					// set the custom dialog components - text, image and button
 					TextView text = (TextView) dialog.findViewById(R.id.text);
-					String info = "Viltu bæta tímanum í Mín Stundatafla?";					
+												
 					text.setText(info);
 					
 

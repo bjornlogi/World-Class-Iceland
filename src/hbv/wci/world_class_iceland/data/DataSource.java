@@ -157,7 +157,7 @@ public class DataSource {
 	public boolean notendatimiExists(int userID, int hoptimiID){
 		String sql = "SELECT uid FROM notendatimar WHERE uid = ? AND htid = ?";
 		Cursor c = mSQLiteDatabase.rawQuery(sql,  new String[] {Integer.toString(userID), Integer.toString(hoptimiID)});
-		return !c.moveToFirst();
+		return c.moveToFirst();
 	}
 	
 	public void addNotendatimi(int userID, int hoptimiID){

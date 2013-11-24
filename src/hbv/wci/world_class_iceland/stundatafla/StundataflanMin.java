@@ -44,6 +44,7 @@ public class StundataflanMin extends Activity {
 	private DataSource data = new DataSource(this);
 	private PendingIntent pendingIntent;
 	public StundatofluTimi st;
+	public CheckBox checkbox_aminning;
 
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +96,13 @@ public class StundataflanMin extends Activity {
 					}
 				});
 				
-				CheckBox checkbox_aminning = (CheckBox) dialog.findViewById(R.id.checkbox_aminning);
+				checkbox_aminning = (CheckBox) dialog.findViewById(R.id.checkbox_aminning);
+				if(data.getAminning(selected.substring(getMoney+3)).equals("ja")) {
+					checkbox_aminning.setChecked(true);
+				}
+				else {
+					checkbox_aminning.setChecked(false);
+				}
 				checkbox_aminning.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -122,23 +129,34 @@ public class StundataflanMin extends Activity {
 						System.out.println(weekDay);
 						
 						Calendar calendar = Calendar.getInstance();
+						calendar.setTimeInMillis(System.currentTimeMillis());
 						
-						calendar.set(Calendar.DAY_OF_WEEK, weekDay);
-						//calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour));
+						//calendar.set(Calendar.DAY_OF_WEEK, weekDay);
+						//calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour)-1);
 						//calendar.set(Calendar.MINUTE, Integer.parseInt(min));
-						calendar.set(Calendar.HOUR_OF_DAY, 14);
-						calendar.set(Calendar.MINUTE, 54);
+						//calendar.set(Calendar.MONTH, 11);
+						//calendar.set(Calendar.YEAR, 2013);				
+						//calendar.set(Calendar.DAY_OF_MONTH, 24);
+						//calendar.set(Calendar.HOUR_OF_DAY, 15);
+						//calendar.set(Calendar.MINUTE, 16);
+						//calendar.set(Calendar.SECOND, 0);
+						
+						calendar.add(Calendar.SECOND, 5);
 						
 						alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 						Toast.makeText(mContext, "Áminning hefur verið skráð", Toast.LENGTH_LONG).show();
+						
+						if (checkbox_aminning.isChecked()) {
+							data.updateAminning("nei", selected.substring(getMoney2+3,selected.length()));
+						}
+						else {
+							data.updateAminning("ja", selected.substring(getMoney2+3,selected.length()));
+						}
 
 					}
 				});
-	 
 				dialog.show();
-				
-				
-				
+			
 				return true;
 			}
 			

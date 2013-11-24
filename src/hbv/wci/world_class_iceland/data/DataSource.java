@@ -177,6 +177,21 @@ public class DataSource {
 		mSQLiteDatabase.insert(MySQLiteHelper.TABLE_NOTENDATIMAR, null, values);
 	}
 	
+	public void updateAminning(String aminning, String id){
+		ContentValues values = new ContentValues();
+		values.put(MySQLiteHelper.AMINNING, aminning);
+		mSQLiteDatabase.update(MySQLiteHelper.TABLE_NOTENDATIMAR, values, MySQLiteHelper.AMINNING +"="+ aminning, null);		
+	}
+	
+	public String getAminning(String id){
+		String sql = "SELECT aminning FROM notendatimar WHERE htid = ?";
+		Cursor c = mSQLiteDatabase.rawQuery(sql,  new String[] {id});
+		c.moveToFirst();
+		System.out.println(c.getLong(0));
+		c.close();
+		return "bla";
+	}
+	
 	public String[] getHoptimarInfo (int htid){
 		String sql = "SELECT * FROM hoptimar WHERE _id = ?";
 		Cursor c = mSQLiteDatabase.rawQuery(sql,  new String[] {Integer.toString(htid)});

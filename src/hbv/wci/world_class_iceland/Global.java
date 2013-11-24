@@ -47,6 +47,14 @@ public class Global {
 		return pref.getInt("_id", -1) != -1;
 	}
 	
+	public static String weekdayFormatForDB(String input){
+		input = input.replaceAll("Þ","T");
+		input = input.replaceAll("ð","d");
+		input = input.replaceAll("á", "a");
+		input = input.replaceAll("ö","o");
+		return input.substring(0, 2);
+	}
+	
 	public static int getUsersID(Context ctx){
 		SharedPreferences pref = ctx.getApplicationContext().getSharedPreferences("login", 0);
 		return pref.getInt("_id", -1);

@@ -111,19 +111,21 @@ public class StundataflaNyrTimi extends Activity {
 		nySkra.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				mDataSource = new DataSource(mContext);
-				mDataSource.open();
-				String nafn = name.getText().toString();
+				
+				String nafnTima = name.getText().toString();
+				String timasetningTima = timasetning.getText().toString();
+				String vikudagur = String.valueOf(spinner.getSelectedItem());
+				
 				Boolean noEmptyField = isNotEmpty(name.getText().toString(), timasetning.getText().toString(), String.valueOf(spinner.getSelectedItem()));
 				
-				Boolean nameError = isName(nafn);
-				Boolean timasetningError = isTimasetning(timasetning.getText().toString());
-				Boolean spinnerError = isSpinner(String.valueOf(spinner.getSelectedItem()));
+				Boolean nameError = isName(nafnTima);
+				Boolean timasetningError = isTimasetning(timasetningTima);
+				Boolean spinnerError = isSpinner(vikudagur);
 								
 				if (noEmptyField)
 				{
 					showSuccessDialog();
-					
+					addToDatabase(nafnTima, timasetningTima, Global.weekdayFormatForDB(vikudagur), lysing.getText().toString());
 				}			
 				else{
 					showFailureDialog(nameError, timasetningError, spinnerError);
@@ -133,6 +135,14 @@ public class StundataflaNyrTimi extends Activity {
 		});
 		
 		setDrawer();
+	}
+	
+	public void addToDatabase(String name, String time, String weekday, String descr){
+		mDataSource = new DataSource(mContext);
+		mDataSource.open();
+		
+		mDataSource.addEinkatimi(name,time,weekday, descr);
+		
 	}
 	
 	public void showSuccessDialog(){
@@ -194,11 +204,14 @@ public class StundataflaNyrTimi extends Activity {
 	public void setSpinners() {
 		spinner = (Spinner) findViewById(R.id.spinner);
 		List<String> list1 = new ArrayList<String>();
-		list1.add("Tími dags");
-		list1.add("Morguntími");
-		list1.add("Hádegistími");
-		list1.add("Síðdegistími");
-		list1.add("Kvöldtími");
+		list1.add("Veldu vikudag");
+		list1.add("Mánudagur");
+		list1.add("Þriðjudagur");
+		list1.add("Miðvikudagur");
+		list1.add("Fimmtudagur");
+		list1.add("Föstudagur");
+		list1.add("Laugardagur");
+		list1.add("Sunnudagur");
 		ArrayAdapter<String> dataAdapter1 = new ArrayAdapter<String>(this, R.layout.spinner_item, list1);
 		dataAdapter1.setDropDownViewResource(android.R.layout.simple_spinner_item);
 		spinner.setAdapter(dataAdapter1);		
@@ -217,7 +230,7 @@ public class StundataflaNyrTimi extends Activity {
 	}
 	
 	public static boolean isSpinner(String spinnerString){
-		return spinnerString.equals("Tími dags");
+		return spinnerString.equals("Veldu vikudag");
 	}
 	
 

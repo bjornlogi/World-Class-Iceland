@@ -160,6 +160,30 @@ public class DataSource {
 		return c.moveToFirst();
 	}
 	
+	public void addEinkatimi(String name, String time, String weekday, String descr){
+		String sql = "select max(htid) from notendatimar where isEinkatimi = 'true'";
+		Cursor c = mSQLiteDatabase.rawQuery(sql,null);
+		int htid;
+		if (!c.moveToFirst())
+			htid = 0;
+		else
+			htid = (int)(long)c.getLong(0)+1;
+		ContentValues values = new ContentValues();
+		values.put("uid", Global.getUsersID(this.ctx));
+		values.put("htid", htid);
+		values.put(MySQLiteHelper.NAFN, name);
+		values.put(MySQLiteHelper.STOD, descr);
+		values.put(MySQLiteHelper.SALUR, "");
+		values.put(MySQLiteHelper.TJALFARI, "");
+		values.put(MySQLiteHelper.TEGUND, "");
+		values.put(MySQLiteHelper.KLUKKAN, time);
+		values.put(MySQLiteHelper.TIMI, "");
+		values.put(MySQLiteHelper.DAGUR, weekday);
+		values.put(MySQLiteHelper.AMINNING, "false");
+		values.put(MySQLiteHelper.ISEINKA, "true");
+		mSQLiteDatabase.insert(MySQLiteHelper.TABLE_NOTENDATIMAR, null, values);
+	}
+	
 	public void addNotendatimi(int userID, int hoptimiID){
 		ContentValues values = new ContentValues();
 		String[] info = getHoptimarInfo(hoptimiID);
@@ -174,6 +198,8 @@ public class DataSource {
 		values.put(MySQLiteHelper.KLUKKAN, info[5]);
 		values.put(MySQLiteHelper.TIMI, info[6]);
 		values.put(MySQLiteHelper.DAGUR, info[7]);
+		values.put(MySQLiteHelper.AMINNING, "false");
+		values.put(MySQLiteHelper.ISEINKA, "false");
 		mSQLiteDatabase.insert(MySQLiteHelper.TABLE_NOTENDATIMAR, null, values);
 	}
 	

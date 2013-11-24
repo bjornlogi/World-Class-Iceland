@@ -97,11 +97,11 @@ public class StundataflanMin extends Activity {
 				});
 				
 				checkbox_aminning = (CheckBox) dialog.findViewById(R.id.checkbox_aminning);
-				if(data.getAminning(selected.substring(getMoney+3)).equals("ja")) {
-					checkbox_aminning.setChecked(true);
+				if(data.getAminning(selected.substring(getMoney+3)).equals("false")) {
+					checkbox_aminning.setChecked(false);
 				}
 				else {
-					checkbox_aminning.setChecked(false);
+					checkbox_aminning.setChecked(true);
 				}
 				checkbox_aminning.setOnClickListener(new View.OnClickListener() {
 					@Override
@@ -147,10 +147,10 @@ public class StundataflanMin extends Activity {
 						Toast.makeText(mContext, "Áminning hefur verið skráð", Toast.LENGTH_LONG).show();
 						
 						if (checkbox_aminning.isChecked()) {
-							data.updateAminning("nei", selected.substring(getMoney2+3,selected.length()));
+							data.updateAminning("true", selected.substring(getMoney2+3,selected.length()));
 						}
 						else {
-							data.updateAminning("ja", selected.substring(getMoney2+3,selected.length()));
+							data.updateAminning("false", selected.substring(getMoney2+3,selected.length()));
 						}
 
 					}

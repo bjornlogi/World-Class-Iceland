@@ -106,8 +106,12 @@ public class StundataflanMin extends Activity {
 
 						AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Service.ALARM_SERVICE);
 
-						
 						int getMoney2 = selected.indexOf("$");
+						String id = selected.substring(getMoney2+1,selected.length());
+						String info_time = st.infoChild.get(id);
+						String[] s = info_time.split(" - ");
+						String hour = s[0].split(":")[0];
+						String min = s[0].split(":")[1];						
 						
 						String[] uppl = data.getHoptimarInfo(Integer.parseInt(selected.substring(getMoney2+3,selected.length())));						
 						
@@ -119,16 +123,12 @@ public class StundataflanMin extends Activity {
 						
 						Calendar calendar = Calendar.getInstance();
 						
+						calendar.set(Calendar.DAY_OF_WEEK, weekDay);
+						//calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour));
+						//calendar.set(Calendar.MINUTE, Integer.parseInt(min));
+						calendar.set(Calendar.HOUR_OF_DAY, 14);
+						calendar.set(Calendar.MINUTE, 54);
 						
-
-						calendar.set(Calendar.DAY_OF_WEEK, 2);
-						calendar.set(Calendar.YEAR, 2011);				
-						calendar.set(Calendar.DAY_OF_MONTH, 5);
-						calendar.set(Calendar.HOUR_OF_DAY, 21);
-						calendar.set(Calendar.MINUTE, 43);
-						
-						calendar.add(Calendar.SECOND, 5);
-
 						alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 						Toast.makeText(mContext, "Áminning hefur verið skráð", Toast.LENGTH_LONG).show();
 

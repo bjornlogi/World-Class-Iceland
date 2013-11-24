@@ -18,6 +18,23 @@ public class Hoptimar {
 	private String dagur;
 	private String lokad;
 	
+	public Hoptimar(long mId, String nafn, String stod, String salur, String tjalfari, String tegund,
+			String klukkan, String timi, String dagur){
+		this.mId = mId;
+		this.nafn = nafn;
+		this.stod = stod;
+		this.salur = salur;
+		this.tjalfari = tjalfari;
+		this.tegund = tegund;
+		this.klukkan = klukkan;
+		this.timi = timi;
+		this.dagur = dagur;
+	}
+	
+	public Hoptimar(){
+		
+	}
+	
 	/**
 	 * Naer i ID
 	 * 
@@ -205,13 +222,24 @@ public class Hoptimar {
 	 */
 	@Override
 	public String toString(){
-		String upplysingar = "";
-		upplysingar += klukkan;
-		upplysingar += "\n" + stod;
+		String info = "";
+		info += klukkan;
+		info += "\n" + stod;
 		if (!salur.equals(""))
-			upplysingar += "\n" + salur;
+			info += "\n" + salur;
 		if (!tjalfari.equals(""))
-			upplysingar += "\n" + tjalfari;
-		return upplysingar;
+			info += "\n" + tjalfari;
+		return info;
+	}
+	
+	public String minnTimiInfo(){
+		String info = "";
+		info += klukkan;
+		info += "\n" + stod;
+		if (!salur.equals(""))
+			info += " - " + salur;
+		if (!tjalfari.equals(""))
+			info += "\n" + tjalfari;
+		return info;
 	}
 }

@@ -243,41 +243,36 @@ public class DataSource {
 		List<String> lau = new ArrayList<String>();
 		List<String> sun = new ArrayList<String>();
 		
-		//String sql = "SELECT * FROM notendatimar WHERE uid = ?";
-		//Cursor cursor = mSQLiteDatabase.rawQuery(sql,  new String[] {Integer.toString(Global.getUsersID(mContext))});
-		//HashMap<String, Integer> map = Global.mapIS;
+		String sql = "SELECT * FROM notendatimar WHERE uid = ? ORDER BY klukkan ASC";
+		Cursor c = mSQLiteDatabase.rawQuery(sql,  new String[] {Integer.toString(Global.getUsersID(mContext))});
+//		//HashMap<String, Integer> map = Global.mapIS;
 		
-		Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_NOTENDATIMAR, notendatimarAllColumns, null, null, null, null, null);
-		cursor.moveToFirst();
-		while (!cursor.isAfterLast()) {
-			int userID = (int)(long) cursor.getLong(0);
-			if (userID != Global.getUsersID(mContext)){
-				cursor.moveToNext();
-				continue;
-			}
+		c.moveToFirst();
+		while (!c.isAfterLast()) {
+			Hoptimar hoptimi = cursorToMinnTimi(c);
 			//TODO gera tetta med lykkju ef haegt, t.d. bua til fylki af listum
 			//Hoptimar hoptimi = cursorToHoptimar(cursor);
 			//dagar.get(map.get(cursor.getString(9))).add(cursor.getString(2)+"$id"+cursor.getString(1));
 			//dagar[map.get(cursor.getString(9))].add(cursor.getString(2)+"$id"+cursor.getString(1));
-			if (cursor.getString(9).equals("Man"))
-				man.add(cursor.getString(2)+"$id"+cursor.getString(1));
-			else if (cursor.getString(9).equals("Tri"))
-				tri.add(cursor.getString(2)+"$id"+cursor.getString(1));
-			else if (cursor.getString(9).equals("Mid"))
-				mid.add(cursor.getString(2)+"$id"+cursor.getString(1));
-			else if (cursor.getString(9).equals("Fim"))
-				fim.add(cursor.getString(2)+"$id"+cursor.getString(1));
-			else if (cursor.getString(9).equals("Fos"))
-				fos.add(cursor.getString(2)+"$id"+cursor.getString(1));
-			else if (cursor.getString(9).equals("Lau"))
-				lau.add(cursor.getString(2)+"$id"+cursor.getString(1));
+			if (hoptimi.getDagur().equals("Man"))
+				man.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
+			else if (hoptimi.getDagur().equals("Tri"))
+				tri.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
+			else if (hoptimi.getDagur().equals("Mid"))
+				mid.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
+			else if (hoptimi.getDagur().equals("Fim"))
+				fim.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
+			else if (hoptimi.getDagur().equals("Fos"))
+				fos.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
+			else if (hoptimi.getDagur().equals("Lau"))
+				lau.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
 			else
-				sun.add(cursor.getString(2) +"$id"+cursor.getString(1));
+				sun.add(hoptimi.getNafn() +"$id"+hoptimi.getmId());
 			
-			infoChild.put("id"+cursor.getString(1), "Kemur bradum");
-			cursor.moveToNext();
+			infoChild.put("id"+hoptimi.getmId(), hoptimi.minnTimiInfo());
+			c.moveToNext();
 		}
-		cursor.close();
+		c.close();
 		
 		int i = 0;
 		if (!man.isEmpty()){
@@ -377,7 +372,6 @@ public class DataSource {
 			listChild.put(listHeader.get(0), nothingFound);
 		}
 		
-		
 		return new StundatofluTimi(listHeader, listChild,infoChild);
 	}
 	
@@ -433,7 +427,6 @@ public class DataSource {
 		try{
 			String sql = "SELECT _id FROM notendur WHERE netfang = ?";
 			Cursor c = mSQLiteDatabase.rawQuery(sql,  new String[] {netfang});
-			//System.out.println();
 			return c.moveToFirst();	
 		} catch (Exception e){
 			return false;
@@ -487,6 +480,7 @@ public class DataSource {
 		return null;
 	}
 	
+	
 	/**
 	 * Skilar nyjum notenda ef allt gengur upp
 	 * @param cursor
@@ -494,6 +488,16 @@ public class DataSource {
 	 */
 	private Notandi cursorToNotandi(Cursor cursor) {
 		return new Notandi(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
+	}
+	
+	/**
+	 * Skilar nyjum minum tima a lesanlegra formi
+	 * @param cursor
+	 * @return timi sem notandi hefur valid ser
+	 */
+	private Hoptimar cursorToMinnTimi(Cursor cursor){
+		return new Hoptimar(cursor.getLong(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), 
+				cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8), cursor.getString(9));
 	}
 
 }

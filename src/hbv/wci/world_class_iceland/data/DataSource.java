@@ -129,19 +129,17 @@ public class DataSource {
 		ContentValues values = new ContentValues();
 		
 		String[] a = hoptimi[5].split(" - ");
-		String b = hoptimi[5];
+		
+		String b = "";
 		
 		String x="", y="";
-		if(a[0].length()==4) {
-			// t.d. ef a[0]=="6:30"
-			x = "0" + a[0];
-		}
-		if(a[1].length()==4) {
-			y = "0" + a[1];
-		}
-		if( x!="" || y!="" ) {
-			b = x + " - " + y; 
-		}
+		if(a[0].length()==4) { x = "0" + a[0]; }
+		else { x = a[0]; }
+		
+		if(a[1].length()==4) { y = "0" + a[1]; }
+		else { y = a[1]; }
+		
+		if( x!="" || y!="" ) { b = x + " - " + y; }
 		
 		
 		values.put(MySQLiteHelper.NAFN, hoptimi[0]);

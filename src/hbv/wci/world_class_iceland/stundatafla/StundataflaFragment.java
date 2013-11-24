@@ -180,7 +180,7 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 							calendar.add(Calendar.SECOND, 5);
 							
 							alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-							Toast.makeText(getActivity(), "Start Alarm", Toast.LENGTH_LONG).show();
+							Toast.makeText(getActivity(), "Áminning hefur verið skráð", Toast.LENGTH_LONG).show();
 
 						}
 					});

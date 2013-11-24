@@ -259,11 +259,9 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 				//i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
 			} else if (str.equals(Global.ST2)){
-				
 				Intent i = new Intent(StundataflaActivity.this, StundataflanMin.class);
 				//i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
-				
 			} else if (str.equals(Global.OPN)){
 				Intent i = new Intent(StundataflaActivity.this, Opnunartimar.class);
 				startActivity(i);

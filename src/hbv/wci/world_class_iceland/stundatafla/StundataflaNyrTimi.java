@@ -163,6 +163,8 @@ public class StundataflaNyrTimi extends Activity {
 			@Override
 			public void onClick(View v) {
 				dialog.dismiss();
+				Intent i = new Intent(StundataflaNyrTimi.this, StundataflanMin.class);
+				startActivity(i);
 			}
 		});
 
@@ -285,11 +287,9 @@ public class StundataflaNyrTimi extends Activity {
 				i.putExtra("vikudagur", Integer.toString(map.get(Global.dayOfWeek)));
 				startActivity(i);
 			} else if (str.equals(Global.ST2)){
-				/*
-				Intent i = new Intent(StundataflaNyrTimi.this, ?.class);
+				Intent i = new Intent(StundataflaNyrTimi.this, StundataflanMin.class);
 				i.putExtra("vikudagur", Integer.toString(map.get(Global.dayOfWeek)));
 				startActivity(i);
-				*/
 			} else if (str.equals(Global.OPN)){
 				Intent i = new Intent(StundataflaNyrTimi.this, Opnunartimar.class);
 				startActivity(i);

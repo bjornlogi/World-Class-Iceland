@@ -205,16 +205,16 @@ public class DataSource {
 	public void updateAminning(String aminning, String id){
 		ContentValues values = new ContentValues();
 		values.put(MySQLiteHelper.AMINNING, aminning);
-		mSQLiteDatabase.update(MySQLiteHelper.TABLE_NOTENDATIMAR, values, MySQLiteHelper.AMINNING +"="+ aminning, null);		
+		mSQLiteDatabase.update(MySQLiteHelper.TABLE_NOTENDATIMAR, values, "htid="+ id, null);
 	}
 	
 	public String getAminning(String id){
-		String sql = "SELECT aminning FROM notendatimar WHERE htid = ?";
+		String sql = "SELECT * FROM notendatimar WHERE htid = ?";
 		Cursor c = mSQLiteDatabase.rawQuery(sql,  new String[] {id});
 		c.moveToFirst();
-		System.out.println(c.getLong(0));
+		String a = c.getString(10);
 		c.close();
-		return "bla";
+		return a;
 	}
 	
 	public String[] getHoptimarInfo (int htid){

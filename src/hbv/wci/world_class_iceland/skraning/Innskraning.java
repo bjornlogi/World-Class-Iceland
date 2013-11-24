@@ -31,6 +31,7 @@ import hbv.wci.world_class_iceland.opnunartimar.Opnunartimar;
 import hbv.wci.world_class_iceland.R;
 import hbv.wci.world_class_iceland.stundatafla.StundataflaActivity;
 import hbv.wci.world_class_iceland.stundatafla.StundataflaNyrTimi;
+import hbv.wci.world_class_iceland.stundatafla.StundataflanMin;
 import hbv.wci.world_class_iceland.Global;
 
 import java.net.UnknownHostException;
@@ -184,11 +185,9 @@ public class Innskraning extends Activity {
 				i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
 			} else if (str.equals(Global.ST2)){
-				/*
-				Intent i = new Intent(Innskraning.this, ?.class);
+				Intent i = new Intent(Innskraning.this, StundataflanMin.class);
 				i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
-				*/
 			} else if (str.equals(Global.OPN)){
 				Intent i = new Intent(Innskraning.this, Opnunartimar.class);
 				startActivity(i);

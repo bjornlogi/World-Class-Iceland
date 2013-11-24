@@ -251,7 +251,6 @@ public class DataSource {
 		
 		Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_NOTENDATIMAR, notendatimarAllColumns, null, null, null, null, null);
 		cursor.moveToFirst();
-		System.out.println(cursor.getLong(0));
 		while (!cursor.isAfterLast()) {
 			int userID = (int)(long) cursor.getLong(0);
 			if (userID != Global.getUsersID(mContext)){
@@ -339,7 +338,6 @@ public class DataSource {
 			if(cursor.getLong(0) != 0) {
 				Hoptimar hoptimi = cursorToHoptimar(cursor);
 				if(hoptimi !=null) {
-					System.out.println(hoptimi.getTimi());
 					if (hoptimi.getTimi().equals("morgun"))
 						morguntimar.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
 					else if (hoptimi.getTimi().equals("hadegi"))

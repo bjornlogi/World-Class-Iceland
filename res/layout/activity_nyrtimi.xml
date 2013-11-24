@@ -65,7 +65,7 @@
 		            android:layout_height="wrap_content"
 		            android:background="@drawable/rounded_edittext"
 		            android:textStyle="bold"
-		            android:textColor="#ffffff"
+		            android:textColor="@color/wcRed"
 		            android:layout_marginRight="5dp"/>
 				
 				<EditText

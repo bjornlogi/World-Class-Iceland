@@ -182,7 +182,7 @@ public class DataSource {
 		Cursor c = mSQLiteDatabase.rawQuery(sql,  new String[] {Integer.toString(htid)});
 		try{
 			c.moveToFirst();
-			return new String[]{
+			String[] a = new String[]{
 					c.getString(1),
 					c.getString(2),
 					c.getString(3),
@@ -192,10 +192,14 @@ public class DataSource {
 					c.getString(7),
 					c.getString(8)
 			};
+			c.close();
+			return a;
 		}
 		catch(Exception e){
+			c.close();
 			return null;
 		}
+		
 	}
 	
 	/**

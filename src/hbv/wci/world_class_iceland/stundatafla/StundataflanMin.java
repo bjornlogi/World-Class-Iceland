@@ -1,6 +1,7 @@
 package hbv.wci.world_class_iceland.stundatafla;
 
 import java.util.Calendar;
+import java.util.List;
 
 import hbv.wci.world_class_iceland.Global;
 import hbv.wci.world_class_iceland.R;
@@ -40,8 +41,9 @@ public class StundataflanMin extends Activity {
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private ExpandableListAdapter listAdapter;
-	DataSource data = new DataSource(this);
+	private DataSource data = new DataSource(this);
 	private PendingIntent pendingIntent;
+	public StundatofluTimi st;
 
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +54,7 @@ public class StundataflanMin extends Activity {
 		
 		data.open();
 		
-		StundatofluTimi st = data.getAllStundataflanMinTimi(this);
+		st = data.getAllStundataflanMinTimi(mContext);
 		
 		ExpandableListView expListView = (ExpandableListView) findViewById(R.id.stundataflan);
 		listAdapter = new ExpandableListAdapter(this, st.listHeader, st.listChild, st.infoChild);
@@ -68,9 +70,6 @@ public class StundataflanMin extends Activity {
 				//System.out.println(Global.isUserLoggedIn(getActivity()));
 				int uid = Global.getUsersID(mContext);
 				int htid = Integer.parseInt(selected.substring(getMoney+3));
-				
-				if (Global.isUserLoggedIn(mContext) && data.notendatimiExists(uid, htid))
-					data.addNotendatimi(uid, htid);
 				
 				final Dialog dialog = new Dialog(mContext);
 				dialog.setContentView(R.layout.dialog_min_stundatafla);
@@ -107,10 +106,29 @@ public class StundataflanMin extends Activity {
 
 						AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Service.ALARM_SERVICE);
 
-						Calendar calendar = Calendar.getInstance();
-						calendar.setTimeInMillis(System.currentTimeMillis());
-						calendar.add(Calendar.SECOND, 5);
 						
+						int getMoney2 = selected.indexOf("$");
+						
+						String[] uppl = data.getHoptimarInfo(Integer.parseInt(selected.substring(getMoney2+3,selected.length())));						
+						
+						int weekDay = Global.mapIS.get(uppl[7]);
+						weekDay += 2;
+						if (weekDay == 8) weekDay = 1;
+						
+						System.out.println(weekDay);
+						
+						Calendar calendar = Calendar.getInstance();
+						
+						
+
+						calendar.set(Calendar.DAY_OF_WEEK, 2);
+						calendar.set(Calendar.YEAR, 2011);				
+						calendar.set(Calendar.DAY_OF_MONTH, 5);
+						calendar.set(Calendar.HOUR_OF_DAY, 21);
+						calendar.set(Calendar.MINUTE, 43);
+						
+						calendar.add(Calendar.SECOND, 5);
+
 						alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 						Toast.makeText(mContext, "Áminning hefur verið skráð", Toast.LENGTH_LONG).show();
 

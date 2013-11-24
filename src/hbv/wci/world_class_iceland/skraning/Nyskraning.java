@@ -32,6 +32,7 @@ import hbv.wci.world_class_iceland.R.string;
 import hbv.wci.world_class_iceland.data.DataSource;
 import hbv.wci.world_class_iceland.opnunartimar.Opnunartimar;
 import hbv.wci.world_class_iceland.stundatafla.StundataflaActivity;
+import hbv.wci.world_class_iceland.stundatafla.StundataflanMin;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -213,11 +214,9 @@ public class Nyskraning extends Activity {
 				i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
 			} else if (str.equals(Global.ST2)){
-				/*
-				Intent i = new Intent(Nyskraning.this, ?.class);
+				Intent i = new Intent(Nyskraning.this, StundataflanMin.class);
 				i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
-				*/
 			} else if (str.equals(Global.OPN)){
 				Intent i = new Intent(Nyskraning.this, Opnunartimar.class);
 				startActivity(i);

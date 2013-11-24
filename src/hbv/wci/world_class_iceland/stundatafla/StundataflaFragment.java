@@ -139,21 +139,19 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 						mDataSource.addNotendatimi(uid, htid);
 					
 					final Dialog dialog = new Dialog(getActivity());
-					dialog.setContentView(R.layout.dialog_min_stundatafla);
-					dialog.setCanceledOnTouchOutside(true);
+					dialog.setContentView(R.layout.dialog_nyskra);
+					dialog.setCanceledOnTouchOutside(false);
 					
 					dialog.setTitle( selected.substring(0, getMoney) );
 				 
 					// set the custom dialog components - text, image and button
-					TextView text = (TextView) dialog.findViewById(R.id.text_eyda);
-					String info = "Viltu eyða tímanum úr þinni stundatöflu?";					
+					TextView text = (TextView) dialog.findViewById(R.id.text);
+					String info = "Viltu bæta tímanum í Mín Stundatafla?";					
 					text.setText(info);
 					
-					TextView text2 = (TextView) dialog.findViewById(R.id.text_aminning);
-					String info2 = "Viltu áminningu?";					
-					text2.setText(info2);
+
 				
-					Button dialogButton = (Button) dialog.findViewById(R.id.dialog_eyda);
+					Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
 					// if button is clicked, close the custom dialog
 					dialogButton.setOnClickListener(new View.OnClickListener() {
 						@Override
@@ -162,30 +160,7 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 						}
 					});
 					
-					CheckBox checkbox_aminning = (CheckBox) dialog.findViewById(R.id.checkbox_aminning);
-					checkbox_aminning.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							dialog.dismiss();
-							
-							Intent myIntent = new Intent(getActivity(), AminningService.class);
-							pendingIntent = PendingIntent.getService(getActivity(), 0, myIntent, 0);
-
-							AlarmManager alarmManager = (AlarmManager) getActivity().getSystemService(Service.ALARM_SERVICE);
-
-							Calendar calendar = Calendar.getInstance();
-							calendar.setTimeInMillis(System.currentTimeMillis());
-							calendar.add(Calendar.SECOND, 5);
-							
-							alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-							Toast.makeText(getActivity(), "Áminning hefur verið skráð", Toast.LENGTH_LONG).show();
-
-						}
-					});
-		 
 					dialog.show();
-					
-					
 					
 					return true;
 				}

@@ -37,7 +37,7 @@ public class AminningService extends Service {
 	public void onStart(Intent intent, int startId) {
 		// TODO Auto-generated method stub
 		super.onStart(intent, startId);
-		Toast.makeText(this, "MyAlarmService.onStart()", Toast.LENGTH_LONG).show();
+		// Toast.makeText(this, "MyAlarmService.onStart()", Toast.LENGTH_LONG).show();
 		makeNotification();
 		
 	}
@@ -53,8 +53,8 @@ public class AminningService extends Service {
 		NotificationCompat.Builder mBuilder =
 		        new NotificationCompat.Builder(this)
 		        .setSmallIcon(R.drawable.ic_launcher)
-		        .setContentTitle("My notification")
-		        .setContentText("Hello World!");
+		        .setContentTitle("World Class Iceland")
+		        .setContentText("Það byrjar tími eftir eina klst");
 		// Creates an explicit intent for an Activity in your app
 		Intent resultIntent = new Intent(this, StundataflanMin.class);
 

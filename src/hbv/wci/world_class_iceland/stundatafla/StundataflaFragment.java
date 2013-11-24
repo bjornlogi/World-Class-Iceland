@@ -158,7 +158,6 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 					dialogButton.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View v) {
-							// bæta
 							dialog.dismiss();
 						}
 					});
@@ -167,8 +166,7 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 					checkbox_aminning.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View v) {
-							// bæta
-							//dialog.dismiss();
+							dialog.dismiss();
 							
 							Intent myIntent = new Intent(getActivity(), AminningService.class);
 							pendingIntent = PendingIntent.getService(getActivity(), 0, myIntent, 0);

@@ -274,9 +274,9 @@ public class DataSource {
 		listChild = new HashMap<String, List<String>>();
 		infoChild = new HashMap<String,String>();
 		
-		List<List<String>> dagar = new ArrayList<List<String>>();
-		for (int i = 0; i < 7; i++)
-			dagar.add(i, new ArrayList<String>());
+//		List<List<String>> dagar = new ArrayList<List<String>>();
+//		for (int i = 0; i < 7; i++)
+//			dagar.add(i, new ArrayList<String>());
 
 		//Listi fyrir hvern dag
 		List<String> man = new ArrayList<String>();

@@ -339,6 +339,14 @@ public class DataSource {
 			}
 		}
 		
+		if (j == 0){
+			List<String> nothingFound = new ArrayList<String>();
+			listHeader.add("Enginn tími fannst");
+			nothingFound.add("Þú hefur ekki bætt við neinum tímum$id-1");
+			infoChild.put("id-1", "Ýttu á tímana í Almennu stundatöflunni til að bæta við hérna.");
+			listChild.put(listHeader.get(0), nothingFound);
+		}
+		
 //		int i = 0;
 //		if (!man.isEmpty()){
 //			listHeader.add("Mánudagur");
@@ -400,7 +408,7 @@ public class DataSource {
 		List<String> hadegistimar = new ArrayList<String>();
 		List<String> siddegistimar = new ArrayList<String>();
 		List<String> kvoldtimar = new ArrayList<String>();
-		List<String> nothingFound = new ArrayList<String>();
+		
 		
 		Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_HOPTIMAR, hoptimarAllColumns, null, null, null, null, null);
 		cursor.moveToFirst();
@@ -444,6 +452,7 @@ public class DataSource {
 		}
 		
 		if (noHoptimar(morguntimar,hadegistimar,siddegistimar,kvoldtimar)){
+			List<String> nothingFound = new ArrayList<String>();
 			listHeader.add("Enginn tími fannst");
 			nothingFound.add("Því miður fannst enginn tími undir gefnum leitarskilyrðum$id-1");
 			infoChild.put("id-1", "Þú getur prófað að breyta þeim eða skoða annan dag.");

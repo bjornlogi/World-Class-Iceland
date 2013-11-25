@@ -55,9 +55,6 @@ public class StundataflanMin extends Activity {
 		setDrawer();
 		setOnButtonClickedListener();
 		data.open();
-		
-		
-		
 		expListView = (ExpandableListView) findViewById(R.id.stundataflan);
 		setAdapter();
 		
@@ -65,9 +62,20 @@ public class StundataflanMin extends Activity {
 	
 	private void setAdapter(){
 		st = data.getAllStundataflanMinTimi(mContext);
+		if (st.isEmpty()){
+			listAdapter = new ExpandableListAdapter(mContext, st.listHeader, st.listChild, st.infoChild){
+				@Override
+				public boolean isChildSelectable(int groupPosition, int childPosition){
+					return false;
+				}
+			};
+			expListView.setAdapter(listAdapter);
+		}
+		else{
 		listAdapter = new ExpandableListAdapter(this, st.listHeader, st.listChild, st.infoChild);
 		expListView.setAdapter(listAdapter);
 		setListListener();
+		}
 	}
 	
 	private void setListListener(){

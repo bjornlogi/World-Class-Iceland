@@ -3,7 +3,7 @@ package hbv.wci.world_class_iceland;
 import hbv.wci.world_class_iceland.R;
 import hbv.wci.world_class_iceland.data.DataSource;
 import hbv.wci.world_class_iceland.skraning.Innskraning;
-import hbv.wci.world_class_iceland.stundatafla.AlmennStundatafla;
+import hbv.wci.world_class_iceland.stundatafla.StundataflanMin;
 
 import java.net.UnknownHostException;
 
@@ -16,12 +16,11 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.widget.Toast;
 
 public class StartUpScreen extends Activity {
 	private DataSource mDataSource;
@@ -33,7 +32,7 @@ public class StartUpScreen extends Activity {
 		setContentView(R.layout.activity_startupscreen);
 		if (hoptimarExists() && Global.isUserLoggedIn(mContext)){
 			Global.currentUser = Global.getUsersEmail(mContext);
-			createIntent("StundataflaActivity");
+			createIntent("StundataflanMin");
 			mDataSource.close();
 		}
 		else if (!Global.isUserLoggedIn(mContext) && hoptimarExists()){
@@ -43,26 +42,19 @@ public class StartUpScreen extends Activity {
 		else if (!hoptimarExists() && isNetworkAvailable()){
 			new AsyncExecution().execute("http://www.worldclass.is/heilsuraekt/stundaskra");
 		}
+		else if (!isNetworkAvailable() && !hoptimarExists()){
+			Toast.makeText(this, "Þú þarft að tengjast netinu til að geta séð stundatöfluna", Toast.LENGTH_LONG).show();
+			createIntent("Innskraning");
+		}
 	}
 	
 	private void createIntent(String destination){
 		Intent i;
-		if (destination == "StundataflaActivity")
-			i = new Intent(StartUpScreen.this, AlmennStundatafla.class);
+		if (destination == "StundataflanMin")
+			i = new Intent(StartUpScreen.this, StundataflanMin.class);
 		else i = new Intent(StartUpScreen.this, Innskraning.class);
-		//i.putExtra("vikudagur", Integer.toString(0));
 		startActivity(i);
 	}
-	
-//	private boolean isUserLoggedIn(){
-//		Long userID = pref.getLong("_id", -1);
-//		if (userID == -1)
-//			return false;
-//		else{
-//			Global.currentUserID = userID;
-//			return true;
-//		}
-//	}
 	
 	/**
 	 * Kannar hvort ad gagnagrunnur se til, ef ekki ta byr hann til nytt async og skilar false
@@ -72,16 +64,14 @@ public class StartUpScreen extends Activity {
 	private boolean hoptimarExists(){
 		mDataSource = new DataSource(mContext);
 		mDataSource.open();
-//		
-//		if ( && isNetworkAvailable()){
-//        	new AsyncExecution().execute("http://www.worldclass.is/heilsuraekt/stundaskra");
-//        	return false;
-//		}
+		
 		return !mDataSource.isEmpty();
 	}
 	
-	/*
+	/**
 	 * Athugar hvort ad siminn se nettengdur
+	 * 
+	 * @return Boolean hvort siminn se nettengdur
 	 */
 	private boolean isNetworkAvailable() {
 	    ConnectivityManager connectivityManager 

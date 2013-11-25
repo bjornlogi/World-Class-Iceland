@@ -280,22 +280,8 @@ public class DataSource {
 		List<List<String>> dagar = new ArrayList<List<String>>();
 		for (int i = 0; i < 7; i++)
 			dagar.add(i, new ArrayList<String>());
+		
 		HashMap<String, Integer> map = Global.mapIS;
-		
-		
-
-		//Listi fyrir hvern dag
-//		List<String> man = new ArrayList<String>();
-//		List<String> tri = new ArrayList<String>();
-//		List<String> mid = new ArrayList<String>();
-//		List<String> fim = new ArrayList<String>();
-//		List<String> fos = new ArrayList<String>();
-//		List<String> lau = new ArrayList<String>();
-//		List<String> sun = new ArrayList<String>();
-		
-		
-//		//
-		
 		c.moveToFirst();
 		while (!c.isAfterLast()) {
 			Hoptimar hoptimi = cursorToMinnTimi(c);
@@ -303,27 +289,12 @@ public class DataSource {
 			int d = map.get(hoptimi.getDagur());
 			String isEinka = "";
 			if(hoptimi.getIsEinka().equals("true")) isEinka = "e";
+			
 			String ID = "$id"+hoptimi.getmId()+isEinka;
 			dagar.get(d).add(hoptimi.getNafn()+ID);
+			
 			ID = "id"+hoptimi.getmId()+isEinka;
 			infoChild.put(ID, hoptimi.minnTimiInfo());
-			
-//			if (hoptimi.getDagur().equals("Man"))
-//				man.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
-//			else if (hoptimi.getDagur().equals("Tri"))
-//				tri.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
-//			else if (hoptimi.getDagur().equals("Mid"))
-//				mid.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
-//			else if (hoptimi.getDagur().equals("Fim"))
-//				fim.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
-//			else if (hoptimi.getDagur().equals("Fos"))
-//				fos.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
-//			else if (hoptimi.getDagur().equals("Lau"))
-//				lau.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
-//			else
-//				sun.add(hoptimi.getNafn() +"$id"+hoptimi.getmId());
-			//if (hoptimi.getIsEinka().equals("true")) ID += "e";
-			
 			
 			c.moveToNext();
 		}
@@ -347,36 +318,6 @@ public class DataSource {
 			listChild.put(listHeader.get(0), nothingFound);
 		}
 		
-//		int i = 0;
-//		if (!man.isEmpty()){
-//			listHeader.add("Mánudagur");
-//			listChild.put(listHeader.get(i++), man);
-//		}
-//		if (!tri.isEmpty()){
-//			listHeader.add("Þriðjudagur");
-//			listChild.put(listHeader.get(i++), tri);
-//		}
-//		if (!mid.isEmpty()){
-//			listHeader.add("Miðvikudagur");
-//			listChild.put(listHeader.get(i++), mid);
-//		}
-//		if (!fim.isEmpty()){
-//			listHeader.add("Fimmtudagur");
-//			listChild.put(listHeader.get(i++), fim);
-//		}
-//		if (!fos.isEmpty()){
-//			listHeader.add("Föstudagur");
-//			listChild.put(listHeader.get(i++), fos);
-//		}
-//		if (!lau.isEmpty()){
-//			listHeader.add("Laugardagur");
-//			listChild.put(listHeader.get(i++), lau);
-//		}
-//		if (!sun.isEmpty()){
-//			listHeader.add("Sunnudagur");
-//			listChild.put(listHeader.get(i), sun);
-//		}
-		
 		return new StundatofluTimi(listHeader, listChild,infoChild);
 	}
 	
@@ -385,10 +326,8 @@ public class DataSource {
 		String isEinkatimi = String.valueOf(isEinka);
 		String userID = String.valueOf(uid);
 		
-		String sql = "DELETE FROM table_notendatimar WHERE uid = ? AND htid = ? AND isEinkatimi = ?";
-		//Cursor c = mSQLiteDatabase.rawQuery(sql,  new String[] {userID,htid,isEinkatimi});
 		mSQLiteDatabase.delete(MySQLiteHelper.TABLE_NOTENDATIMAR, "uid = ? AND htid = ? AND isEinkatimi = ?",
-				new String[] {userID,htid,isEinkatimi});
+													new String[] {userID,		htid,		isEinkatimi});
 		
 		
 	}
@@ -404,54 +343,43 @@ public class DataSource {
 		listChild = new HashMap<String, List<String>>();
 		infoChild = new HashMap<String,String>();
 		
-		List<String> morguntimar = new ArrayList<String>();
-		List<String> hadegistimar = new ArrayList<String>();
-		List<String> siddegistimar = new ArrayList<String>();
-		List<String> kvoldtimar = new ArrayList<String>();
+		HashMap<String, Integer> timiIndexMap = Global.timiDags;
 		
+		List<List<String>> timiDags = new ArrayList<List<String>>();
+		for (int i = 0; i < 4; i++)
+			timiDags.add(i, new ArrayList<String>());
 		
 		Cursor cursor = mSQLiteDatabase.query(MySQLiteHelper.TABLE_HOPTIMAR, hoptimarAllColumns, null, null, null, null, null);
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {
 			//viljum ekki fa tofluheaderinn
-			if(cursor.getLong(0) != 0) {
-				Hoptimar hoptimi = cursorToHoptimar(cursor);
-				if(hoptimi !=null) {
-					if (hoptimi.getTimi().equals("morgun"))
-						morguntimar.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
-					else if (hoptimi.getTimi().equals("hadegi"))
-						hadegistimar.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
-					else if (hoptimi.getTimi().equals("siddegi"))
-						siddegistimar.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
-					else
-						kvoldtimar.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
-					
-					infoChild.put("id"+hoptimi.getmId(), hoptimi.toString());
-				}
+		   if(cursor.getLong(0) == 0) cursor.moveToNext();
+			
+			Hoptimar hoptimi = cursorToHoptimar(cursor);
+			if(hoptimi == null) {
 				cursor.moveToNext();
-			}		
+				continue; 
+			}
+			
+			int index = timiIndexMap.get(hoptimi.getTimi());
+			timiDags.get(index).add(hoptimi.getNafn()+"$id"+hoptimi.getmId());	
+			infoChild.put("id"+hoptimi.getmId(), hoptimi.toString());
+				
+			cursor.moveToNext();	
 		}
 		cursor.close();
 		
-		int i = 0;
-		if (!morguntimar.isEmpty()){
-			listHeader.add("Morguntímar");
-			listChild.put(listHeader.get(i++), morguntimar);
-		}
-		if (!hadegistimar.isEmpty()){
-			listHeader.add("Hádegistímar");
-			listChild.put(listHeader.get(i++), hadegistimar);
-		}
-		if (!siddegistimar.isEmpty()){
-			listHeader.add("Síðdegistímar");
-			listChild.put(listHeader.get(i++), siddegistimar);
-		}
-		if (!kvoldtimar.isEmpty()){
-			listHeader.add("Kvöldtímar");
-			listChild.put(listHeader.get(i), kvoldtimar);
+		String[] timiDagsArray = Global.timiDagsArray;
+		
+		int j = 0;
+		for (int k = 0; k < 4; k++){
+			if (!timiDags.get(k).isEmpty()){
+				listHeader.add(timiDagsArray[k]);
+				listChild.put(listHeader.get(j++), timiDags.get(k));
+			}
 		}
 		
-		if (noHoptimar(morguntimar,hadegistimar,siddegistimar,kvoldtimar)){
+		if (noHoptimar(timiDags.get(0),timiDags.get(1),timiDags.get(2),timiDags.get(3))){
 			List<String> nothingFound = new ArrayList<String>();
 			listHeader.add("Enginn tími fannst");
 			nothingFound.add("Því miður fannst enginn tími undir gefnum leitarskilyrðum$id-1");
@@ -496,8 +424,8 @@ public class DataSource {
 		try{
 			String sql = "SELECT _id,netfang,lykilord FROM notendur WHERE netfang = ? AND lykilord = ?";
 			Cursor c = mSQLiteDatabase.rawQuery(sql,  new String[] {netfang, lykilord});
-			c.moveToFirst();	
-			Global.setUser(ctx, (int)(long)c.getLong(0), c.getString(1));
+			if(c.moveToFirst())	
+				Global.setUser(ctx, (int)(long)c.getLong(0), c.getString(1));
 		} catch (Exception e){
 			return false;
 		}
@@ -565,16 +493,6 @@ public class DataSource {
 			return hoptimi;
 		}	
 		return null;
-	}
-	
-	
-	/**
-	 * Skilar nyjum notenda ef allt gengur upp
-	 * @param cursor
-	 * @return gildur notandi
-	 */
-	private Notandi cursorToNotandi(Cursor cursor) {
-		return new Notandi(cursor.getLong(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
 	}
 	
 	/**

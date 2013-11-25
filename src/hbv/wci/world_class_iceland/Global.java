@@ -91,6 +91,17 @@ public class Global {
 		dayOfWeek = dagur;
 	}
 	
+	public static HashMap<String, Integer> timiDags = initTimiDags();
+	private static HashMap<String, Integer> initTimiDags(){
+		timiDags = new HashMap<String,Integer>();
+		timiDags.put("morgun", 0);
+		timiDags.put("hadegi", 1);
+		timiDags.put("siddegi", 2);
+		timiDags.put("kvold", 3);
+		
+		return timiDags;
+	}
+	
 	
 	public static HashMap<String, Integer> map = initMap();
 	private static HashMap<String, Integer> initMap(){
@@ -117,6 +128,16 @@ public class Global {
 		weekdayArray[5] = "Laugardagur";
 		weekdayArray[6] = "Sunnudagur";
 		return weekdayArray;
+	}
+	
+	public static String[] timiDagsArray = initDagsArray();
+	private static String[] initDagsArray() {
+		timiDagsArray = new String[7];
+		timiDagsArray[0] = "Morguntímar";
+		timiDagsArray[1] = "Hádegistímar";
+		timiDagsArray[2] = "Síðdegistímar";
+		timiDagsArray[3] = "Kvöldtímar";
+		return timiDagsArray;
 	}
 	
 	public static HashMap<String, Integer> mapIS = initMapIS();

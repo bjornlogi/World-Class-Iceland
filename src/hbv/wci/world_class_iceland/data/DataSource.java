@@ -274,77 +274,95 @@ public class DataSource {
 		listChild = new HashMap<String, List<String>>();
 		infoChild = new HashMap<String,String>();
 		
-//		List<List<String>> dagar = new ArrayList<List<String>>();
-//		for (int i = 0; i < 7; i++)
-//			dagar.add(i, new ArrayList<String>());
-
-		//Listi fyrir hvern dag
-		List<String> man = new ArrayList<String>();
-		List<String> tri = new ArrayList<String>();
-		List<String> mid = new ArrayList<String>();
-		List<String> fim = new ArrayList<String>();
-		List<String> fos = new ArrayList<String>();
-		List<String> lau = new ArrayList<String>();
-		List<String> sun = new ArrayList<String>();
-		
 		String sql = "SELECT * FROM notendatimar WHERE uid = ? ORDER BY klukkan ASC";
 		Cursor c = mSQLiteDatabase.rawQuery(sql,  new String[] {Integer.toString(Global.getUsersID(mContext))});
-//		//HashMap<String, Integer> map = Global.mapIS;
+		
+		List<List<String>> dagar = new ArrayList<List<String>>();
+		for (int i = 0; i < 7; i++)
+			dagar.add(i, new ArrayList<String>());
+		HashMap<String, Integer> map = Global.mapIS;
+		
+		
+
+		//Listi fyrir hvern dag
+//		List<String> man = new ArrayList<String>();
+//		List<String> tri = new ArrayList<String>();
+//		List<String> mid = new ArrayList<String>();
+//		List<String> fim = new ArrayList<String>();
+//		List<String> fos = new ArrayList<String>();
+//		List<String> lau = new ArrayList<String>();
+//		List<String> sun = new ArrayList<String>();
+		
+		
+//		//
 		
 		c.moveToFirst();
 		while (!c.isAfterLast()) {
 			Hoptimar hoptimi = cursorToMinnTimi(c);
-			//TODO gera tetta med lykkju ef haegt, t.d. bua til fylki af listum
 			
-			if (hoptimi.getDagur().equals("Man"))
-				man.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
-			else if (hoptimi.getDagur().equals("Tri"))
-				tri.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
-			else if (hoptimi.getDagur().equals("Mid"))
-				mid.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
-			else if (hoptimi.getDagur().equals("Fim"))
-				fim.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
-			else if (hoptimi.getDagur().equals("Fos"))
-				fos.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
-			else if (hoptimi.getDagur().equals("Lau"))
-				lau.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
-			else
-				sun.add(hoptimi.getNafn() +"$id"+hoptimi.getmId());
+			int d = map.get(hoptimi.getDagur());
+			dagar.get(d).add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
+			
+			
+//			if (hoptimi.getDagur().equals("Man"))
+//				man.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
+//			else if (hoptimi.getDagur().equals("Tri"))
+//				tri.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
+//			else if (hoptimi.getDagur().equals("Mid"))
+//				mid.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
+//			else if (hoptimi.getDagur().equals("Fim"))
+//				fim.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
+//			else if (hoptimi.getDagur().equals("Fos"))
+//				fos.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
+//			else if (hoptimi.getDagur().equals("Lau"))
+//				lau.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
+//			else
+//				sun.add(hoptimi.getNafn() +"$id"+hoptimi.getmId());
 			
 			infoChild.put("id"+hoptimi.getmId(), hoptimi.minnTimiInfo());
 			c.moveToNext();
 		}
 		c.close();
 		
-		int i = 0;
-		if (!man.isEmpty()){
-			listHeader.add("Mánudagur");
-			listChild.put(listHeader.get(i++), man);
+		String[] weekdays = Global.weekdayArray;
+		
+		int j = 0;
+		for (int k = 0; k < 7; k++){
+			if (!dagar.get(k).isEmpty()){
+				listHeader.add(weekdays[k]);
+				listChild.put(listHeader.get(j++), dagar.get(k));
+			}
 		}
-		if (!tri.isEmpty()){
-			listHeader.add("Þriðjudagur");
-			listChild.put(listHeader.get(i++), tri);
-		}
-		if (!mid.isEmpty()){
-			listHeader.add("Miðvikudagur");
-			listChild.put(listHeader.get(i++), mid);
-		}
-		if (!fim.isEmpty()){
-			listHeader.add("Fimmtudagur");
-			listChild.put(listHeader.get(i++), fim);
-		}
-		if (!fos.isEmpty()){
-			listHeader.add("Föstudagur");
-			listChild.put(listHeader.get(i++), fos);
-		}
-		if (!lau.isEmpty()){
-			listHeader.add("Laugardagur");
-			listChild.put(listHeader.get(i++), lau);
-		}
-		if (!sun.isEmpty()){
-			listHeader.add("Sunnudagur");
-			listChild.put(listHeader.get(i), sun);
-		}
+		
+//		int i = 0;
+//		if (!man.isEmpty()){
+//			listHeader.add("Mánudagur");
+//			listChild.put(listHeader.get(i++), man);
+//		}
+//		if (!tri.isEmpty()){
+//			listHeader.add("Þriðjudagur");
+//			listChild.put(listHeader.get(i++), tri);
+//		}
+//		if (!mid.isEmpty()){
+//			listHeader.add("Miðvikudagur");
+//			listChild.put(listHeader.get(i++), mid);
+//		}
+//		if (!fim.isEmpty()){
+//			listHeader.add("Fimmtudagur");
+//			listChild.put(listHeader.get(i++), fim);
+//		}
+//		if (!fos.isEmpty()){
+//			listHeader.add("Föstudagur");
+//			listChild.put(listHeader.get(i++), fos);
+//		}
+//		if (!lau.isEmpty()){
+//			listHeader.add("Laugardagur");
+//			listChild.put(listHeader.get(i++), lau);
+//		}
+//		if (!sun.isEmpty()){
+//			listHeader.add("Sunnudagur");
+//			listChild.put(listHeader.get(i), sun);
+//		}
 		
 		return new StundatofluTimi(listHeader, listChild,infoChild);
 	}

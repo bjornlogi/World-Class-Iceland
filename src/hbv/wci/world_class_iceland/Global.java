@@ -106,6 +106,19 @@ public class Global {
 		return map;
 	}
 	
+	public static String[] weekdayArray = initWeekday();
+	private static String[] initWeekday() {
+		weekdayArray = new String[7];
+		weekdayArray[0] = "Mánudagur";
+		weekdayArray[1] = "Þriðjudagur";
+		weekdayArray[2] = "Miðvikudagur";
+		weekdayArray[3] = "Fimmtudagur";
+		weekdayArray[4] = "Föstudagur";
+		weekdayArray[5] = "Laugardagur";
+		weekdayArray[6] = "Sunnudagur";
+		return weekdayArray;
+	}
+	
 	public static HashMap<String, Integer> mapIS = initMapIS();
 	private static HashMap<String, Integer> initMapIS(){
 		mapIS = new HashMap<String,Integer>();

@@ -149,15 +149,6 @@ public class Innskraning extends Activity {
 			}
 		});
 		
-		
-		skraNyjanTima.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent j = new Intent(Innskraning.this, StundataflaNyrTimi.class);
-				startActivity(j);
-			}
-		});
-		
 		setDrawer();
 		
 	}

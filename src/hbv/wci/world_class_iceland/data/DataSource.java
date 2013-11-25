@@ -7,26 +7,12 @@ import java.util.ArrayList;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
-import android.util.Log;
-
-/*
- * Test import
- */
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
- 
-import net.sourceforge.jtds.jdbc.*;
 
 /**
  * Er notadur til tess ad lesa ur gagnagrunni.
@@ -56,28 +42,6 @@ public class DataSource {
 		MySQLiteHelper.DAGUR,
 		MySQLiteHelper.LOKAD
 	};
-	
-	private String[] notendurAllColumns = {
-		MySQLiteHelper.COLUMN_ID,
-		MySQLiteHelper.NETFANG,
-		MySQLiteHelper.LYKILORD,
-		MySQLiteHelper.STADFEST,
-		MySQLiteHelper.KORT
-	};
-	
-	private String[] notendatimarAllColumns = {
-			MySQLiteHelper.USERID,
-			MySQLiteHelper.HOPTIMIID,
-			MySQLiteHelper.NAFN,
-			MySQLiteHelper.STOD,
-			MySQLiteHelper.SALUR,
-			MySQLiteHelper.TJALFARI,
-			MySQLiteHelper.TEGUND,
-			MySQLiteHelper.KLUKKAN,
-			MySQLiteHelper.TIMI,
-			MySQLiteHelper.DAGUR,
-			MySQLiteHelper.AMINNING
-		};
 	
 	/**
 	 * Upphafsstillir sem tekur baedi context og dag a strengjaformi
@@ -152,16 +116,31 @@ public class DataSource {
 		mSQLiteDatabase.insert(MySQLiteHelper.TABLE_HOPTIMAR, null, values);		
 	}
 	
+	/**
+	 * Kannar hvort timi se til i Stundatoflu notendans.
+	 * 
+	 * @param userID, audkenni notendans
+	 * @param hoptimiID, audkenni hoptimans
+	 * @return boolean hvort timinn se til stadar
+	 */
 	public boolean notendatimiExists(int userID, int hoptimiID){
 		String sql = "SELECT uid FROM notendatimar WHERE uid = ? AND htid = ? AND isEinkatimi = 'false'";
 		Cursor c = mSQLiteDatabase.rawQuery(sql,  new String[] {Integer.toString(userID), Integer.toString(hoptimiID)});
 		return c.moveToFirst();
 	}
 	
+	/**
+	 * Baetir vid einkatima sem notandinn bjo til i gagnagrunn
+	 * 
+	 * @param name, nafn timans sem notandinn skirdi
+	 * @param time, timasetning timans sem notandinn valdi af spinner
+	 * @param weekday, vikudagur sem var valinn i Man, Tri, Mid o.s.frv. formati.
+	 * @param descr, lysing timans ef hun er til stadar sem er sett i 'stod' dalkinn
+	 */
 	public void addEinkatimi(String name, String time, String weekday, String descr){
+		//Byrjum a ad finna staersta idid og baetum einum vid tad
 		String sql = "select max(htid) from notendatimar where isEinkatimi = 'true'";
 		Cursor c = mSQLiteDatabase.rawQuery(sql,null);
-		System.out.println(weekday);
 		int htid;
 		if (!c.moveToFirst())
 			htid = 0;
@@ -183,6 +162,12 @@ public class DataSource {
 		mSQLiteDatabase.insert(MySQLiteHelper.TABLE_NOTENDATIMAR, null, values);
 	}
 	
+	/**
+	 * Baetir voldum tima ur almennum tima i mina stundatoflu 
+	 * 
+	 * @param userID, audkenni notendans
+	 * @param hoptimiID, audkenni hoptimans
+	 */
 	public void addNotendatimi(int userID, int hoptimiID){
 		ContentValues values = new ContentValues();
 		String[] info = getHoptimarInfo(hoptimiID);
@@ -202,12 +187,23 @@ public class DataSource {
 		mSQLiteDatabase.insert(MySQLiteHelper.TABLE_NOTENDATIMAR, null, values);
 	}
 	
+	/**
+	 * Uppfaerir aminningu i true eda false i gagnagrunni
+	 * 
+	 * @param aminning
+	 * @param id
+	 */
 	public void updateAminning(String aminning, String id){
 		ContentValues values = new ContentValues();
 		values.put(MySQLiteHelper.AMINNING, aminning);
 		mSQLiteDatabase.update(MySQLiteHelper.TABLE_NOTENDATIMAR, values, "htid="+ id, null);
 	}
 	
+	/**
+	 * Finnur ut hvort aminnning se true eda false i gagnagrunni
+	 * @param id
+	 * @return Strengur um hvort aminningin se sett a true eda false
+	 */
 	public String getAminning(String id){
 		String sql = "SELECT * FROM notendatimar WHERE htid = ?";
 		Cursor c = mSQLiteDatabase.rawQuery(sql,  new String[] {id});
@@ -217,6 +213,11 @@ public class DataSource {
 		return a;
 	}
 	
+	/**
+	 * Naer i upplysingar um hoptima fyrir valid ID og strengjafylki
+	 * @param htid, audkenni hoptimans
+	 * @return strengjafylki med upplysingum ur gagnagrunni
+	 */
 	public String[] getHoptimarInfo (int htid){
 		String sql = "SELECT * FROM hoptimar WHERE _id = ?";
 		Cursor c = mSQLiteDatabase.rawQuery(sql,  new String[] {Integer.toString(htid)});
@@ -269,6 +270,12 @@ public class DataSource {
 		}
 	}
 	
+	/**
+	 * Naer i alla timana sem hafa verid skradir i Stundatoflu notendans.
+	 * 
+	 * @param mContext
+	 * @return Listi og tvaer hakktoflur i formi StundatofluTima
+	 */
 	public StundatofluTimi getAllStundataflanMinTimi(Context mContext){
 		listHeader = new ArrayList<String>();
 		listChild = new HashMap<String, List<String>>();
@@ -321,6 +328,13 @@ public class DataSource {
 		return new StundatofluTimi(listHeader, listChild,infoChild);
 	}
 	
+	/**
+	 * Eydir voldum notendatima ur stundatoflu notendans. Inntok eru allar eindir frumlykils(primary key)
+	 * 
+	 * @param uid, audkenni notendans
+	 * @param htid, audkenni hoptima
+	 * @param isEinka, hvort timinn se buinn til af notenda eda ekki
+	 */
 	public void deleteNotendatimi(int uid, String htid, boolean isEinka){
 		if (isEinka) htid = htid.substring(0,htid.length()-1);
 		String isEinkatimi = String.valueOf(isEinka);

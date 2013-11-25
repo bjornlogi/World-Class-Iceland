@@ -30,6 +30,14 @@ public class StartUpScreen extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_startupscreen);
+		nextAction();
+	}
+	
+	/**
+	 * Tekur ákvordun hvad skal gera med teim upplysingum sem notandinn er med
+	 * 
+	 */
+	private void nextAction(){
 		if (hoptimarExists() && Global.isUserLoggedIn(mContext)){
 			Global.currentUser = Global.getUsersEmail(mContext);
 			createIntent("StundataflanMin");

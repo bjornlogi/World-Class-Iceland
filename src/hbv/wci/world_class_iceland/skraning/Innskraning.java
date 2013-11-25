@@ -59,7 +59,6 @@ public class Innskraning extends Activity {
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
 	
-	private String vikudagur;
 	private Map<String,Integer> map;
 
 	/** Byr til skjainn, bindur layout ur activity_innskraning.xml vid skjainn
@@ -80,6 +79,10 @@ public class Innskraning extends Activity {
 		
 	}
 	
+	/**
+	 * Stillir listener sem bidur eftir ad ytt er a nyskra takkann
+	 * 
+	 */
 	private void setOnRegisterListener(){
 		final Button nySkra = (Button) findViewById(R.id.nySkraTakki);
 		nySkra.setOnClickListener(new View.OnClickListener() {
@@ -91,6 +94,10 @@ public class Innskraning extends Activity {
 		});
 	}
 	
+	/**
+	 * Stillir listener sem bidur eftir ad ytt er a innskra takkann.
+	 * 
+	 */
 	private void setOnLoginClickListener(){
 		final EditText netfangInntak = (EditText) findViewById(R.id.netfangInntak);
 		final EditText lykilordInntak = (EditText) findViewById(R.id.lykilordInntakNr3);
@@ -117,13 +124,21 @@ public class Innskraning extends Activity {
 			}
 		});
 	}
-	
+	/**
+	 * Hondlar atburdin tegar innskraning tekst
+	 * 
+	 * @param netfang
+	 */
 	private void loginSuccessful(String netfang){
 		Global.currentUser = netfang;
 		Intent i = new Intent(Innskraning.this, AlmennStundatafla.class);
 		startActivity(i);
 	}
 	
+	/**
+	 * Hondlar atburdin tegar innskraning tekst ekki
+	 * 
+	 */
 	private void loginUnsuccessfulDialog(){
 		final Dialog dialog = new Dialog(mContext);
 		dialog.setContentView(R.layout.dialog_nyskra);

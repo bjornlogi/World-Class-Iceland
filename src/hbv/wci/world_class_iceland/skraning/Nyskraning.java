@@ -61,6 +61,10 @@ public class Nyskraning extends Activity {
 		setDrawer();
 	}
 	
+	/**
+	 * Athugar inntak notendans i innskraningunni
+	 * 
+	 */
 	private void checkUserInput(){
 		lykilord.setTypeface(Typeface.SANS_SERIF);
 		lykilord2.setTypeface(Typeface.SANS_SERIF);
@@ -81,6 +85,10 @@ public class Nyskraning extends Activity {
 		});
 	}
 	
+	/**
+	 * Kannar hvort netfang-lykilord comboid se til i gagnagrunni og skilar boolean
+	 * @return boolean um hvort notandi se til
+	 */
 	private boolean validateInput(){
 		validEmail = validate(netfang.getText().toString());
 		noEmptyField = isNotEmptyNyskra(netfang.getText().toString(), lykilord.getText().toString(), kennitala.getText().toString(), lykilord2.getText().toString());
@@ -90,6 +98,10 @@ public class Nyskraning extends Activity {
 		return validEmail && noEmptyField && validKennitala && passwordMatch && emailAvailable;
 	}
 	
+	/**
+	 * Byr til dialog sem birtir upplysingar um ad innskraning hafi tekist
+	 * 
+	 */
 	private void createSuccessDialog(){
 		final Dialog dialog = new Dialog(context);
 		dialog.setContentView(R.layout.dialog_nyskra);
@@ -121,6 +133,10 @@ public class Nyskraning extends Activity {
 		dialog.show();
 	}
 	
+	/**
+	 * Byr til dialog sem birtir upplysingar um ad innskraning hafi ekki tekist
+	 * 
+	 */
 	private void createFailureDialog(){
 		final Dialog dialog = new Dialog(context);
 		dialog.setContentView(R.layout.dialog_nyskra);

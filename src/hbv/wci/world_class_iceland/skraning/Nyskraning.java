@@ -15,30 +15,20 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.res.Configuration;
 
 import hbv.wci.world_class_iceland.Global;
 import hbv.wci.world_class_iceland.R;
-import hbv.wci.world_class_iceland.R.drawable;
-import hbv.wci.world_class_iceland.R.id;
-import hbv.wci.world_class_iceland.R.layout;
-import hbv.wci.world_class_iceland.R.string;
 import hbv.wci.world_class_iceland.data.DataSource;
 import hbv.wci.world_class_iceland.opnunartimar.Opnunartimar;
 import hbv.wci.world_class_iceland.stundatafla.AlmennStundatafla;
 import hbv.wci.world_class_iceland.stundatafla.StundataflanMin;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -48,22 +38,30 @@ public class Nyskraning extends Activity {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
+	final EditText netfang = (EditText) findViewById(R.id.netfangInntak2);
+	final EditText lykilord = (EditText) findViewById(R.id.lykilordInntakNr1);
+	final EditText lykilord2 = (EditText) findViewById(R.id.lykilordInntakNr2);
+	final EditText kennitala = (EditText) findViewById(R.id.kennitalaInntak);
+	final Button nySkra = (Button) findViewById(R.id.nySkraTakki);
+	final Context context = this;
 	
-	private String vikudagur;
+	private Boolean validEmail;
+	private Boolean noEmptyField;
+	private Boolean validKennitala;
+	private Boolean passwordMatch;
+	private Boolean emailAvailable;
+	
 	private Map<String,Integer> map;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_nyskraning);
-		
-		final EditText netfang = (EditText) findViewById(R.id.netfangInntak2);
-		final EditText lykilord = (EditText) findViewById(R.id.lykilordInntakNr1);
-		final EditText lykilord2 = (EditText) findViewById(R.id.lykilordInntakNr2);
-		final EditText kennitala = (EditText) findViewById(R.id.kennitalaInntak);
-		final Button nySkra = (Button) findViewById(R.id.nySkraTakki);
-		final Context context = this;
-		
+		checkUserInput();
+		setDrawer();
+	}
+	
+	private void checkUserInput(){
 		lykilord.setTypeface(Typeface.SANS_SERIF);
 		lykilord2.setTypeface(Typeface.SANS_SERIF);
 		
@@ -75,85 +73,88 @@ public class Nyskraning extends Activity {
 
 				// TODO ef gefid upp netfang, lykilord og ytt a nyskra, baeta vid gognum inn i nyskraningar inputin
 				//svo ekki turfi ad skrifa aftur
-				Boolean validEmail = validate(netfang.getText().toString());
-				Boolean noEmptyField = isNotEmptyNyskra(netfang.getText().toString(), lykilord.getText().toString(), kennitala.getText().toString(), lykilord2.getText().toString());
-				Boolean validKennitala = isKennitala(kennitala.getText().toString());
-				Boolean passwordMatch = passwordMatch(lykilord.getText().toString(), lykilord2.getText().toString());
-				Boolean emailAvailable = !mDataSource.userExists(netfang.getText().toString());
-				if (validEmail && noEmptyField && validKennitala && passwordMatch && emailAvailable)
-				{
-					final Dialog dialog = new Dialog(context);
-					dialog.setContentView(R.layout.dialog_nyskra);
-					dialog.setCanceledOnTouchOutside(false);
-					dialog.setTitle("Til hamingju");
-		 
-					// set the custom dialog components - text, image and button
-					TextView text = (TextView) dialog.findViewById(R.id.text);
-					String info ="Þú ert nú skráður í kerfið. Upplýsingar þínar:";
-					info += "\nnetfang: " + netfang.getText().toString();
-					info += "\nkennitala: " + kennitala.getText().toString();
-					info += "\nVinsamlegast ýttu á 'OK' til að halda áfram.";
-											
-					text.setText(info);
-					
-					Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
-					// if button is clicked, close the custom dialog
-					dialogButton.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							dialog.dismiss();
-							
-							Global.currentUser = netfang.getText().toString();
-							mDataSource.addUser(new String[]{netfang.getText().toString(),lykilord.getText().toString(),kennitala.getText().toString(),"nei","nei"}, mContext);
-							Intent j = new Intent(Nyskraning.this, AlmennStundatafla.class);
-							startActivity(j);
-						}
-					});
-		 
-					dialog.show();
-					
-				}			
-				else{
-					final Dialog dialog = new Dialog(context);
-					dialog.setContentView(R.layout.dialog_nyskra);
-					dialog.setCanceledOnTouchOutside(false);
-					dialog.setTitle("Villa");
-		 
-					// set the custom dialog components - text, image and button
-					TextView text = (TextView) dialog.findViewById(R.id.text);
-					String villa ="Vinsamlegast lagaðu eftirfarandi:";
-					if(!emailAvailable)
-						villa += "\nNetfang er þegar skráð.";
-					else {
-						if(!validEmail)
-							villa += "\nNetfang er ekki á réttu formi.";
-						if(!validKennitala)
-							villa += "\nKennitala er ekki á réttu formi.";
-						if(!passwordMatch)
-							villa += "\nLykilorð stemma ekki.";
-						if(!noEmptyField)
-							villa += "\nFylla verður út í alla reiti.";
-					}
-								
-					text.setText(villa);
-					
-					
-					Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
-					// if button is clicked, close the custom dialog
-					dialogButton.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							dialog.dismiss();
-						}
-					});
-					dialog.show();
-					//Toast.makeText(Nyskraning.this, R.string.rangt, Toast.LENGTH_LONG).show();
-				}
-									
+				if (validateInput()){
+					createSuccessDialog();
+				}		
+				else createFailureDialog();				
 			}
 		});
+	}
+	
+	private boolean validateInput(){
+		validEmail = validate(netfang.getText().toString());
+		noEmptyField = isNotEmptyNyskra(netfang.getText().toString(), lykilord.getText().toString(), kennitala.getText().toString(), lykilord2.getText().toString());
+		validKennitala = isKennitala(kennitala.getText().toString());
+		passwordMatch = passwordMatch(lykilord.getText().toString(), lykilord2.getText().toString());
+		emailAvailable = !mDataSource.userExists(netfang.getText().toString());
+		return validEmail && noEmptyField && validKennitala && passwordMatch && emailAvailable;
+	}
+	
+	private void createSuccessDialog(){
+		final Dialog dialog = new Dialog(context);
+		dialog.setContentView(R.layout.dialog_nyskra);
+		dialog.setCanceledOnTouchOutside(false);
+		dialog.setTitle("Til hamingju");
+
+		// set the custom dialog components - text, image and button
+		TextView text = (TextView) dialog.findViewById(R.id.text);
+		String info ="Þú ert nú skráður í kerfið. Upplýsingar þínar:";
+		info += "\nnetfang: " + netfang.getText().toString();
+		info += "\nkennitala: " + kennitala.getText().toString();
+		info += "\nVinsamlegast ýttu á 'OK' til að halda áfram.";
+								
+		text.setText(info);
 		
-		setDrawer();
+		Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+		// if button is clicked, close the custom dialog
+		dialogButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+				Global.currentUser = netfang.getText().toString();
+				mDataSource.addUser(new String[]{netfang.getText().toString(),lykilord.getText().toString(),kennitala.getText().toString(),"nei","nei"}, mContext);
+				Intent j = new Intent(Nyskraning.this, AlmennStundatafla.class);
+				startActivity(j);
+			}
+		});
+
+		dialog.show();
+	}
+	
+	private void createFailureDialog(){
+		final Dialog dialog = new Dialog(context);
+		dialog.setContentView(R.layout.dialog_nyskra);
+		dialog.setCanceledOnTouchOutside(false);
+		dialog.setTitle("Villa");
+
+		// set the custom dialog components - text, image and button
+		TextView text = (TextView) dialog.findViewById(R.id.text);
+		String villa ="Vinsamlegast lagaðu eftirfarandi:";
+		if(!emailAvailable)
+			villa += "\nNetfang er þegar skráð.";
+		else {
+			if(!validEmail)
+				villa += "\nNetfang er ekki á réttu formi.";
+			if(!validKennitala)
+				villa += "\nKennitala er ekki á réttu formi.";
+			if(!passwordMatch)
+				villa += "\nLykilorð stemma ekki.";
+			if(!noEmptyField)
+				villa += "\nFylla verður út í alla reiti.";
+		}
+					
+		text.setText(villa);
+		
+		
+		Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+		// if button is clicked, close the custom dialog
+		dialogButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+		dialog.show();
 	}
 	public static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 

@@ -8,7 +8,6 @@ import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
@@ -21,7 +20,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,8 +29,6 @@ import java.util.TimeZone;
 
 import hbv.wci.world_class_iceland.Global;
 import hbv.wci.world_class_iceland.R;
-import hbv.wci.world_class_iceland.R.id;
-import hbv.wci.world_class_iceland.R.layout;
 import hbv.wci.world_class_iceland.data.Stod;
 import hbv.wci.world_class_iceland.skraning.Innskraning;
 import hbv.wci.world_class_iceland.stundatafla.AlmennStundatafla;
@@ -97,12 +93,12 @@ public class Opnunartimi extends Activity implements OpnunStodVidmot{
 	}
 	
 	public void setDate(){
-		TimeZone T1 = TimeZone.getTimeZone("GMT"); 
-		SimpleDateFormat DOW = new SimpleDateFormat ("EEE");
+//		TimeZone T1 = TimeZone.getTimeZone("GMT"); 
+//		SimpleDateFormat DOW = new SimpleDateFormat ("EEE");
+//		
+//		DOW.setTimeZone(T1);
 		
-		DOW.setTimeZone(T1);
-		
-		this.vikudagur = DOW.format(new Date());
+		this.vikudagur = Global.dayOfWeek;// = DOW.format(new Date());
 	}
 	
 	/**
@@ -126,11 +122,8 @@ public class Opnunartimi extends Activity implements OpnunStodVidmot{
 	 * @param klukkanNuna
 	 */
 	public void birtaErOpid (String opnunIDag) {
-		
-		TimeZone T1 = TimeZone.getTimeZone("GMT"); 
-		SimpleDateFormat klukkan = new SimpleDateFormat ("HH:mm");
-		klukkan.setTimeZone(T1);
-		String klukkanNuna = klukkan.format(new Date());
+
+		String klukkanNuna = Global.timeRightNow();
 		
 		TextView opidTV = (TextView)findViewById(R.id.opid);
 		Boolean opid;

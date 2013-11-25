@@ -72,74 +72,15 @@ public class Innskraning extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_innskraning);
-		TimeZone T1 = TimeZone.getTimeZone("GMT"); 
-		SimpleDateFormat DOW = new SimpleDateFormat ("EEE");
-		DOW.setTimeZone(T1);
+
+		setOnLoginClickListener();
+		setOnRegisterListener();
 		
-		Date date = new Date();
-		vikudagur = DOW.format(date);
-		createMap();
+		setDrawer();
 		
-		
-		
-		SharedPreferences pref = mContext.getApplicationContext().getSharedPreferences("login", 0);
-		if (pref.getLong("_id", -1) != -1){
-			Global.currentUser = pref.getString("netfang", "-1");
-			Intent i = new Intent(Innskraning.this, AlmennStundatafla.class);
-			i.putExtra("vikudagur", Integer.toString(map.get(vikudagur)));
-			startActivity(i);
-		}
-		
-		
-		
-		final EditText netfangInntak = (EditText) findViewById(R.id.netfangInntak);
-		final EditText lykilordInntak = (EditText) findViewById(R.id.lykilordInntakNr3);
-		final Button skraInn = (Button) findViewById(R.id.skraInnTakki);
-		final Button skraNyjanTima = (Button) findViewById(R.id.skraNyjanTima);
-		
-		lykilordInntak.setTypeface(Typeface.SANS_SERIF);
-		
-		skraInn.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				
-				String netfang = netfangInntak.getText().toString();
-				String lykilord = lykilordInntak.getText().toString();
-				mDataSource = new DataSource(mContext);
-				mDataSource.open();
-				boolean flag = mDataSource.checkUser(netfang, lykilord, mContext);
-				if(flag) {
-					Global.currentUser = netfang;
-					
-					Intent i = new Intent(Innskraning.this, AlmennStundatafla.class);
-					i.putExtra("vikudagur", Integer.toString(Global.map.get(vikudagur)));
-					startActivity(i);
-				} else {
-					final Dialog dialog = new Dialog(mContext);
-					dialog.setContentView(R.layout.dialog_nyskra);
-					dialog.setTitle("Innskráningarvilla");
-		 
-					// set the custom dialog components - text, image and button
-					TextView text = (TextView) dialog.findViewById(R.id.text);
-					String info = "Ekki tókst að skrá þig inn.\nAthugaðu hvort netfangið og lykilorðið eru rétt.";
+	}
 	
-											
-					text.setText(info);
-					
-					Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
-					// if button is clicked, close the custom dialog
-					dialogButton.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							dialog.dismiss();
-						}
-					});
-		 
-					dialog.show();
-				}
-				
-			}
-		});
-		
+	private void setOnRegisterListener(){
 		final Button nySkra = (Button) findViewById(R.id.nySkraTakki);
 		nySkra.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -148,19 +89,63 @@ public class Innskraning extends Activity {
 				startActivity(j);
 			}
 		});
-		
-		setDrawer();
-		
 	}
 	
-	/*
-	 * Athugar hvort ad siminn se nettengdur
-	 */
-	private boolean isNetworkAvailable() {
-	    ConnectivityManager connectivityManager 
-	          = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-	    return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+	private void setOnLoginClickListener(){
+		final EditText netfangInntak = (EditText) findViewById(R.id.netfangInntak);
+		final EditText lykilordInntak = (EditText) findViewById(R.id.lykilordInntakNr3);
+		final Button skraInn = (Button) findViewById(R.id.skraInnTakki);
+		
+		lykilordInntak.setTypeface(Typeface.SANS_SERIF);
+		
+		skraInn.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				
+				mDataSource = new DataSource(mContext);
+				mDataSource.open();
+				
+				String netfang = netfangInntak.getText().toString();
+				String lykilord = lykilordInntak.getText().toString();
+				
+				boolean correctCredentials = mDataSource.checkUser(netfang, lykilord, mContext);
+				if(correctCredentials) {
+					loginSuccessful(netfang);
+				} else {
+					loginUnsuccessfulDialog();	
+				}
+				mDataSource.close();
+			}
+		});
+	}
+	
+	private void loginSuccessful(String netfang){
+		Global.currentUser = netfang;
+		Intent i = new Intent(Innskraning.this, AlmennStundatafla.class);
+		startActivity(i);
+	}
+	
+	private void loginUnsuccessfulDialog(){
+		final Dialog dialog = new Dialog(mContext);
+		dialog.setContentView(R.layout.dialog_nyskra);
+		dialog.setTitle("Innskráningarvilla");
+
+		// set the custom dialog components - text, image and button
+		TextView text = (TextView) dialog.findViewById(R.id.text);
+		String info = "Ekki tókst að skrá þig inn.\nAthugaðu hvort netfangið og lykilorðið eru rétt.";
+
+								
+		text.setText(info);
+		
+		Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+		// if button is clicked, close the custom dialog
+		dialogButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+
+		dialog.show();
 	}
 	
 	/* The click listner for ListView in the navigation drawer */

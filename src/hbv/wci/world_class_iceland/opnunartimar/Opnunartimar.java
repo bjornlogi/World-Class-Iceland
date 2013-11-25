@@ -26,7 +26,7 @@ import hbv.wci.world_class_iceland.R.layout;
 import hbv.wci.world_class_iceland.R.menu;
 import hbv.wci.world_class_iceland.R;
 import hbv.wci.world_class_iceland.skraning.Innskraning;
-import hbv.wci.world_class_iceland.stundatafla.StundataflaActivity;
+import hbv.wci.world_class_iceland.stundatafla.AlmennStundatafla;
 import hbv.wci.world_class_iceland.stundatafla.StundataflanMin;
 
 import java.text.SimpleDateFormat;
@@ -218,7 +218,7 @@ public class Opnunartimar extends Activity implements OpnunVidmot {
 			
 			String str = Global.drawerListItems[position];
 			if (str.equals(Global.ST1)) {
-				Intent i = new Intent(Opnunartimar.this, StundataflaActivity.class);
+				Intent i = new Intent(Opnunartimar.this, AlmennStundatafla.class);
 				i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
 			} else if (str.equals(Global.ST2)){

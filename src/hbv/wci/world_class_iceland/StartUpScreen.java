@@ -3,7 +3,7 @@ package hbv.wci.world_class_iceland;
 import hbv.wci.world_class_iceland.R;
 import hbv.wci.world_class_iceland.data.DataSource;
 import hbv.wci.world_class_iceland.skraning.Innskraning;
-import hbv.wci.world_class_iceland.stundatafla.StundataflaActivity;
+import hbv.wci.world_class_iceland.stundatafla.AlmennStundatafla;
 
 import java.net.UnknownHostException;
 
@@ -31,7 +31,6 @@ public class StartUpScreen extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_startupscreen);
-		
 		if (hoptimarExists() && Global.isUserLoggedIn(mContext)){
 			Global.currentUser = Global.getUsersEmail(mContext);
 			createIntent("StundataflaActivity");
@@ -49,7 +48,7 @@ public class StartUpScreen extends Activity {
 	private void createIntent(String destination){
 		Intent i;
 		if (destination == "StundataflaActivity")
-			i = new Intent(StartUpScreen.this, StundataflaActivity.class);
+			i = new Intent(StartUpScreen.this, AlmennStundatafla.class);
 		else i = new Intent(StartUpScreen.this, Innskraning.class);
 		//i.putExtra("vikudagur", Integer.toString(0));
 		startActivity(i);

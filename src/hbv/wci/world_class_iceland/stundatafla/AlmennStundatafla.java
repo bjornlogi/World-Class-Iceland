@@ -35,7 +35,7 @@ import hbv.wci.world_class_iceland.skraning.Innskraning;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StundataflaActivity extends FragmentActivity implements Stundatafla {
+public class AlmennStundatafla extends FragmentActivity implements StundataflaVidmot {
 	/**
 	 * The number of pages (wizard steps) to show in this demo.
 	 */
@@ -255,15 +255,15 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 			
 			String str = Global.drawerListItems[position];
 			if (str.equals(Global.ST1)) {
-				Intent i = new Intent(StundataflaActivity.this, StundataflaActivity.class);
+				Intent i = new Intent(AlmennStundatafla.this, AlmennStundatafla.class);
 				//i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
 			} else if (str.equals(Global.ST2)){
-				Intent i = new Intent(StundataflaActivity.this, StundataflanMin.class);
+				Intent i = new Intent(AlmennStundatafla.this, StundataflanMin.class);
 				//i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
 			} else if (str.equals(Global.OPN)){
-				Intent i = new Intent(StundataflaActivity.this, Opnunartimar.class);
+				Intent i = new Intent(AlmennStundatafla.this, Opnunartimar.class);
 				startActivity(i);
 			} else if (str.equals(Global.UTS)) {
 				Global.currentUser = null;
@@ -273,11 +273,11 @@ public class StundataflaActivity extends FragmentActivity implements Stundatafla
 				editor.clear();
 				editor.commit();
 				
-				Intent i = new Intent(StundataflaActivity.this, Innskraning.class);
+				Intent i = new Intent(AlmennStundatafla.this, Innskraning.class);
 				//i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
 			} else if (str.equals(Global.INS)) {
-				Intent i = new Intent(StundataflaActivity.this, Innskraning.class);
+				Intent i = new Intent(AlmennStundatafla.this, Innskraning.class);
 				startActivity(i);
 			} else if (str.contains("@")) {
 				//Intent i = new Intent(??.this, UmNotenda.class);

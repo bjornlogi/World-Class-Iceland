@@ -301,8 +301,12 @@ public class DataSource {
 			Hoptimar hoptimi = cursorToMinnTimi(c);
 			
 			int d = map.get(hoptimi.getDagur());
-			dagar.get(d).add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
-			
+			String isEinka = "";
+			if(hoptimi.getIsEinka().equals("true")) isEinka = "e";
+			String ID = "$id"+hoptimi.getmId()+isEinka;
+			dagar.get(d).add(hoptimi.getNafn()+ID);
+			ID = "id"+hoptimi.getmId()+isEinka;
+			infoChild.put(ID, hoptimi.minnTimiInfo());
 			
 //			if (hoptimi.getDagur().equals("Man"))
 //				man.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
@@ -318,8 +322,9 @@ public class DataSource {
 //				lau.add(hoptimi.getNafn()+"$id"+hoptimi.getmId());
 //			else
 //				sun.add(hoptimi.getNafn() +"$id"+hoptimi.getmId());
+			//if (hoptimi.getIsEinka().equals("true")) ID += "e";
 			
-			infoChild.put("id"+hoptimi.getmId(), hoptimi.minnTimiInfo());
+			
 			c.moveToNext();
 		}
 		c.close();
@@ -365,6 +370,19 @@ public class DataSource {
 //		}
 		
 		return new StundatofluTimi(listHeader, listChild,infoChild);
+	}
+	
+	public void deleteNotendatimi(int uid, String htid, boolean isEinka){
+		if (isEinka) htid = htid.substring(0,htid.length()-1);
+		String isEinkatimi = String.valueOf(isEinka);
+		String userID = String.valueOf(uid);
+		
+		String sql = "DELETE FROM table_notendatimar WHERE uid = ? AND htid = ? AND isEinkatimi = ?";
+		//Cursor c = mSQLiteDatabase.rawQuery(sql,  new String[] {userID,htid,isEinkatimi});
+		mSQLiteDatabase.delete(MySQLiteHelper.TABLE_NOTENDATIMAR, "uid = ? AND htid = ? AND isEinkatimi = ?",
+				new String[] {userID,htid,isEinkatimi});
+		
+		
 	}
 	
 	/**
@@ -556,8 +574,9 @@ public class DataSource {
 	 * @return timi sem notandi hefur valid ser
 	 */
 	private Hoptimar cursorToMinnTimi(Cursor cursor){
-		return new Hoptimar(cursor.getLong(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), 
-				cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8), cursor.getString(9));
+		return new Hoptimar(cursor.getLong(1), cursor.getString(2), cursor.getString(3), 
+				cursor.getString(4), cursor.getString(5), cursor.getString(6), cursor.getString(7), 
+				cursor.getString(8), cursor.getString(9), cursor.getString(11));
 	}
 
 }

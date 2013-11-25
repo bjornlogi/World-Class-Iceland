@@ -31,7 +31,7 @@ import hbv.wci.world_class_iceland.R.layout;
 import hbv.wci.world_class_iceland.R.string;
 import hbv.wci.world_class_iceland.data.DataSource;
 import hbv.wci.world_class_iceland.opnunartimar.Opnunartimar;
-import hbv.wci.world_class_iceland.stundatafla.StundataflaActivity;
+import hbv.wci.world_class_iceland.stundatafla.AlmennStundatafla;
 import hbv.wci.world_class_iceland.stundatafla.StundataflanMin;
 
 import java.text.SimpleDateFormat;
@@ -105,7 +105,7 @@ public class Nyskraning extends Activity {
 							
 							Global.currentUser = netfang.getText().toString();
 							mDataSource.addUser(new String[]{netfang.getText().toString(),lykilord.getText().toString(),kennitala.getText().toString(),"nei","nei"}, mContext);
-							Intent j = new Intent(Nyskraning.this, StundataflaActivity.class);
+							Intent j = new Intent(Nyskraning.this, AlmennStundatafla.class);
 							startActivity(j);
 						}
 					});
@@ -210,7 +210,7 @@ public class Nyskraning extends Activity {
 			
 			String str = Global.drawerListItems[position];
 			if (str.equals(Global.ST1)) {
-				Intent i = new Intent(Nyskraning.this, StundataflaActivity.class);
+				Intent i = new Intent(Nyskraning.this, AlmennStundatafla.class);
 				i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
 			} else if (str.equals(Global.ST2)){

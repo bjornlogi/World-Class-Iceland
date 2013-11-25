@@ -17,9 +17,10 @@ public class Hoptimar {
 	private String timi;
 	private String dagur;
 	private String lokad;
+	private String isEinka;
 	
 	public Hoptimar(long mId, String nafn, String stod, String salur, String tjalfari, String tegund,
-			String klukkan, String timi, String dagur){
+			String klukkan, String timi, String dagur, String isEinka){
 		this.mId = mId;
 		this.nafn = nafn;
 		this.stod = stod;
@@ -29,6 +30,7 @@ public class Hoptimar {
 		this.klukkan = klukkan;
 		this.timi = timi;
 		this.dagur = dagur;
+		this.isEinka = isEinka;
 	}
 	
 	public Hoptimar(){
@@ -69,6 +71,24 @@ public class Hoptimar {
 	 */
 	public void setNafn(String nafn) {
 		this.nafn = nafn;
+	}
+	
+	/**
+	 * Naer i hvort timi se timi sem notandi bjo til eda ekki
+	 * 
+	 * @return isEinka
+	 */
+	public String getIsEinka() {
+		return isEinka;
+	}
+	
+	/**
+	 * Stillir isEinka i annadhvort strenginn true eda false
+	 * 
+	 * @param isEinka
+	 */
+	public void setIsEinka(String isEinka) {
+		this.isEinka = isEinka;
 	}
 	
 	/**

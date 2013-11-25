@@ -39,7 +39,7 @@ import hbv.wci.world_class_iceland.R.string;
 import hbv.wci.world_class_iceland.data.DataSource;
 import hbv.wci.world_class_iceland.opnunartimar.Opnunartimar;
 import hbv.wci.world_class_iceland.skraning.Innskraning;
-import hbv.wci.world_class_iceland.stundatafla.StundataflaActivity;
+import hbv.wci.world_class_iceland.stundatafla.AlmennStundatafla;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -140,7 +140,6 @@ public class StundataflaNyrTimi extends Activity {
 	public void addToDatabase(String name, String time, String weekday, String descr){
 		mDataSource = new DataSource(mContext);
 		mDataSource.open();
-		
 		mDataSource.addEinkatimi(name,time,weekday, descr);
 		
 	}
@@ -283,7 +282,7 @@ public class StundataflaNyrTimi extends Activity {
 			
 			String str = Global.drawerListItems[position];
 			if (str.equals(Global.ST1)) {
-				Intent i = new Intent(StundataflaNyrTimi.this, StundataflaActivity.class);
+				Intent i = new Intent(StundataflaNyrTimi.this, AlmennStundatafla.class);
 				i.putExtra("vikudagur", Integer.toString(map.get(Global.dayOfWeek)));
 				startActivity(i);
 			} else if (str.equals(Global.ST2)){

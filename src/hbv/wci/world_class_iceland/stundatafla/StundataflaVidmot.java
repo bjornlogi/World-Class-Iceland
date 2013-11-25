@@ -5,7 +5,7 @@ package hbv.wci.world_class_iceland.stundatafla;
  * @author Bjorn
  *
  */
-public interface Stundatafla {
+public interface StundataflaVidmot {
 	void setPagerAndAdapter();
 	void setDate();
 	void setSpinners();

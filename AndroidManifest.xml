@@ -52,7 +52,7 @@
             android:name="hbv.wci.world_class_iceland.stundatafla.Stundataflagamalt"
             android:screenOrientation="portrait" ></activity>
         <activity 
-            android:name="hbv.wci.world_class_iceland.stundatafla.StundataflaActivity"
+            android:name="hbv.wci.world_class_iceland.stundatafla.AlmennStundatafla"
             android:screenOrientation="portrait" ></activity>
         <activity 
             android:name="hbv.wci.world_class_iceland.stundatafla.StundataflanMin"

@@ -45,6 +45,7 @@ public class StundataflanMin extends Activity {
 	private PendingIntent pendingIntent;
 	public StundatofluTimi st;
 	public CheckBox checkbox_aminning;
+	private ExpandableListView expListView;
 
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,22 +56,38 @@ public class StundataflanMin extends Activity {
 		setOnButtonClickedListener();
 		data.open();
 		
-		st = data.getAllStundataflanMinTimi(mContext);
 		
-		ExpandableListView expListView = (ExpandableListView) findViewById(R.id.stundataflan);
+		
+		expListView = (ExpandableListView) findViewById(R.id.stundataflan);
+		setAdapter();
+		
+	}
+	
+	private void setAdapter(){
+		st = data.getAllStundataflanMinTimi(mContext);
 		listAdapter = new ExpandableListAdapter(this, st.listHeader, st.listChild, st.infoChild);
 		expListView.setAdapter(listAdapter);
+		setListListener();
+	}
+	
+	private void setListListener(){
+		
 		expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 			 
 			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 				
 				final String selected = (String) listAdapter.getChild(groupPosition, childPosition);
-				int getMoney = selected.indexOf("$");
+				final int getMoney = selected.indexOf("$");
+				
+				final boolean einkatimi = isClickedEinka(selected);
+				String newS = selected;
+				//erum buin ad finna ut hvort ad timi se einkatimi eda ekki, svo vid viljum ekki 'e' a endanum
+				//lengur
+				if (einkatimi) newS = newS.substring(0,selected.length()-1);
 				
 				//Toast.makeText(getActivity(), selected + "\nUserID is " + userID, Toast.LENGTH_LONG).show();
 				//System.out.println(Global.isUserLoggedIn(getActivity()));
-				int uid = Global.getUsersID(mContext);
-				int htid = Integer.parseInt(selected.substring(getMoney+3));
+
 				
 				final Dialog dialog = new Dialog(mContext);
 				dialog.setContentView(R.layout.dialog_min_stundatafla);
@@ -87,19 +104,30 @@ public class StundataflanMin extends Activity {
 				String info2 = "Viltu áminningu?";					
 				text2.setText(info2);
 			
-				Button dialogButton = (Button) dialog.findViewById(R.id.dialog_eyda);
+				Button buttonLoka = (Button) dialog.findViewById(R.id.dialog_loka);
 				// if button is clicked, close the custom dialog
-				dialogButton.setOnClickListener(new View.OnClickListener() {
+				buttonLoka.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
 						dialog.dismiss();
 					}
 				});
 				
-				checkbox_aminning = (CheckBox) dialog.findViewById(R.id.checkbox_aminning);
-				//System.out.println(data.getAminning(selected.substring(getMoney+3)));
+				Button buttonEyda = (Button) dialog.findViewById(R.id.dialog_eyda);
 				
-				if(data.getAminning(selected.substring(getMoney+3)).equals("true")) {
+				buttonEyda.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						int uid = Global.getUsersID(mContext);
+						data.deleteNotendatimi(uid, selected.substring(getMoney+3), einkatimi);
+						setAdapter();
+						dialog.dismiss();
+					}
+				});
+				
+				checkbox_aminning = (CheckBox) dialog.findViewById(R.id.checkbox_aminning);
+				
+				if(data.getAminning(newS.substring(getMoney+3)).equals("true")) {
 					checkbox_aminning.setChecked(true);
 				}
 				else {
@@ -111,17 +139,24 @@ public class StundataflanMin extends Activity {
 						
 						Intent myIntent = new Intent(mContext, AminningService.class);
 						pendingIntent = PendingIntent.getService(mContext, 0, myIntent, 0);
-
 						AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Service.ALARM_SERVICE);
 
 						int getMoney2 = selected.indexOf("$");
 						String id = selected.substring(getMoney2+1,selected.length());
-						String info_time = st.infoChild.get(id);
-						String[] s = info_time.split(" - ");
-						String hour = s[0].split(":")[0];
-						String min = s[0].split(":")[1];						
+						//System.out.println(einkatimi);
+						//System.out.println(id);
+						//String info_time = st.infoChild.get(id);
+						//String[] s = info_time.split(" - ");
+						//String hour = s[0].split(":")[0];
+						//String min = s[0].split(":")[1];	
+						String justTheID;
+						if(einkatimi)
+							justTheID = selected.substring(getMoney2+3,selected.length()-1);
+						else
+							justTheID = selected.substring(getMoney2+3,selected.length());
+							
 						
-						String[] uppl = data.getHoptimarInfo(Integer.parseInt(selected.substring(getMoney2+3,selected.length())));						
+						String[] uppl = data.getHoptimarInfo(Integer.parseInt(justTheID));						
 						
 						int weekDay = Global.mapIS.get(uppl[7]);
 						weekDay += 2;
@@ -147,12 +182,12 @@ public class StundataflanMin extends Activity {
 						
 						
 						if (checkbox_aminning.isChecked()) {
-							data.updateAminning("true", selected.substring(getMoney2+3,selected.length()));
+							data.updateAminning("true", justTheID);
 							alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 							Toast.makeText(mContext, "Áminning hefur verið skráð", Toast.LENGTH_LONG).show();
 						}
 						else {
-							data.updateAminning("false", selected.substring(getMoney2+3,selected.length()));
+							data.updateAminning("false", justTheID);
 							Toast.makeText(mContext, "Áminning hefur verið afskráð", Toast.LENGTH_LONG).show();
 						}
 
@@ -165,7 +200,10 @@ public class StundataflanMin extends Activity {
 			
 			
 		});
-		
+	}
+	
+	private boolean isClickedEinka(String selected){
+		return selected.indexOf('e', selected.length()-1) != -1;
 	}
 	
 	private void setOnButtonClickedListener(){
@@ -223,7 +261,7 @@ public class StundataflanMin extends Activity {
 			
 			String str = Global.drawerListItems[position];
 			if (str.equals(Global.ST1)) {
-				Intent i = new Intent(StundataflanMin.this, StundataflaActivity.class);
+				Intent i = new Intent(StundataflanMin.this, AlmennStundatafla.class);
 				//i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
 			} else if (str.equals(Global.ST2)){

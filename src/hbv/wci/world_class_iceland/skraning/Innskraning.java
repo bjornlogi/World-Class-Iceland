@@ -29,7 +29,7 @@ import android.widget.Toast;
 import hbv.wci.world_class_iceland.data.DataSource;
 import hbv.wci.world_class_iceland.opnunartimar.Opnunartimar;
 import hbv.wci.world_class_iceland.R;
-import hbv.wci.world_class_iceland.stundatafla.StundataflaActivity;
+import hbv.wci.world_class_iceland.stundatafla.AlmennStundatafla;
 import hbv.wci.world_class_iceland.stundatafla.StundataflaNyrTimi;
 import hbv.wci.world_class_iceland.stundatafla.StundataflanMin;
 import hbv.wci.world_class_iceland.Global;
@@ -85,7 +85,7 @@ public class Innskraning extends Activity {
 		SharedPreferences pref = mContext.getApplicationContext().getSharedPreferences("login", 0);
 		if (pref.getLong("_id", -1) != -1){
 			Global.currentUser = pref.getString("netfang", "-1");
-			Intent i = new Intent(Innskraning.this, StundataflaActivity.class);
+			Intent i = new Intent(Innskraning.this, AlmennStundatafla.class);
 			i.putExtra("vikudagur", Integer.toString(map.get(vikudagur)));
 			startActivity(i);
 		}
@@ -110,7 +110,7 @@ public class Innskraning extends Activity {
 				if(flag) {
 					Global.currentUser = netfang;
 					
-					Intent i = new Intent(Innskraning.this, StundataflaActivity.class);
+					Intent i = new Intent(Innskraning.this, AlmennStundatafla.class);
 					i.putExtra("vikudagur", Integer.toString(Global.map.get(vikudagur)));
 					startActivity(i);
 				} else {
@@ -181,7 +181,7 @@ public class Innskraning extends Activity {
 			
 			String str = Global.drawerListItems[position];
 			if (str.equals(Global.ST1)) {
-				Intent i = new Intent(Innskraning.this, StundataflaActivity.class);
+				Intent i = new Intent(Innskraning.this, AlmennStundatafla.class);
 				i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
 				startActivity(i);
 			} else if (str.equals(Global.ST2)){

@@ -40,7 +40,7 @@ import java.util.List;
  *
  */
 public class AlmennStundatafla extends FragmentActivity implements StundataflaVidmot {
-	/**
+	/*
 	 * The number of pages (wizard steps) to show in this demo.
 	 */
 	private static final int NUM_PAGES = 7*5; //til ad "wrappa" stundatöflunni
@@ -48,12 +48,12 @@ public class AlmennStundatafla extends FragmentActivity implements StundataflaVi
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
-	/**
+	/*
 	 * Pager widget, hondlar animationid og hondlar listenerinn og utfaersluna a "swipe"inu
 	 */
 	private ViewPager mPager;
 
-	/**
+	/*
 	 * Pager adapter, sem birtir stundatofluna
 	 */
 	private PagerAdapter mPagerAdapter;
@@ -72,13 +72,13 @@ public class AlmennStundatafla extends FragmentActivity implements StundataflaVi
 		setSpinners();
 		setDrawer();
 	}
-	/**
+	/*
 	 * Tegar ytt er a innbyggda android til baka takkann fer hann ekki til baka um eina sidu, heldur
 	 * til baka um Intent
 	 */
 	@Override
 	public void onBackPressed() {
-		if (Global.isUserLoggedIn(this))
+		if (!Global.isUserLoggedIn(this))
 			super.onBackPressed();
 	}
 	/**
@@ -177,36 +177,7 @@ public class AlmennStundatafla extends FragmentActivity implements StundataflaVi
 	public void setDrawer()	{
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_stundatafla);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer_stundatafla);
-
-		// set a custom shadow that overlays the main content when the drawer opens
-		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-		
-		// set up the drawer's list view with items and click listener
-		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, Global.drawerListItems));
-		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
-		// enable ActionBar app icon to behave as action to toggle nav drawer
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setHomeButtonEnabled(true);
-		
-		// ActionBarDrawerToggle ties together the the proper interactions
-		// between the sliding drawer and the action bar app icon
-		mDrawerToggle = new ActionBarDrawerToggle(
-			this,                  /* host Activity */
-			mDrawerLayout,         /* DrawerLayout object */
-			R.drawable.ic_drawer,  /* nav drawer image to replace 'Up' caret */
-			R.string.app_name,     /* "open drawer" description for accessibility */
-			R.string.app_name      /* "close drawer" description for accessibility */
-		){
-            public void onDrawerClosed(View view) {
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-
-            public void onDrawerOpened(View drawerView) {
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
-		mDrawerLayout.setDrawerListener(mDrawerToggle);
+		mDrawerToggle = Global.setDrawer(mContext, mDrawerLayout, mDrawerList, this);
 	}
 	
 	/**
@@ -247,46 +218,6 @@ public class AlmennStundatafla extends FragmentActivity implements StundataflaVi
 		@Override
 		public int getCount() {
 			return NUM_PAGES;
-		}
-	}
-		
-	/* The click listner for ListView in the navigation drawer */
-	private class DrawerItemClickListener implements ListView.OnItemClickListener {
-		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			mDrawerList.setItemChecked(position, true);
-			mDrawerLayout.closeDrawer(mDrawerList);
-			
-			String str = Global.drawerListItems[position];
-			if (str.equals(Global.ST1)) {
-				Intent i = new Intent(AlmennStundatafla.this, AlmennStundatafla.class);
-				//i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
-				startActivity(i);
-			} else if (str.equals(Global.ST2)){
-				Intent i = new Intent(AlmennStundatafla.this, StundataflanMin.class);
-				//i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
-				startActivity(i);
-			} else if (str.equals(Global.OPN)){
-				Intent i = new Intent(AlmennStundatafla.this, Opnunartimar.class);
-				startActivity(i);
-			} else if (str.equals(Global.UTS)) {
-				Global.currentUser = null;
-				Global.currentUserID = -1;
-				SharedPreferences pref = mContext.getApplicationContext().getSharedPreferences("login", 0); // 0 - for private mode
-				Editor editor = pref.edit();
-				editor.clear();
-				editor.commit();
-				
-				Intent i = new Intent(AlmennStundatafla.this, Innskraning.class);
-				//i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
-				startActivity(i);
-			} else if (str.equals(Global.INS)) {
-				Intent i = new Intent(AlmennStundatafla.this, Innskraning.class);
-				startActivity(i);
-			} else if (str.contains("@")) {
-				//Intent i = new Intent(??.this, UmNotenda.class);
-				//startActivity(i);
-			}
 		}
 	}
 	

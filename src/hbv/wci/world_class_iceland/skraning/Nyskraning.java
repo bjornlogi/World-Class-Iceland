@@ -198,6 +198,12 @@ public class Nyskraning extends Activity {
 		return(lykilord1.equals(lykilord2));
 	}
 	
+	public void setDrawer()	{
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_nyskraning);
+		mDrawerList = (ListView) findViewById(R.id.left_drawer_nyskraning);
+		mDrawerToggle = Global.setDrawer(mContext, mDrawerLayout, mDrawerList, this);
+	}
+	
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
@@ -229,41 +235,6 @@ public class Nyskraning extends Activity {
 		return super.onPrepareOptionsMenu(menu);
 	}
 	
-	private class DrawerItemClickListener implements ListView.OnItemClickListener {
-		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			mDrawerList.setItemChecked(position, true);
-			mDrawerLayout.closeDrawer(mDrawerList);
-			
-			String str = Global.drawerListItems[position];
-			if (str.equals(Global.ST1)) {
-				Intent i = new Intent(Nyskraning.this, AlmennStundatafla.class);
-				i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
-				startActivity(i);
-			} else if (str.equals(Global.ST2)){
-				Intent i = new Intent(Nyskraning.this, StundataflanMin.class);
-				i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
-				startActivity(i);
-			} else if (str.equals(Global.OPN)){
-				Intent i = new Intent(Nyskraning.this, Opnunartimar.class);
-				startActivity(i);
-			} else if (str.equals(Global.UTS)) {
-				Global.currentUser = null;
-				//mDrawerToggle.syncState();
-				
-				Intent i = new Intent(Nyskraning.this, Innskraning.class);
-				i.putExtra("vikudagur", Integer.toString(Global.map.get(Global.dayOfWeek)));
-				startActivity(i);
-			} else if (str.equals(Global.INS)) {
-				Intent i = new Intent(Nyskraning.this, Innskraning.class);
-				startActivity(i);
-			} else if (str.contains("@")) {
-				//Intent i = new Intent(Nyskraning.this, UmNotenda.class);
-				//startActivity(i);
-			}
-		}
-	}
-	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Pass the event to ActionBarDrawerToggle, if it returns
@@ -274,52 +245,6 @@ public class Nyskraning extends Activity {
 		// Handle your other action bar items...
 
 		return super.onOptionsItemSelected(item);
-	}
-	
-	private void createMap(){
-		map = new HashMap<String,Integer>();
-		map.put("Mon", 0);
-		map.put("Tue", 1);
-		map.put("Wed", 2);
-		map.put("Thu", 3);
-		map.put("Fri", 4);
-		map.put("Sat", 5);
-		map.put("Sun", 6);
-	}
-	
-	public void setDrawer()	{
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_nyskraning);
-		mDrawerList = (ListView) findViewById(R.id.left_drawer_nyskraning);
-
-		// set a custom shadow that overlays the main content when the drawer opens
-		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-		
-		// set up the drawer's list view with items and click listener
-		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, Global.drawerListItems));
-		mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
-		// enable ActionBar app icon to behave as action to toggle nav drawer
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-		getActionBar().setHomeButtonEnabled(true);
-		
-		// ActionBarDrawerToggle ties together the the proper interactions
-		// between the sliding drawer and the action bar app icon
-		mDrawerToggle = new ActionBarDrawerToggle(
-			this,                  /* host Activity */
-			mDrawerLayout,         /* DrawerLayout object */
-			R.drawable.ic_drawer,  /* nav drawer image to replace 'Up' caret */
-			R.string.app_name,     /* "open drawer" description for accessibility */
-			R.string.app_name      /* "close drawer" description for accessibility */
-		){
-            public void onDrawerClosed(View view) {
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-
-            public void onDrawerOpened(View drawerView) {
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
-		mDrawerLayout.setDrawerListener(mDrawerToggle);
 	}
 	 
 }

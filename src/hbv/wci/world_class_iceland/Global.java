@@ -7,9 +7,17 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.view.Menu;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 public class Global {
 	public static final String ST1 = "Almenn stundatafla";
@@ -201,4 +209,54 @@ public class Global {
 		
 		return mapIS;
 	}
+	
+	public static ActionBarDrawerToggle setDrawer(Context mContext, DrawerLayout mDrawerLayout, ListView mDrawerList, final Activity activity){
+
+		final ActionBarDrawerToggle mDrawerToggle;
+		// set a custom shadow that overlays the main content when the drawer opens
+		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+		
+		// set up the drawer's list view with items and click listener
+		mDrawerList.setAdapter(new ArrayAdapter<String>(mContext, R.layout.drawer_list_item, Global.drawerListItems));
+		//mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+		mDrawerList.setOnItemClickListener(new NavDrawerListener(mContext, mDrawerLayout, mDrawerList));
+
+		// enable ActionBar app icon to behave as action to toggle nav drawer
+		
+		activity.getActionBar().setDisplayHomeAsUpEnabled(true);
+		activity.getActionBar().setHomeButtonEnabled(true);
+		
+		// ActionBarDrawerToggle ties together the the proper interactions
+		// between the sliding drawer and the action bar app icon
+		mDrawerToggle = new ActionBarDrawerToggle(
+			activity,                  /* host Activity */
+			mDrawerLayout,         /* DrawerLayout object */
+			R.drawable.ic_drawer,  /* nav drawer image to replace 'Up' caret */
+			R.string.app_name,     /* "open drawer" description for accessibility */
+			R.string.app_name      /* "close drawer" description for accessibility */
+		){
+            public void onDrawerClosed(View view) {
+                activity.invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                activity.invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
+		return mDrawerToggle;
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+

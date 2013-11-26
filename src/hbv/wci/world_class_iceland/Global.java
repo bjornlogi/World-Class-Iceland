@@ -1,6 +1,8 @@
 package hbv.wci.world_class_iceland;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -60,6 +62,45 @@ public class Global {
 		return pref.getInt("_id", -1);
 	}
 	
+	/**
+	 * Kemst ad tvi hvort timinn second se a milli first og third.
+	 * 
+	 * @param first strengur a forminu "hh:mm"
+	 * @param second strengur a forminu "hh:mm"
+	 * @param third strengur a forminu "hh:mm"
+	 * @return true ef first<second<third, false annars
+	 */
+	public static boolean isBetween(String first, String second, String third) {
+		String []firstParts = first.split(":");
+		String []secondParts = second.split(":");
+		String []thirdParts = third.split(":");
+		
+		int firstKlu = Integer.parseInt(firstParts[0]);
+		int firstMin = Integer.parseInt(firstParts[1]);
+		int secondKlu = Integer.parseInt(secondParts[0]);
+		int secondMin = Integer.parseInt(secondParts[1]);
+		int thirdKlu = Integer.parseInt(thirdParts[0]);
+		int thirdMin = Integer.parseInt(thirdParts[1]);
+		
+		if (secondKlu > firstKlu && secondKlu < thirdKlu) {
+			return true;
+		} else if (secondKlu == thirdKlu) {
+			if (secondMin < thirdMin) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		if (firstKlu == secondKlu) {
+			if (secondMin > firstMin) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		return false;
+	}
+	
 	public static String getUsersEmail(Context ctx){
 		SharedPreferences pref = ctx.getApplicationContext().getSharedPreferences("login", 0);
 		return pref.getString("netfang", "-1");
@@ -71,6 +112,13 @@ public class Global {
 		editor.putInt("_id", _id); 
 		editor.putString("netfang", netfang);
 		editor.commit();
+	}
+	
+	public static String timeRightNow(){
+		TimeZone T1 = TimeZone.getTimeZone("GMT"); 
+		SimpleDateFormat klukkan = new SimpleDateFormat ("HH:mm");
+		klukkan.setTimeZone(T1);
+		return klukkan.format(new Date());
 	}
 	
 	public static void updateDay() {

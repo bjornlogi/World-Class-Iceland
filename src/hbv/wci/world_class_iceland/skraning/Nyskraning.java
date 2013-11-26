@@ -38,12 +38,12 @@ public class Nyskraning extends Activity {
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
-	final EditText netfang = (EditText) findViewById(R.id.netfangInntak2);
-	final EditText lykilord = (EditText) findViewById(R.id.lykilordInntakNr1);
-	final EditText lykilord2 = (EditText) findViewById(R.id.lykilordInntakNr2);
-	final EditText kennitala = (EditText) findViewById(R.id.kennitalaInntak);
-	final Button nySkra = (Button) findViewById(R.id.nySkraTakki);
-	final Context context = this;
+	EditText netfang;
+	EditText lykilord;
+	EditText lykilord2;
+	EditText kennitala;
+	Button nySkra;
+	Context context = this;
 	
 	private Boolean validEmail;
 	private Boolean noEmptyField;
@@ -57,8 +57,18 @@ public class Nyskraning extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_nyskraning);
+		initialiseFields();
 		checkUserInput();
 		setDrawer();
+	}
+	
+	private void initialiseFields(){
+		lykilord = (EditText) findViewById(R.id.lykilordInntakNr1);
+		lykilord2 = (EditText) findViewById(R.id.lykilordInntakNr2);
+		lykilord.setTypeface(Typeface.SANS_SERIF);
+		lykilord2.setTypeface(Typeface.SANS_SERIF);
+		netfang = (EditText) findViewById(R.id.netfangInntak2);
+		kennitala = (EditText) findViewById(R.id.kennitalaInntak);
 	}
 	
 	/**
@@ -66,9 +76,9 @@ public class Nyskraning extends Activity {
 	 * 
 	 */
 	private void checkUserInput(){
-		lykilord.setTypeface(Typeface.SANS_SERIF);
-		lykilord2.setTypeface(Typeface.SANS_SERIF);
 		
+		
+		nySkra = (Button) findViewById(R.id.nySkraTakki);
 		nySkra.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

@@ -61,28 +61,39 @@ public class StundataflanMin extends Activity {
 		setOnButtonClickedListener();
 		data.open();
 		expListView = (ExpandableListView) findViewById(R.id.stundataflan);
-		setAdapter();
+		createTimetable();
 		
 	}
 	
-	private void setAdapter(){
+	private void createTimetable(){
 		st = data.getAllStundataflanMinTimi(mContext);
 		if (st.isEmpty()){
-			listAdapter = new ExpandableListAdapter(mContext, st.listHeader, st.listChild, st.infoChild){
-				@Override
-				public boolean isChildSelectable(int groupPosition, int childPosition){
-					return false;
-				}
-			};
-			expListView.setAdapter(listAdapter);
+			makeEmptyMessageUnclickable();
 		}
 		else{
+			displayTimetable();
+			}
+		expandAllGroups();
+	}
+	
+	private void expandAllGroups(){
+		for (int position = 0; position < listAdapter.getGroupCount(); position++)
+			expListView.expandGroup(position);
+	}
+	private void makeEmptyMessageUnclickable(){
+		listAdapter = new ExpandableListAdapter(mContext, st.listHeader, st.listChild, st.infoChild){
+			@Override
+			public boolean isChildSelectable(int groupPosition, int childPosition){
+				return false;
+			}
+		};
+		expListView.setAdapter(listAdapter);
+	}
+	
+	private void displayTimetable(){
 		listAdapter = new ExpandableListAdapter(this, st.listHeader, st.listChild, st.infoChild);
 		expListView.setAdapter(listAdapter);
 		setListListener();
-		}
-		for (int position = 0; position < listAdapter.getGroupCount(); position++)
-			expListView.expandGroup(position);
 	}
 	
 	private void setListListener(){
@@ -102,8 +113,7 @@ public class StundataflanMin extends Activity {
 					newS = newS.substring(0,selected.length()-1);
 				}
 				
-				//Toast.makeText(getActivity(), selected + "\nUserID is " + userID, Toast.LENGTH_LONG).show();
-				//System.out.println(Global.isUserLoggedIn(getActivity()));
+				createAminningDialog();
 
 				
 				final Dialog dialog = new Dialog(mContext);
@@ -137,7 +147,7 @@ public class StundataflanMin extends Activity {
 					public void onClick(View v) {
 						int uid = Global.getUsersID(mContext);
 						data.deleteNotendatimi(uid, selected.substring(getMoney+3), einkatimi);
-						setAdapter();
+						createTimetable();
 						dialog.dismiss();
 					}
 				});
@@ -217,6 +227,10 @@ public class StundataflanMin extends Activity {
 			
 			
 		});
+	}
+	
+	private void createAminningDialog(){
+		
 	}
 	
 	private boolean isClickedEinka(String selected){

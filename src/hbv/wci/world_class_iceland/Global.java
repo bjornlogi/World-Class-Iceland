@@ -247,6 +247,17 @@ public class Global {
 		return mDrawerToggle;
 	}
 	
+	public static String[] determineListItems(Context ctx){
+		// If the nav drawer is open, hide action items related to the content view
+		// check if user is logged in
+		if(!isUserLoggedIn(ctx)) {
+			drawerListItems = new String[] {Global.ST1, Global.OPN, Global.INS};
+		} else {
+			drawerListItems = new String[] {getUsersEmail(ctx), Global.ST1, Global.ST2, Global.OPN, Global.UTS};
+		}
+		return drawerListItems;
+	}
+	
 }
 
 

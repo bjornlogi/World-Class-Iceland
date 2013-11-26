@@ -271,17 +271,7 @@ public class StundataflanMin extends Activity {
 	/* Called whenever we call invalidateOptionsMenu() */
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		// If the nav drawer is open, hide action items related to the content view
-		// check if user is logged in
-		if(!Global.isUserLoggedIn(mContext)) {
-			Global.drawerListItems = new String[] {Global.ST1, Global.OPN, Global.INS};
-		} else {
-			Global.drawerListItems = new String[] {Global.getUsersEmail(mContext), Global.ST1, Global.ST2, Global.OPN, Global.UTS};
-		}
-		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, Global.drawerListItems));
-		
-		//boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-		//menu.findItem(R.id.opnun_menu).setVisible(!drawerOpen);
+		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, Global.determineListItems(mContext)));
 		return super.onPrepareOptionsMenu(menu);
 	}
 	

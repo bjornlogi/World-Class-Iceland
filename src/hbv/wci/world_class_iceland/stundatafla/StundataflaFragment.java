@@ -1,20 +1,12 @@
 package hbv.wci.world_class_iceland.stundatafla;
 
-import java.util.Calendar;
 
 import hbv.wci.world_class_iceland.Global;
 import hbv.wci.world_class_iceland.R;
 import hbv.wci.world_class_iceland.data.DataSource;
 import hbv.wci.world_class_iceland.data.StundatofluTimi;
 
-import android.app.AlarmManager;
 import android.app.Dialog;
-import android.app.PendingIntent;
-import android.app.Service;
-import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -22,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,8 +32,6 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 	private ExpandableListView expListView;
 	private ViewGroup rootView;
 	private StundatofluTimi st;
-	private Context mContext = getActivity();
-	private PendingIntent pendingIntent;
 	
 	@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -113,91 +102,93 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 		
 		st = mDataSource.getAllStundatoflutimar();
 		if (st.isEmpty()){
-			listAdapter = new ExpandableListAdapter(getActivity(), st.listHeader, st.listChild, st.infoChild){
-				@Override
-				public boolean isChildSelectable(int groupPosition, int childPosition){
-					return false;
-				}
-			};
-			expListView.setAdapter(listAdapter);
+			makeUnclickable();
 		} else {
-			listAdapter = new ExpandableListAdapter(getActivity(), st.listHeader, st.listChild, st.infoChild);
-			expListView.setAdapter(listAdapter);
-			expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-					 
-				public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-					
-					final String selected = (String) listAdapter.getChild(groupPosition, childPosition);
-					int getMoney = selected.indexOf("$");
-					
-					//Toast.makeText(getActivity(), selected + "\nUserID is " + userID, Toast.LENGTH_LONG).show();
-					//System.out.println(Global.isUserLoggedIn(getActivity()));
-					int uid = Global.getUsersID(getActivity());
-					int htid = Integer.parseInt(selected.substring(getMoney+3));
-					
-					String info;
-					if(mDataSource.notendatimiExists(uid, htid))
-						info = "Tíminn er þegar til staðar í Mín Stundatafla.";
-					else
-						info = "Tímanum var bætt í Mín Stundatafla.";
-					
-					if (Global.isUserLoggedIn(getActivity()) && !mDataSource.notendatimiExists(uid, htid))
-						mDataSource.addNotendatimi(uid, htid);
-					
-					final Dialog dialog = new Dialog(getActivity());
-					dialog.setContentView(R.layout.dialog_nyskra);
-					dialog.setCanceledOnTouchOutside(false);
-					
-					dialog.setTitle( selected.substring(0, getMoney) );
+			setListViewListener();
+		}
+		determineWhichAreExpanded();
+	}
+	
+	private void makeUnclickable(){
+		listAdapter = new ExpandableListAdapter(getActivity(), st.listHeader, st.listChild, st.infoChild){
+			@Override
+			public boolean isChildSelectable(int groupPosition, int childPosition){
+				return false;
+			}
+		};
+		expListView.setAdapter(listAdapter);
+	}
+	
+	private void setListViewListener(){
+		listAdapter = new ExpandableListAdapter(getActivity(), st.listHeader, st.listChild, st.infoChild);
+		expListView.setAdapter(listAdapter);
+		expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
 				 
-					// set the custom dialog components - text, image and button
-					TextView text = (TextView) dialog.findViewById(R.id.text);
-												
-					text.setText(info);
-					
-
+			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 				
-					Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
-					// if button is clicked, close the custom dialog
-					dialogButton.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View v) {
-							dialog.dismiss();
-						}
-					});
-					
-					dialog.show();
-					
-					return true;
-				}
+				final String selected = (String) listAdapter.getChild(groupPosition, childPosition);
+				int getMoney = selected.indexOf("$");
+				int uid = Global.getUsersID(getActivity());
+				int htid = Integer.parseInt(selected.substring(getMoney+3));
 				
+				String info;
+				if(mDataSource.notendatimiExists(uid, htid))
+					info = "Tíminn er þegar til staðar í Mín Stundatafla.";
+				else
+					info = "Tímanum var bætt í Mín Stundatafla.";
 				
-			});
-		}
-		/*
-		 * uncommenta tetta svo ad allir listsar byrja opnadir
-		 * 
-		 */
-//		for (int position = 1; position <= listAdapter.getGroupCount(); position++)
-//			expListView.expandGroup(position - 1);
+				if (Global.isUserLoggedIn(getActivity()) && !mDataSource.notendatimiExists(uid, htid))
+					mDataSource.addNotendatimi(uid, htid);
+				
+				createDialog(selected, info, getMoney);
+				
+				return true;
+			}
+		});
 	}
 	
+	private void createDialog(String selected, String info, int getMoney){
+		final Dialog dialog = new Dialog(getActivity());
+		dialog.setContentView(R.layout.dialog_nyskra);
+		dialog.setCanceledOnTouchOutside(false);
+		
+		dialog.setTitle( selected.substring(0, getMoney) );
+	 
+		// set the custom dialog components - text, image and button
+		TextView text = (TextView) dialog.findViewById(R.id.text);
+									
+		text.setText(info);
+		
+		Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
+		// if button is clicked, close the custom dialog
+		dialogButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+		
+		dialog.show();
+	}
 	
-
-	private class MyAsyncTask extends AsyncTask<Void, Void, Void> {
-		private StundatofluTimi st;
-
-		protected Void doInBackground(Void... params) {
-			mDataSource.filter(stod, tegund);
-			st = mDataSource.getAllStundatoflutimar();
-
-			return null;
-		}  
-
-		@Override
-		protected void onPostExecute(Void results) {
-			//synaLista(st);
-			//birtaLista();
+	private void determineWhichAreExpanded(){
+		String klukkanNuna = Global.timeRightNow();
+		for (int position = 0; position < listAdapter.getGroupCount(); position++){
+			if(listAdapter.getGroup(position).equals("Morguntímar") && Global.isBetween("05:00", klukkanNuna, "11:59")){
+				expListView.expandGroup(position);
+				break;
+			}
+			else if (listAdapter.getGroup(position).equals("Hádegistímar") && Global.isBetween("12:00", klukkanNuna, "14:29")){
+				expListView.expandGroup(position);
+				break;
+			}
+			else if (listAdapter.getGroup(position).equals("Síðdegistímar") && Global.isBetween("14:30", klukkanNuna, "17:29")){
+				expListView.expandGroup(position);
+				break;
+			}
+			else if (listAdapter.getGroup(position).equals("Kvöldtímar"))
+				expListView.expandGroup(position);
 		}
 	}
+
 }

@@ -1,7 +1,6 @@
 package hbv.wci.world_class_iceland.stundatafla;
 
 import java.util.Calendar;
-import java.util.List;
 
 import hbv.wci.world_class_iceland.Global;
 import hbv.wci.world_class_iceland.R;
@@ -35,6 +34,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Activity fyrir personulegu stundatoflu notendans.
+ * 
+ * @author Bjorn
+ *
+ */
 public class StundataflanMin extends Activity {
 	public Context mContext = this;
 	private DrawerLayout mDrawerLayout;
@@ -93,7 +98,9 @@ public class StundataflanMin extends Activity {
 				String newS = selected;
 				//erum buin ad finna ut hvort ad timi se einkatimi eda ekki, svo vid viljum ekki 'e' a endanum
 				//lengur
-				if (einkatimi) newS = newS.substring(0,selected.length()-1);
+				if (einkatimi) {
+					newS = newS.substring(0,selected.length()-1);
+				}
 				
 				//Toast.makeText(getActivity(), selected + "\nUserID is " + userID, Toast.LENGTH_LONG).show();
 				//System.out.println(Global.isUserLoggedIn(getActivity()));

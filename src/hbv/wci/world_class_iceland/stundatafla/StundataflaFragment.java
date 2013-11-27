@@ -36,64 +36,47 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 	@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-		 
+		 	//Buum til viewid fyrir fragmentinn
 			rootView = (ViewGroup) inflater.inflate(
 					R.layout.expandable, container, false);
-			
-			
+				
 			akvedaDag();
-			mDataSource.open();
-			if (mDataSource.isEmpty() && getArguments().getString("update")=="0")
-				Toast.makeText(getActivity(),"Tengstu netinu til að sjá stundatöfluna", Toast.LENGTH_LONG)
-				.show();
-			else{
-				birtaToflu();
-			}
+			determineNextAction();
 			
 			return rootView;
 		}
+	
+	/**
+	 * Akvedur hvad a ad gera, ef gagnagrunnurinn er tomur og tetta er fyrsta kallid, ta hefur hun ekki hladist
+	 * i startUpScreen og tvi er notandinn liklegast ekki nettengdur. Tvi birtist toast um ad tengjast turfi netinu
+	 * Annars birta toflu
+	 */
+	private void determineNextAction(){
+		mDataSource.open();
+		if (mDataSource.isEmpty() && getArguments().getString("update")=="0")
+			Toast.makeText(getActivity(),"Tengstu netinu til að sjá stundatöfluna", Toast.LENGTH_LONG)
+			.show();
+		else birtaToflu();
+	}
 	 
 	/**
 	 * Finnur ut hvada dag a birta a voldu sidunni
+	 * 
 	 */
 	public void akvedaDag(){
 		int position = getArguments().getInt("position");
 		TextView t = (TextView) rootView.findViewById(R.id.opnun_header);
-		switch(position){
-			case 0:
-				t.setText("Mánudagur");
-				mDataSource = new DataSource(getActivity(), "Man");
-				break;
-			case 1:
-				t.setText("Þriðjudagur");
-				mDataSource = new DataSource(getActivity(), "Tri");
-				break;
-			case 2:
-				t.setText("Miðvikudagur");
-				mDataSource = new DataSource(getActivity(), "Mid");
-				break;
-			case 3:
-				t.setText("Fimmtudagur");
-				mDataSource = new DataSource(getActivity(), "Fim");
-				break;
-			case 4:
-				t.setText("Föstudagur");
-				mDataSource = new DataSource(getActivity(), "Fos");
-				break;
-			case 5:
-				t.setText("Laugardagur");
-				mDataSource = new DataSource(getActivity(), "Lau");
-				break;
-			case 6:
-				t.setText("Sunnudagur");
-				mDataSource = new DataSource(getActivity(), "Sun");
-				break;
-			}
+		String[] weekdays = Global.weekdayArray;
+		String weekday = weekdays[position];
+		String weekdayFormatForDB = Global.weekdayFormatForDB(weekdays[position]);
+		t.setText(weekday);
+		mDataSource = new DataSource(getActivity(), weekdayFormatForDB);
 	}
+	
 	/**
 	 * Birtir videigandi stundatoflu
+	 * 
 	 */
-
 	public void birtaToflu(){
 		expListView = (ExpandableListView) rootView.findViewById(R.id.stundataflan);
 		stod = getArguments().getString("stod");
@@ -109,6 +92,10 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 		determineWhichAreExpanded();
 	}
 	
+	/**
+	 * Gerum listaitemid ekki clickable tegar listinn er notadur til ad birta ekkert er valid
+	 * 
+	 */
 	private void makeUnclickable(){
 		listAdapter = new ExpandableListAdapter(getActivity(), st.listHeader, st.listChild, st.infoChild){
 			@Override
@@ -119,6 +106,9 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 		expListView.setAdapter(listAdapter);
 	}
 	
+	/**
+	 * Stillum listener tegar klikkad er a hlut i stundatoflunni
+	 */
 	private void setListViewListener(){
 		listAdapter = new ExpandableListAdapter(getActivity(), st.listHeader, st.listChild, st.infoChild);
 		expListView.setAdapter(listAdapter);
@@ -132,10 +122,13 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 				int htid = Integer.parseInt(selected.substring(getMoney+3));
 				
 				String info;
-				if(mDataSource.notendatimiExists(uid, htid))
+				if(mDataSource.notendatimiExists(uid, htid) && Global.isUserLoggedIn(getActivity()))
 					info = "Tíminn er þegar til staðar í Mín Stundatafla.";
-				else
+				else if (!mDataSource.notendatimiExists(uid, htid) && Global.isUserLoggedIn(getActivity()))
 					info = "Tímanum var bætt í Mín Stundatafla.";
+				else
+					info = "Skráðu þig inn til að bæta tímum við í stundatöflu";
+				
 				
 				if (Global.isUserLoggedIn(getActivity()) && !mDataSource.notendatimiExists(uid, htid))
 					mDataSource.addNotendatimi(uid, htid);
@@ -153,8 +146,6 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 		dialog.setCanceledOnTouchOutside(false);
 		
 		dialog.setTitle( selected.substring(0, getMoney) );
-	 
-		// set the custom dialog components - text, image and button
 		TextView text = (TextView) dialog.findViewById(R.id.text);
 									
 		text.setText(info);
@@ -171,6 +162,10 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 		dialog.show();
 	}
 	
+	/**
+	 * Expandum morguntima ef tad er morgun, o.s.frv.
+	 * 
+	 */
 	private void determineWhichAreExpanded(){
 		String klukkanNuna = Global.timeRightNow();
 		for (int position = 0; position < listAdapter.getGroupCount(); position++){

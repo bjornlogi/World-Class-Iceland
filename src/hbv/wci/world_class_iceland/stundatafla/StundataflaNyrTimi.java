@@ -52,6 +52,10 @@ public class StundataflaNyrTimi extends Activity {
 		setDrawer();
 	}
 	
+	/**
+	 * Stillir listener fyrir timasetningar spinnerinum
+	 * 
+	 */
 	private void setTimasetningListener(){
 		final Button timasetning = (Button) findViewById(R.id.NyrTimiKlukkan);
 		timasetning.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +85,10 @@ public class StundataflaNyrTimi extends Activity {
         });
 	}
 	
+	/**
+	 * Stillir listener fyrir Nyskra takkann
+	 * 
+	 */
 	private void setNyskraListener(){
 		final Button nySkra = (Button) findViewById(R.id.nySkraTima);
 		final EditText name = (EditText) findViewById(R.id.nafnNyrTimi);
@@ -114,13 +122,24 @@ public class StundataflaNyrTimi extends Activity {
 		});
 	}
 	
+	/**
+	 * Baetir vid upplysingum i gagnagrunn
+	 * 
+	 * @param name - nafn timans
+	 * @param time - timi timans
+	 * @param weekday - dagur timans
+	 * @param descr - lysing a timanum
+	 */
 	private void addToDatabase(String name, String time, String weekday, String descr){
 		mDataSource = new DataSource(mContext);
 		mDataSource.open();
 		mDataSource.addEinkatimi(name,time,weekday, descr);
-		
 	}
 	
+	/**
+	 * Birtir dialog ef allt for vel
+	 * 
+	 */
 	private void showSuccessDialog(){
 		final Dialog dialog = new Dialog(mContext);
 		dialog.setContentView(R.layout.dialog_nyskra);
@@ -147,6 +166,13 @@ public class StundataflaNyrTimi extends Activity {
 		dialog.show();
 	}
 	
+	/**
+	 * Birtir dialog ef nyskraning misheppnaist og hvad for vitlaust
+	 * 
+	 * @param nameError - boolean hvort tad hafi ordid error i nafn inntakinu
+	 * @param timasetningError - boolean hvort tad hafi ordid error i timasetningar inntakinu
+	 * @param spinnerError - boolean hvort tad hafi ordid error i vikudags inntakinu
+	 */
 	private void showFailureDialog(Boolean nameError, Boolean timasetningError, Boolean spinnerError){
 		final Dialog dialog = new Dialog(mContext);
 		dialog.setContentView(R.layout.dialog_nyskra);
@@ -195,29 +221,73 @@ public class StundataflaNyrTimi extends Activity {
 		spinner.setAdapter(dataAdapter1);		
 	}
 	
+	/**
+	 * Athugar a ollum i einu
+	 * 
+	 * @param nameString - gildi ur nafnaeydunni
+	 * @param timasetningString - gildi ur timasetningarspinner
+	 * @param spinnerString - gildi ur dagsetningar spinner
+	 * @return boolean um hvort allt se rett eda ekki
+	 */
 	public static boolean isNotEmpty(String nameString, String timasetningString, String spinnerString){
 		return !nameString.isEmpty() && !timasetningString.equals("Tímasetning") && !spinnerString.equals("Tími dags");	
 	}
 	
+	/**
+	 * Er buid ad fylla uti nafn reitin
+	 * @param nameString - nafn inntak
+	 * @return boolean hvort nafnid se tomi strengurinn
+	 */
 	public static boolean isName(String nameString){
 		return nameString.isEmpty();	
 	}
 	
+	/**
+	 * Er buid ad velja timasetningu?
+	 * @param timasetningString - inntak fra notenda
+	 * @return boolean hvort buid se ad velja
+	 */
 	public static boolean isTimasetning(String timasetningString){
 		return timasetningString.equals("Tímasetning");
 	}
 	
+	/**
+	 * Er buid ad velja vikudag?
+	 * @param spinnerString - tad sem valid var af spinnerinum
+	 * @return boolean hvort buid se ad velja
+	 */
 	public static boolean isSpinner(String spinnerString){
 		return spinnerString.equals("Veldu vikudag");
 	}
 	
+	/**
+	 * Styrir i hvada Activity verdur kallad fyrir hvern af valmoguleikunum
+	 * 
+	 * @param item 
+	 * @return boolean gildi sem segir manni breytingin a Activity hafi gengid upp
+	 * @see MenuItem
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (mDrawerToggle.onOptionsItemSelected(item)) return true;
+		return super.onOptionsItemSelected(item); 
+	}
+	
+	/**
+	 * Keyrt eftir postCreateFallid til ad samstilla mDrawerToggle vid astand activitysins
+	 * 
+	 */
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		// Sync the toggle state after onRestoreInstanceState has occurred.
 		mDrawerToggle.syncState();
 	}
-
+	
+	/**
+	 * Allar breytingar a stillingum eru sendar yfir i drawerinn
+	 * 
+	 */
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
@@ -225,17 +295,14 @@ public class StundataflaNyrTimi extends Activity {
 		mDrawerToggle.onConfigurationChanged(newConfig);
 	}
 	
-	/* Called whenever we call invalidateOptionsMenu() */
+	/**
+	 * Undirbyr listann eftir tvi hvort notandinn se skradur inn eda ekki
+	 * 
+	 */
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, Global.determineListItems(mContext)));
 		return super.onPrepareOptionsMenu(menu);
-	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if (mDrawerToggle.onOptionsItemSelected(item)) return true;
-		return super.onOptionsItemSelected(item);
 	}
 	
 	public void setDrawer()	{

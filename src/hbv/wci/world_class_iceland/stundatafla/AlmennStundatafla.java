@@ -34,23 +34,21 @@ import java.util.List;
  *
  */
 public class AlmennStundatafla extends FragmentActivity implements StundataflaVidmot {
-	/*
-	 * The number of pages (wizard steps) to show in this demo.
-	 */
+	
+	//Byrjum ad skilgreina hversu margar sidur vid viljum fyrir stundatofluna 
 	private static final int NUM_PAGES = 7*5; //til ad "wrappa" stundatöflunni
+	
 	public Context mContext = this;
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
-	/*
-	 * Pager widget, hondlar animationid og hondlar listenerinn og utfaersluna a "swipe"inu
-	 */
-	private ViewPager mPager;
 
-	/*
-	 * Pager adapter, sem birtir stundatofluna
-	 */
+	 //Pager widget, hondlar animationid og hondlar listenerinn og utfaersluna a "swipe"inu
+	private ViewPager mPager;
+	
+	 //Pager adapter, sem birtir stundatofluna
 	private PagerAdapter mPagerAdapter;
+	
 	private Spinner spinner1, spinner2;
 	private String stod = "Allar stöðvar";
 	private String tegund = "Allar tegundir";
@@ -66,9 +64,10 @@ public class AlmennStundatafla extends FragmentActivity implements StundataflaVi
 		setSpinners();
 		setDrawer();
 	}
-	/*
-	 * Tegar ytt er a innbyggda android til baka takkann fer hann ekki til baka um eina sidu, heldur
-	 * til baka um Intent
+	/**
+	 * Leyfir notenanum ad yta a til baka takkann ef hann er ekki skradur inn, annars tarf ad nota navDrawer
+	 * Hugsunin a bak vid tetta er svo ad innskradur notandi komist aldrei a innskraningar siduna.
+	 * 
 	 */
 	@Override
 	public void onBackPressed() {
@@ -77,6 +76,7 @@ public class AlmennStundatafla extends FragmentActivity implements StundataflaVi
 	}
 	/**
 	 * Stilli pager og adapterinn fyrir stundatofluna
+	 * 
 	 */
 	public void setPagerAndAdapter(){
 		mPager = (ViewPager) findViewById(R.id.viewpagermain);
@@ -86,6 +86,7 @@ public class AlmennStundatafla extends FragmentActivity implements StundataflaVi
 	
 	/**
 	 * Finnur hvada dagur er til ad akveda hvada sidu a ad birta fyrst, t.e. dagurinn i dag
+	 * 
 	 */
 	public void setDate(){
 		currentPos = 7*2 + Global.map.get(Global.dayOfWeek);
@@ -93,6 +94,7 @@ public class AlmennStundatafla extends FragmentActivity implements StundataflaVi
 	}
 	/**
 	 * Upphafsstillir spinnerana sem eru valmyndin fyrir stundatofluna og setur a ta listener
+	 * 
 	 */
 	public void setSpinners() {
 		spinner1 = (Spinner) findViewById(R.id.spinner1);
@@ -133,6 +135,7 @@ public class AlmennStundatafla extends FragmentActivity implements StundataflaVi
 	
 	/**
 	 * fengin eru gildi þeirra staka sem valin voru úr dropdownlistanum 
+	 * 
 	 */
 	private boolean first = true;
 	private boolean second = true;
@@ -168,6 +171,9 @@ public class AlmennStundatafla extends FragmentActivity implements StundataflaVi
 		});
 	}
 	
+	/**
+	 * Stillir navigationid
+	 */
 	public void setDrawer()	{
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_stundatafla);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer_stundatafla);
@@ -183,6 +189,10 @@ public class AlmennStundatafla extends FragmentActivity implements StundataflaVi
 			super(fm);
 		}
 		int i = 0;
+		/**
+		 * Naer i ta sidu sem a ad uppfaera, sem er sidan sem notandinn er ad skoda og taer sem eru hlidina
+		 * 
+		 */
 		@Override
 		public Fragment getItem(int position) {
 			StundataflaFragment pf = new StundataflaFragment();
@@ -191,12 +201,20 @@ public class AlmennStundatafla extends FragmentActivity implements StundataflaVi
 			return pf;
 		}
 		
+		/**
+		 * Undirbyr taer upplysingar sem senda a yfir til fragmentsins
+		 * @param position
+		 * @return
+		 */
 		private Bundle prepareBundle(int position){
 			Bundle bdl = new Bundle(3);
+			//hver er stadsetningin? notad til ad akveda dag
 			bdl.putInt("position", position%7);
+			//viljum toastid sem birtir stendur a ad tad turfi nettenginu birtist bara einu sinni
 			bdl.putInt("update", i++);
-			bdl.putBoolean("isCurrent", position == mPager.getCurrentItem());
+			//Hvada stod var valin til ad geta filterad gagnagrunnsleitina eftir tvi
 			bdl.putString("stod", stod);
+			//Sama og stod bara hvada tegund var valin
 			bdl.putString("tegund", tegund);
 			return bdl;
 		}
@@ -215,27 +233,6 @@ public class AlmennStundatafla extends FragmentActivity implements StundataflaVi
 		}
 	}
 	
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-		// Sync the toggle state after onRestoreInstanceState has occurred.
-		mDrawerToggle.syncState();
-	}
-
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-		// Pass any configuration change to the drawer toggle
-		mDrawerToggle.onConfigurationChanged(newConfig);
-	}
-	
-	/* Called whenever we call invalidateOptionsMenu() */
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, Global.determineListItems(mContext)));
-		return super.onPrepareOptionsMenu(menu);
-	}
-	
 	/**
 	 * Styrir i hvada Activity verdur kallad fyrir hvern af valmoguleikunum
 	 * 
@@ -246,8 +243,38 @@ public class AlmennStundatafla extends FragmentActivity implements StundataflaVi
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (mDrawerToggle.onOptionsItemSelected(item)) return true;
-		return super.onOptionsItemSelected(item);
+		return super.onOptionsItemSelected(item); 
 	}
 	
+	/**
+	 * Keyrt eftir postCreateFallid til ad samstilla mDrawerToggle vid astand activitysins
+	 * 
+	 */
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		// Sync the toggle state after onRestoreInstanceState has occurred.
+		mDrawerToggle.syncState();
+	}
 	
+	/**
+	 * Allar breytingar a stillingum eru sendar yfir i drawerinn
+	 * 
+	 */
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		// Pass any configuration change to the drawer toggle
+		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
+	
+	/**
+	 * Undirbyr listann eftir tvi hvort notandinn se skradur inn eda ekki
+	 * 
+	 */
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, Global.determineListItems(mContext)));
+		return super.onPrepareOptionsMenu(menu);
+	}
 }

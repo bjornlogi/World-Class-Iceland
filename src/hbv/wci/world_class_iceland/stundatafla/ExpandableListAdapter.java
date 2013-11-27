@@ -13,6 +13,12 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
  
+/**
+ * Klasi sem utfaerir Expandable listann
+ * 
+ * @author Bjorn
+ *
+ */
 public class ExpandableListAdapter extends BaseExpandableListAdapter {
  
     private Context _context;
@@ -20,6 +26,14 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     private HashMap<String, List<String>> _listDataChild;
     private HashMap<String, String> _infoChild;
  
+    /**
+     * Smidurinn upphafsstillir tau gagnasofn sem eru naudsynleg fyrir listann
+     * 
+     * @param context
+     * @param listDataHeader - allir headerar, t.d. morgun siddegi o.s.frv.
+     * @param listChildData - allir hoptimar sem falla undir hvern header fyrir sig
+     * @param infoChild - upplysingar sem einstakur timi kann ad hafa
+     */
     public ExpandableListAdapter(Context context, List<String> listDataHeader,
             HashMap<String, List<String>> listChildData, HashMap<String, String> infoChild) {
         this._context = context;
@@ -38,7 +52,10 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
     public long getChildId(int groupPosition, int childPosition) {
         return childPosition;
     }
- 
+    /**
+     * Herna er loksins unnid ur ollum gognunum sem sent var inn i smidnum
+     * 
+     */
     @Override
     public View getChildView(int groupPosition, final int childPosition,
             boolean isLastChild, View convertView, ViewGroup parent) {
@@ -114,9 +131,6 @@ public class ExpandableListAdapter extends BaseExpandableListAdapter {
         catch (Exception e){
         	
         }
-        
- 
-        
         lblListHeader.setText("");
  
         return convertView;

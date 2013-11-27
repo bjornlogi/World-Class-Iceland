@@ -14,6 +14,8 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -59,7 +61,10 @@ public class StundataflanMin extends Activity {
 		createTimetable();
 		
 	}
-	
+	/**
+	 * Fall sem naer i gogn ur gagnagrunni og birtir tau i lista
+	 * 
+	 */
 	private void createTimetable(){
 		st = data.getAllStundataflanMinTimi(mContext);
 		if (st.isEmpty()){
@@ -71,10 +76,18 @@ public class StundataflanMin extends Activity {
 		expandAllGroups();
 	}
 	
+	/**
+	 * Fall sem expandar alla dalkana
+	 */
 	private void expandAllGroups(){
 		for (int position = 0; position < listAdapter.getGroupCount(); position++)
 			expListView.expandGroup(position);
 	}
+	
+	/**
+	 * Fall sem gerir hlutina i listanum 'unclickable'
+	 * 
+	 */
 	private void makeEmptyMessageUnclickable(){
 		listAdapter = new ExpandableListAdapter(mContext, st.listHeader, st.listChild, st.infoChild){
 			@Override
@@ -84,13 +97,18 @@ public class StundataflanMin extends Activity {
 		};
 		expListView.setAdapter(listAdapter);
 	}
-	
+	/**
+	 * Fall sem birtir tau gogn sem sott voru ur gagnagrunni
+	 */
 	private void displayTimetable(){
 		listAdapter = new ExpandableListAdapter(this, st.listHeader, st.listChild, st.infoChild);
 		expListView.setAdapter(listAdapter);
 		setListListener();
 	}
-	
+	/**
+	 * Fall sem stillir listenerinn fyrir listann
+	 * 
+	 */
 	private void setListListener(){
 		
 		expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
@@ -118,6 +136,13 @@ public class StundataflanMin extends Activity {
 		});
 	}
 	
+	/**
+	 * Fall sem byr til aminningar dialogginn.
+	 * 
+	 * @param selected - hoptiminn sem var valin af forminu nafn$idx tar sem x er einhver heiltala
+	 * @param getMoney - stadsetning id er skilgreind med $
+	 * @param einkatimi - hvort um einkatima se ad raeda
+	 */
 	private void createAminningDialog(final String selected, final int getMoney, final boolean einkatimi){
 		final Dialog dialog = new Dialog(mContext);
 		dialog.setContentView(R.layout.dialog_min_stundatafla);
@@ -160,6 +185,13 @@ public class StundataflanMin extends Activity {
 		dialog.show();		
 	}
 	
+	/**
+	 * Fall sem stillir listenerinn fyrir aminningu
+	 * 
+	 * @param dialog - aminningardialoginn
+	 * @param selected - hoptiminn sem var valin af forminu nafn$idx tar sem x er einhver heiltala
+	 * @param getMoney - stadsetning id er skilgreind med $
+	 */
 	private void onAminningClickListener(final Dialog dialog, final String selected, final int getMoney){
 		checkbox_aminning = (CheckBox) dialog.findViewById(R.id.checkbox_aminning);
 		
@@ -176,40 +208,25 @@ public class StundataflanMin extends Activity {
 				Intent myIntent = new Intent(mContext, AminningService.class);
 				pendingIntent = PendingIntent.getService(mContext, 0, myIntent, 0);
 				AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Service.ALARM_SERVICE);
-
-				//int getMoney2 = selected.indexOf("$");
-				//String id = selected.substring(getMoney2+1,selected.length());
-				//System.out.println(einkatimi);
-				//System.out.println(id);
-				//String info_time = st.infoChild.get(id);
-				//String[] s = info_time.split(" - ");
-				//String hour = s[0].split(":")[0];
-				//String min = s[0].split(":")[1];	
+				
 				String justTheID = selected.substring(getMoney+3,selected.length());
-					
-				
-				
-				Calendar calendar = Calendar.getInstance();
+				String[] info = data.getHoptimarInfo(Integer.parseInt(justTheID));
+				String name = info[0];
+				String klukkan = info[5];
+				String day = info[7];
+				String [] parts = klukkan.split(" - ");
+ 				Calendar calendar = Calendar.getInstance();
 				calendar.setTimeInMillis(System.currentTimeMillis());
 				
-				//calendar.set(Calendar.DAY_OF_WEEK, weekDay);
-				//calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour)-1);
-				//calendar.set(Calendar.MINUTE, Integer.parseInt(min));
-				//calendar.set(Calendar.MONTH, 11);
-				//calendar.set(Calendar.YEAR, 2013);				
-				//calendar.set(Calendar.DAY_OF_MONTH, 24);
-				//calendar.set(Calendar.HOUR_OF_DAY, 15);
-				//calendar.set(Calendar.MINUTE, 16);
-				//calendar.set(Calendar.SECOND, 0);
-				int sec = secondsTillNotification(justTheID);
-				calendar.add(Calendar.SECOND, sec);
+				calendar.add(Calendar.SECOND, secondsTillNotification(klukkan,day));
 				
-				System.out.println(sec);
+				
 				
 				if (checkbox_aminning.isChecked()) {
 					data.updateAminning("true", justTheID);
 					alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 					Toast.makeText(mContext, "Áminning hefur verið skráð", Toast.LENGTH_LONG).show();
+					prepareMsg(hourEarlier(parts[0]), name);
 				}
 				else {
 					data.updateAminning("false", justTheID);
@@ -219,20 +236,32 @@ public class StundataflanMin extends Activity {
 			}
 		});
 	}
+	
+	/**
+	 * Setur skilabod i SharedPrefrences sem er sidan nad i af aminningarklasanum. Sett er nafnid sem er svo birt
+	 * Lykillinn er klukkan hvad aminningin a ad birtast
+	 * 
+	 * @param time - Klukkan hvad aminningin a ad birtst
+	 * @param hoptimi - nafnid a hoptimanum
+	 */
+	public void prepareMsg(String time, String hoptimi){
+		SharedPreferences pref = mContext.getApplicationContext().getSharedPreferences("notifications", 1); // 0 - for private mode
+		Editor editor = pref.edit();
+		editor.putString(time, hoptimi);
+		System.out.println(time);
+		editor.commit();
+	}
 	/**
 	 * Finnur ut hvad tad eru margar sekundur tangad til tad er klukkutimi i timann
 	 * @param justTheID - audkenni timans
 	 * @return sekundur tangad til tad er klukkutimi i ad timinn byrjar
 	 */
-	public int secondsTillNotification(String justTheID){
-		String[] uppl = data.getHoptimarInfo(Integer.parseInt(justTheID));
+	public int secondsTillNotification(String klukkan, String day){
 		HashMap<String, Integer> map = Global.map;
 		int today = map.get(Global.dayOfWeek);
 		
-		int weekDay = Global.mapIS.get(uppl[7]);
-		//if (weekDay == 8) weekDay = 1;
+		int weekDay = Global.mapIS.get(day);
 		
-		String klukkan = uppl[5];
 		String[] parts = klukkan.split(" - ");
 		String[] timi1 = parts[0].split(":");
 		String timi1klst = timi1[0];
@@ -258,10 +287,32 @@ public class StundataflanMin extends Activity {
 			return secondsTillTakeOff + Global.secondsInADay*(7+(weekDay - today));
 	}
 	
+	/**
+	 * Tekur inn tima a forminu HH:mm og skilar streng af klukku sem er klukkutima a undan
+	 * @param time - timi sem vid viljum minnka
+	 * @return time fyrir klukkutima sidan
+	 */
+	public String hourEarlier(String time){
+		String [] parts = time.split(":");
+		int hour = Integer.parseInt(parts[0])-1;
+		return String.valueOf(hour)+":"+parts[1];
+	}
+	
+	/**
+	 * Athugar hvort valid se einkatimi eda ekki
+	 * 
+	 * @param selected - hoptiminn sem var valin af forminu nafn$idx tar sem x er einhver heiltala. ef timinn er einkatimi
+	 * er buid ad skeyta 'e' a endann
+	 * @return boolean hvort selected se einkatimi
+	 */
 	private boolean isClickedEinka(String selected){
 		return selected.indexOf('e', selected.length()-1) != -1;
 	}
 	
+	/**
+	 * Setur listener a nyskraningar takkann
+	 * 
+	 */
 	private void setOnButtonClickedListener(){
 		final Button skraNyjanTima = (Button) findViewById(R.id.skraNyjanTima);
 		skraNyjanTima.setOnClickListener(new View.OnClickListener() {
@@ -273,31 +324,14 @@ public class StundataflanMin extends Activity {
 		});
 	}
 	
+	/**
+	 * Stillir navigationid
+	 * 
+	 */
 	public void setDrawer()	{
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_stundataflan_min);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer_stundataflan_min);
 		mDrawerToggle = Global.setDrawer(mContext, mDrawerLayout, mDrawerList, this);
-	}
-	
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-		// Sync the toggle state after onRestoreInstanceState has occurred.
-		mDrawerToggle.syncState();
-	}
-
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-		// Pass any configuration change to the drawer toggle
-		mDrawerToggle.onConfigurationChanged(newConfig);
-	}
-	
-	/* Called whenever we call invalidateOptionsMenu() */
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, Global.determineListItems(mContext)));
-		return super.onPrepareOptionsMenu(menu);
 	}
 	
 	/**
@@ -309,11 +343,39 @@ public class StundataflanMin extends Activity {
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Drawer toggle button
-		if (mDrawerToggle.onOptionsItemSelected(item)) {
-	          return true;
-	    }
-		
-		return super.onOptionsItemSelected(item);
+		if (mDrawerToggle.onOptionsItemSelected(item)) return true;
+		return super.onOptionsItemSelected(item); 
+	}
+	
+	/**
+	 * Keyrt eftir postCreateFallid til ad samstilla mDrawerToggle vid astand activitysins
+	 * 
+	 */
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		// Sync the toggle state after onRestoreInstanceState has occurred.
+		mDrawerToggle.syncState();
+	}
+	
+	/**
+	 * Allar breytingar a stillingum eru sendar yfir i drawerinn
+	 * 
+	 */
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		// Pass any configuration change to the drawer toggle
+		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
+	
+	/**
+	 * Undirbyr listann eftir tvi hvort notandinn se skradur inn eda ekki
+	 * 
+	 */
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, Global.determineListItems(mContext)));
+		return super.onPrepareOptionsMenu(menu);
 	}
 }

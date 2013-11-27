@@ -34,7 +34,7 @@ public class StartUpScreen extends Activity {
 	}
 	
 	/**
-	 * Tekur ákvordun hvad skal gera med teim upplysingum sem notandinn er med
+	 * Tekur ákvordun hvad skal gera med teim upplysingum sem appid er med
 	 * 
 	 */
 	private void nextAction(){
@@ -56,6 +56,11 @@ public class StartUpScreen extends Activity {
 		}
 	}
 	
+	/**
+	 * Byr til intent
+	 * 
+	 * @param destination - hvada activity a ad senda a
+	 */
 	private void createIntent(String destination){
 		Intent i;
 		if (destination == "StundataflanMin")

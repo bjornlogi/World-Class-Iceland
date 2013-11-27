@@ -14,7 +14,6 @@ import android.content.SharedPreferences.Editor;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -28,10 +27,14 @@ public class Global {
 	public static String[] drawerListItems = new String[] {ST1, OPN, INS};
 	public static String currentUser;
 	public static int currentUserID;
-	//public static SharedPreferences pref = this.getApplicationContext().getSharedPreferences("login", 0);
 	public static Editor editor;
-	public Global mContext = this;
+	//public Global mContext = this;
 	
+	/**
+	 * Skilar thremur fyrstu stofum i teim vikudag sem er i dag a ensku
+	 * 
+	 * @return vikudagur dagsins i dag
+	 */
 	public static String dayOfWeek = initDay();
 	private static String initDay() {
 		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"), Locale.UK);
@@ -52,11 +55,22 @@ public class Global {
 		
 	}
 	
+	/**
+	 * Fall sem kannar hvort notandi se loggadur inn eda ekki
+	 * 
+	 * @param ctx - Samhengid sem kallad er ur
+	 * @return boolean hvort einhver se loggadur inn eda ekki
+	 */
 	public static boolean isUserLoggedIn(Context ctx){
 		SharedPreferences pref = ctx.getApplicationContext().getSharedPreferences("login", 0);
 		return pref.getInt("_id", -1) != -1;
 	}
-	
+	/**
+	 * Fall sem er mjog serhaeft, en skilar fyrstu tremur stofunum i inntakinu med enskum stofum
+	 * 
+	 * @param input - vikudagur a islensku
+	 * @return fyrstu trir stafirnir, ekki med islenskum stofum
+	 */
 	public static String weekdayFormatForDB(String input){
 		input = input.replaceAll("Þ","T");
 		input = input.replaceAll("ð","d");
@@ -65,9 +79,26 @@ public class Global {
 		return input.substring(0, 3);
 	}
 	
+	/**
+	 * Fall sem skilar audkenni notenda sem er loggadur inn
+	 * 
+	 * @param ctx - Samhengid sem kallad er ur
+	 * @return audkenni notendans sem er skradur inn.
+	 */
 	public static int getUsersID(Context ctx){
 		SharedPreferences pref = ctx.getApplicationContext().getSharedPreferences("login", 0);
 		return pref.getInt("_id", -1);
+	}
+	
+	/**
+	 * Fall sem skilar tolvupost notenda sem er loggadur inn
+	 * 
+	 * @param ctx - Samhengid sem kallad er ur
+	 * @return tolvupostur notendans sem er skradur inn.
+	 */
+	public static String getUsersEmail(Context ctx){
+		SharedPreferences pref = ctx.getApplicationContext().getSharedPreferences("login", 0);
+		return pref.getString("netfang", "-1");
 	}
 	
 	/**
@@ -109,11 +140,13 @@ public class Global {
 		return false;
 	}
 	
-	public static String getUsersEmail(Context ctx){
-		SharedPreferences pref = ctx.getApplicationContext().getSharedPreferences("login", 0);
-		return pref.getString("netfang", "-1");
-	}
-	
+	/**
+	 * Stillir notendann
+	 * 
+	 * @param ctx - Samhengid sem kallad er ur
+	 * @param _id - Audkenni notendans
+	 * @param netfang - Netfang notendans
+	 */
 	public static void setUser(Context ctx, int _id, String netfang){
 		SharedPreferences pref = ctx.getApplicationContext().getSharedPreferences("login", 0); // 0 - for private mode
 		Editor editor = pref.edit();
@@ -121,7 +154,11 @@ public class Global {
 		editor.putString("netfang", netfang);
 		editor.commit();
 	}
-	
+	/**
+	 * Fall sem skilar hvad klukkan er
+	 * 
+	 * @return hvad klukkan er a HH:mm formati
+	 */
 	public static String timeRightNow(){
 		TimeZone T1 = TimeZone.getTimeZone("GMT"); 
 		SimpleDateFormat klukkan = new SimpleDateFormat ("HH:mm");
@@ -129,6 +166,10 @@ public class Global {
 		return klukkan.format(new Date());
 	}
 	
+	/**
+	 * Fall sem uppfaerir daginn i dag
+	 * 
+	 */
 	public static void updateDay() {
 		Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("GMT"), Locale.UK);
 		
@@ -147,6 +188,10 @@ public class Global {
 		dayOfWeek = dagur;
 	}
 	
+	/**
+	 * Byr til hakktoflu sem breytir strengjum i index fyrir fylki
+	 * 
+	 */
 	public static HashMap<String, Integer> timiDags = initTimiDags();
 	private static HashMap<String, Integer> initTimiDags(){
 		timiDags = new HashMap<String,Integer>();
@@ -158,7 +203,10 @@ public class Global {
 		return timiDags;
 	}
 	
-	
+	/**
+	 * Byr til hakktoflu sem breytir strengjum i index fyrir fylki
+	 * 
+	 */
 	public static HashMap<String, Integer> map = initMap();
 	private static HashMap<String, Integer> initMap(){
 		map = new HashMap<String,Integer>();
@@ -173,6 +221,10 @@ public class Global {
 		return map;
 	}
 	
+	/**
+	 * Byr til fylki af vikudogum a islensku
+	 * 
+	 */
 	public static String[] weekdayArray = initWeekday();
 	private static String[] initWeekday() {
 		weekdayArray = new String[7];
@@ -186,6 +238,10 @@ public class Global {
 		return weekdayArray;
 	}
 	
+	/**
+	 * Byr til fylki af tima dags a islensku
+	 * 
+	 */
 	public static String[] timiDagsArray = initDagsArray();
 	private static String[] initDagsArray() {
 		timiDagsArray = new String[7];
@@ -196,6 +252,10 @@ public class Global {
 		return timiDagsArray;
 	}
 	
+	/**
+	 * Byr til hakktoflu sem breytir strengjum i index fyrir fylki
+	 * 
+	 */
 	public static HashMap<String, Integer> mapIS = initMapIS();
 	private static HashMap<String, Integer> initMapIS(){
 		mapIS = new HashMap<String,Integer>();
@@ -210,6 +270,15 @@ public class Global {
 		return mapIS;
 	}
 	
+	/**
+	 * Stillir Navigationid 
+	 * 
+	 * @param mContext - Samhengi sem kallad er ur
+	 * @param mDrawerLayout - Snid og utlit menusins
+	 * @param mDrawerList - Listinn sem birtist a drawerinum
+	 * @param activity - Activity sem kallad er ur
+	 * @return Trigger fyrir navigationid.
+	 */
 	public static ActionBarDrawerToggle setDrawer(Context mContext, DrawerLayout mDrawerLayout, ListView mDrawerList, final Activity activity){
 
 		final ActionBarDrawerToggle mDrawerToggle;
@@ -259,15 +328,3 @@ public class Global {
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-

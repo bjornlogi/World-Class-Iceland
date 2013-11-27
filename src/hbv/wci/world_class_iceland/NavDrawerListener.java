@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,12 +19,22 @@ public class NavDrawerListener implements ListView.OnItemClickListener{
 	private ListView mDrawerList;
 	//private ActionBarDrawerToggle mDrawerToggle;
 	
+	/**
+	 * Smidur sem tekur inn breytur ur activityinu sem byr til tilvikid
+	 * 
+	 * @param ctx - Samhengid
+	 * @param drawerLayout - Snid og utlit
+	 * @param drawerList - Listi hluta
+	 */
 	public NavDrawerListener(Context ctx,DrawerLayout drawerLayout, ListView drawerList){
 		mContext = ctx;
 		mDrawerLayout = drawerLayout;
 		mDrawerList = drawerList;
 	}
-
+	/**
+	 * Yfirskrifun a innbyggt fall i ListView, tar stillum vid Intentin fyrir navigationid a onClick
+	 * 
+	 */
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		mDrawerList.setItemChecked(position, true);
@@ -55,7 +64,7 @@ public class NavDrawerListener implements ListView.OnItemClickListener{
 			Intent i = new Intent(mContext, Innskraning.class);
 			mContext.startActivity(i);
 		} else if (str.contains("@")) {
-			//Intent i = new Intent(Innskraning.this, UmNotenda.class);
+			//Intent i = new Intent(mContext, UmNotenda.class);
 			//startActivity(i);
 		}
 	}

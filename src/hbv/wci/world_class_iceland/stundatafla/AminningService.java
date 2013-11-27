@@ -37,7 +37,7 @@ public class AminningService extends Service {
 	@Override
 	public void onStart(Intent intent, int startId) {
 		// TODO Auto-generated method stub
-		super.onStart(intent, startId);
+		//super.onStart(intent, startId);
 		// Toast.makeText(this, "MyAlarmService.onStart()", Toast.LENGTH_LONG).show();
 		makeNotification();
 		

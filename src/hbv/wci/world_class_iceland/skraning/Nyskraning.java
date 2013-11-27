@@ -6,12 +6,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -23,12 +21,8 @@ import android.content.res.Configuration;
 import hbv.wci.world_class_iceland.Global;
 import hbv.wci.world_class_iceland.R;
 import hbv.wci.world_class_iceland.data.DataSource;
-import hbv.wci.world_class_iceland.opnunartimar.Opnunartimar;
 import hbv.wci.world_class_iceland.stundatafla.AlmennStundatafla;
-import hbv.wci.world_class_iceland.stundatafla.StundataflanMin;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -51,7 +45,6 @@ public class Nyskraning extends Activity {
 	private Boolean passwordMatch;
 	private Boolean emailAvailable;
 	
-	private Map<String,Integer> map;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

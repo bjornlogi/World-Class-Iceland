@@ -3,37 +3,20 @@ package hbv.wci.world_class_iceland.opnunartimar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View.OnClickListener;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
-
 import hbv.wci.world_class_iceland.Global;
-import hbv.wci.world_class_iceland.R.id;
-import hbv.wci.world_class_iceland.R.layout;
-import hbv.wci.world_class_iceland.R.menu;
 import hbv.wci.world_class_iceland.R;
-import hbv.wci.world_class_iceland.skraning.Innskraning;
-import hbv.wci.world_class_iceland.stundatafla.AlmennStundatafla;
-import hbv.wci.world_class_iceland.stundatafla.StundataflanMin;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TimeZone;
 
 /**
  * Activity sem synir valmynd til tess ad sja opnunartima stodva. 
@@ -47,8 +30,6 @@ public class Opnunartimar extends Activity implements OpnunVidmot {
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
 	
-	private Map<String,Integer> map;
-	
 	/**
 	 * Byr til skjainn, bindur layout ur opnunartimar.xml við skjainn. Tengir virkni við takkana ur layout-i.
 	 *
@@ -61,11 +42,9 @@ public class Opnunartimar extends Activity implements OpnunVidmot {
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_opnunartimar);
-			
-		
+				
 		setTakkar(); 
 		setDrawer();
-		
 	}
 	
 	/**
@@ -192,9 +171,7 @@ public class Opnunartimar extends Activity implements OpnunVidmot {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Drawer toggle button
-		if (mDrawerToggle.onOptionsItemSelected(item)) {
-	          return true;
-	    }
+		if (mDrawerToggle.onOptionsItemSelected(item)) return true;
 			
 		return super.onOptionsItemSelected(item); 
 	}
@@ -220,6 +197,10 @@ public class Opnunartimar extends Activity implements OpnunVidmot {
 		return super.onPrepareOptionsMenu(menu);
 	}
 	
+	/**
+	 * Leyfir notenanum ad yta a til baka takkann ef hann er ekki skradur inn, annars tarf ad nota navDrawer
+	 * Hugsunin a bak vid tetta er svo ad innskradur notandi komist aldrei a innskraningar siduna.
+	 */
 	@Override
 	public void onBackPressed() {
 		if (!Global.isUserLoggedIn(this))

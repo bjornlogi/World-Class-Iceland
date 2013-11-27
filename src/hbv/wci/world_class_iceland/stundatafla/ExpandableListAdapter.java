@@ -1,14 +1,11 @@
 package hbv.wci.world_class_iceland.stundatafla;
 
 import hbv.wci.world_class_iceland.R;
-import hbv.wci.world_class_iceland.R.id;
-import hbv.wci.world_class_iceland.R.layout;
 
 import java.util.HashMap;
 import java.util.List;
  
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;

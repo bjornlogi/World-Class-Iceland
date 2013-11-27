@@ -8,12 +8,10 @@ import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,11 +19,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import hbv.wci.world_class_iceland.data.DataSource;
-import hbv.wci.world_class_iceland.opnunartimar.Opnunartimar;
-import hbv.wci.world_class_iceland.NavDrawerListener;
 import hbv.wci.world_class_iceland.R;
 import hbv.wci.world_class_iceland.stundatafla.AlmennStundatafla;
-import hbv.wci.world_class_iceland.stundatafla.StundataflanMin;
 import hbv.wci.world_class_iceland.Global;
 
 /** 

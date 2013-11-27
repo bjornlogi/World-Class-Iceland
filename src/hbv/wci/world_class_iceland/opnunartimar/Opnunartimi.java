@@ -3,36 +3,23 @@ package hbv.wci.world_class_iceland.opnunartimar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TimeZone;
 
 import hbv.wci.world_class_iceland.Global;
 import hbv.wci.world_class_iceland.R;
 import hbv.wci.world_class_iceland.data.Stod;
-import hbv.wci.world_class_iceland.skraning.Innskraning;
-import hbv.wci.world_class_iceland.stundatafla.AlmennStundatafla;
-import hbv.wci.world_class_iceland.stundatafla.StundataflanMin;
 
 /**
  * Activity sem synir opnunartima einnar stodvar.
@@ -47,7 +34,6 @@ public class Opnunartimi extends Activity implements OpnunStodVidmot{
 	private ActionBarDrawerToggle mDrawerToggle;
 	
 	private String vikudagur;
-	private Map<String,Integer> map;
 	private String stod;
 	
 	/**
@@ -64,18 +50,14 @@ public class Opnunartimi extends Activity implements OpnunStodVidmot{
 		setContentView(R.layout.activity_opnunartimi);
 		
 		setTitle();
-		setDate();
-		createMap();
 		//naum i opnunartimana i dag fyrir stodina
+		setDate();
 		Stod timarObj = new Stod(stod); 
-		String opnunIDag = timarObj.OpnunFyrirDag(this.vikudagur);	
+		String opnunIDag = timarObj.OpnunFyrirDag(vikudagur);	
 		birtaErOpid(opnunIDag);		
 		birtaMynd(stod);
 		birtaOpnunartima(timarObj);
 		
-		/*
-		 * CREATE DRAWER
-		 */
 		setDrawer();
 		
 	}
@@ -93,12 +75,7 @@ public class Opnunartimi extends Activity implements OpnunStodVidmot{
 	}
 	
 	public void setDate(){
-//		TimeZone T1 = TimeZone.getTimeZone("GMT"); 
-//		SimpleDateFormat DOW = new SimpleDateFormat ("EEE");
-//		
-//		DOW.setTimeZone(T1);
-		
-		this.vikudagur = Global.dayOfWeek;// = DOW.format(new Date());
+		vikudagur = Global.dayOfWeek;
 	}
 	
 	/**
@@ -289,17 +266,6 @@ public class Opnunartimi extends Activity implements OpnunStodVidmot{
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, Global.determineListItems(mContext)));
 		return super.onPrepareOptionsMenu(menu);
-	}
-	
-	public void createMap(){
-		map = new HashMap<String,Integer>();
-		map.put("Mon", 0);
-		map.put("Tue", 1);
-		map.put("Wed", 2);
-		map.put("Thu", 3);
-		map.put("Fri", 4);
-		map.put("Sat", 5);
-		map.put("Sun", 6);
 	}
 	
 	public void setDrawer()	{

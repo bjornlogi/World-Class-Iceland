@@ -1,9 +1,6 @@
 package hbv.wci.world_class_iceland.stundatafla;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -11,7 +8,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.GravityCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -24,10 +20,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-import hbv.wci.world_class_iceland.opnunartimar.Opnunartimar;
 import hbv.wci.world_class_iceland.Global;
 import hbv.wci.world_class_iceland.R;
-import hbv.wci.world_class_iceland.skraning.Innskraning;
 
 import java.util.ArrayList;
 import java.util.List;

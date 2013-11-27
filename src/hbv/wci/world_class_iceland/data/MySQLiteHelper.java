@@ -119,7 +119,6 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		db.execSQL("DROP TABLE IF EXISTS "+TABLE_HOPTIMAR);
-		db.execSQL("DROP TABLE IF EXISTS "+TABLE_NOTENDATIMAR);
 		onCreate(db);
 	}
 	

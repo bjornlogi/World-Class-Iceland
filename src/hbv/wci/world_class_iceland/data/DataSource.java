@@ -301,7 +301,7 @@ public class DataSource {
 			dagar.get(d).add(hoptimi.getNafn()+ID);
 			
 			ID = "id"+hoptimi.getmId()+isEinka;
-			infoChild.put(ID, hoptimi.minnTimiInfo());
+			infoChild.put(ID, hoptimi.toString());
 			
 			c.moveToNext();
 		}

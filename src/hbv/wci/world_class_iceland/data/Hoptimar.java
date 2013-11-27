@@ -19,6 +19,20 @@ public class Hoptimar {
 	private String lokad;
 	private String isEinka;
 	
+	/**
+	 * Smidur tar sem hoptiminn er stilltur tegar tilvikid er buid til.
+	 * 
+	 * @param mId
+	 * @param nafn
+	 * @param stod
+	 * @param salur
+	 * @param tjalfari
+	 * @param tegund
+	 * @param klukkan
+	 * @param timi
+	 * @param dagur
+	 * @param isEinka
+	 */
 	public Hoptimar(long mId, String nafn, String stod, String salur, String tjalfari, String tegund,
 			String klukkan, String timi, String dagur, String isEinka){
 		this.mId = mId;
@@ -33,6 +47,9 @@ public class Hoptimar {
 		this.isEinka = isEinka;
 	}
 	
+	/**
+	 * Smidur tar sem tilvikid er stillt i gegnum get follin
+	 */
 	public Hoptimar(){
 		
 	}
@@ -246,20 +263,25 @@ public class Hoptimar {
 		info += klukkan;
 		info += "\n" + stod;
 		if (!salur.equals(""))
-			info += "\n" + salur;
-		if (!tjalfari.equals(""))
-			info += "\n" + tjalfari;
-		return info;
-	}
-	
-	public String minnTimiInfo(){
-		String info = "";
-		info += klukkan;
-		info += "\n" + stod;
-		if (!salur.equals(""))
 			info += " - " + salur;
 		if (!tjalfari.equals(""))
 			info += "\n" + tjalfari;
 		return info;
 	}
+	
+//	/**
+//	 * Strengurinn er adeins odruvisi tegar um mina stundatoflu er ad raeda.
+//	 * 
+//	 * @return strengur sem lysir innihaldi hlutsins
+//	 */
+//	public String minnTimiInfo(){
+//		String info = "";
+//		info += klukkan;
+//		info += "\n" + stod;
+//		if (!salur.equals(""))
+//			info += " - " + salur;
+//		if (!tjalfari.equals(""))
+//			info += "\n" + tjalfari;
+//		return info;
+//	}
 }

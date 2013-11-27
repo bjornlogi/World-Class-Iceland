@@ -64,6 +64,7 @@ public class Opnunartimi extends Activity implements OpnunStodVidmot{
 	
 	/**
 	 * Birtir titilinn, t.e.a.s. hvada stod hefur verid valin og stillir global breytuna stod
+	 * 
 	 */
 	
 	public void setTitle(){
@@ -237,23 +238,37 @@ public class Opnunartimi extends Activity implements OpnunStodVidmot{
 		return false;
 	}
 	
+	/**
+	 * Stillir navigationid
+	 * 
+	 */
+	public void setDrawer()	{
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_opnunartimi);
+		mDrawerList = (ListView) findViewById(R.id.left_drawer_opnunartimi);
+		mDrawerToggle = Global.setDrawer(mContext, mDrawerLayout, mDrawerList, this);
+	}
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Drawer toggle button
-		if (mDrawerToggle.onOptionsItemSelected(item)) {
-	          return true;
-	    }
-			
+		if (mDrawerToggle.onOptionsItemSelected(item)) return true;
 		return super.onOptionsItemSelected(item); 
 	}
 	
+	/**
+	 * Keyrt eftir postCreateFallid til ad samstilla mDrawerToggle vid astand activitysins
+	 * 
+	 */
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		// Sync the toggle state after onRestoreInstanceState has occurred.
 		mDrawerToggle.syncState();
 	}
-
+	
+	/**
+	 * Allar breytingar a stillingum eru sendar yfir i drawerinn
+	 * 
+	 */
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
@@ -261,16 +276,13 @@ public class Opnunartimi extends Activity implements OpnunStodVidmot{
 		mDrawerToggle.onConfigurationChanged(newConfig);
 	}
 	
-	/* Called whenever we call invalidateOptionsMenu() */
+	/**
+	 * Undirbyr listann eftir tvi hvort notandinn se skradur inn eda ekki
+	 * 
+	 */
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, Global.determineListItems(mContext)));
 		return super.onPrepareOptionsMenu(menu);
-	}
-	
-	public void setDrawer()	{
-		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_opnunartimi);
-		mDrawerList = (ListView) findViewById(R.id.left_drawer_opnunartimi);
-		mDrawerToggle = Global.setDrawer(mContext, mDrawerLayout, mDrawerList, this);
 	}
 }

@@ -148,6 +148,7 @@ public class Opnunartimar extends Activity implements OpnunVidmot {
 	
 	/**
 	 * Tar sem oll intent eru a sama formi var taegilast ad bua til fall
+	 * 
 	 */
 	public void createIntent(String stod){
 		Intent i = new Intent(this, Opnunartimi.class);
@@ -155,6 +156,10 @@ public class Opnunartimar extends Activity implements OpnunVidmot {
 		startActivity(i);
 	}
 	
+	/**
+	 * Stillir navigationid
+	 * 
+	 */
 	public void setDrawer()	{
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_opnunartimar);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer_opnunartimar);
@@ -170,19 +175,25 @@ public class Opnunartimar extends Activity implements OpnunVidmot {
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
-		// Drawer toggle button
 		if (mDrawerToggle.onOptionsItemSelected(item)) return true;
-			
 		return super.onOptionsItemSelected(item); 
 	}
 	
+	/**
+	 * Keyrt eftir postCreateFallid til ad samstilla mDrawerToggle vid astand activitysins
+	 * 
+	 */
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		// Sync the toggle state after onRestoreInstanceState has occurred.
 		mDrawerToggle.syncState();
 	}
-
+	
+	/**
+	 * Allar breytingar a stillingum eru sendar yfir i drawerinn
+	 * 
+	 */
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
@@ -190,7 +201,10 @@ public class Opnunartimar extends Activity implements OpnunVidmot {
 		mDrawerToggle.onConfigurationChanged(newConfig);
 	}
 	
-	/* Called whenever we call invalidateOptionsMenu() */
+	/**
+	 * Undirbyr listann eftir tvi hvort notandinn se skradur inn eda ekki
+	 * 
+	 */
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, Global.determineListItems(mContext)));
@@ -200,6 +214,7 @@ public class Opnunartimar extends Activity implements OpnunVidmot {
 	/**
 	 * Leyfir notenanum ad yta a til baka takkann ef hann er ekki skradur inn, annars tarf ad nota navDrawer
 	 * Hugsunin a bak vid tetta er svo ad innskradur notandi komist aldrei a innskraningar siduna.
+	 * 
 	 */
 	@Override
 	public void onBackPressed() {

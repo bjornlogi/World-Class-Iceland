@@ -120,9 +120,7 @@ public class Innskraning extends Activity {
 
 		// set the custom dialog components - text, image and button
 		TextView text = (TextView) dialog.findViewById(R.id.text);
-		String info = "Ekki tókst að skrá þig inn.\nAthugaðu hvort netfangið og lykilorðið eru rétt.";
-
-								
+		String info = "Ekki tókst að skrá þig inn.\nAthugaðu hvort netfangið og lykilorðið eru rétt.";					
 		text.setText(info);
 		
 		Button dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
@@ -137,37 +135,15 @@ public class Innskraning extends Activity {
 		dialog.show();
 	}
 	
+	/**
+	 * Stillir navigationid
+	 * 
+	 */
 	public void setDrawer()	{
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_innskraning);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer_innskraning);
 		mDrawerToggle = Global.setDrawer(mContext, mDrawerLayout, mDrawerList, this);
 	}
-	
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-		// Sync the toggle state after onRestoreInstanceState has occurred.
-		mDrawerToggle.syncState();
-	}
-
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-		// Pass any configuration change to the drawer toggle
-		mDrawerToggle.onConfigurationChanged(newConfig);
-	}
-	
-	/* Called whenever we call invalidateOptionsMenu() */
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, Global.determineListItems(mContext)));
-		return super.onPrepareOptionsMenu(menu);
-	}
-	
-	@Override
-	public void onBackPressed() {
-	}
-		
 	
 	/**
 	 * Styrir i hvada Activity verdur kallad fyrir hvern af valmoguleikunum
@@ -185,6 +161,43 @@ public class Innskraning extends Activity {
 		return super.onOptionsItemSelected(item); 
 	}
 	
+	/**
+	 * Keyrt eftir postCreateFallid til ad samstilla mDrawerToggle vid astand activitysins
+	 * 
+	 */
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		// Sync the toggle state after onRestoreInstanceState has occurred.
+		mDrawerToggle.syncState();
+	}
 	
+	/**
+	 * Allar breytingar a stillingum eru sendar yfir i drawerinn
+	 * 
+	 */
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		// Pass any configuration change to the drawer toggle
+		mDrawerToggle.onConfigurationChanged(newConfig);
+	}
+	
+	/**
+	 * Undirbyr listann eftir tvi hvort notandinn se skradur inn eda ekki
+	 * 
+	 */
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, Global.determineListItems(mContext)));
+		return super.onPrepareOptionsMenu(menu);
+	}
 
+	/**
+	 * Ef ytt er a tilbaka, ekki gera neitt
+	 * 
+	 */
+	@Override
+	public void onBackPressed() {
+	}
 }

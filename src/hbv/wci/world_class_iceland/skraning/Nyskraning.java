@@ -191,19 +191,44 @@ public class Nyskraning extends Activity {
 		return(lykilord1.equals(lykilord2));
 	}
 	
+	/**
+	 * Stillir navigationid
+	 * 
+	 */
 	public void setDrawer()	{
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout_nyskraning);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer_nyskraning);
 		mDrawerToggle = Global.setDrawer(mContext, mDrawerLayout, mDrawerList, this);
 	}
 	
+	/**
+	 * Styrir i hvada Activity verdur kallad fyrir hvern af valmoguleikunum
+	 * 
+	 * @param item 
+	 * @return boolean gildi sem segir manni breytingin a Activity hafi gengid upp
+	 * @see MenuItem
+	 */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (mDrawerToggle.onOptionsItemSelected(item)) return true;
+		return super.onOptionsItemSelected(item); 
+	}
+	
+	/**
+	 * Keyrt eftir postCreateFallid til ad samstilla mDrawerToggle vid astand activitysins
+	 * 
+	 */
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
 		super.onPostCreate(savedInstanceState);
 		// Sync the toggle state after onRestoreInstanceState has occurred.
 		mDrawerToggle.syncState();
 	}
-
+	
+	/**
+	 * Allar breytingar a stillingum eru sendar yfir i drawerinn
+	 * 
+	 */
 	@Override
 	public void onConfigurationChanged(Configuration newConfig) {
 		super.onConfigurationChanged(newConfig);
@@ -211,17 +236,13 @@ public class Nyskraning extends Activity {
 		mDrawerToggle.onConfigurationChanged(newConfig);
 	}
 	
-	/* Called whenever we call invalidateOptionsMenu() */
+	/**
+	 * Undirbyr listann eftir tvi hvort notandinn se skradur inn eda ekki
+	 * 
+	 */
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, Global.determineListItems(mContext)));
 		return super.onPrepareOptionsMenu(menu);
 	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		if (mDrawerToggle.onOptionsItemSelected(item)) return true;
-		return super.onOptionsItemSelected(item);
-	}
-	 
 }

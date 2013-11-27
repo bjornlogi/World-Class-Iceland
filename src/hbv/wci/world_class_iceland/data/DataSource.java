@@ -224,14 +224,14 @@ public class DataSource {
 		try{
 			c.moveToFirst();
 			String[] a = new String[]{
-					c.getString(1),
-					c.getString(2),
-					c.getString(3),
-					c.getString(4),
-					c.getString(5),
-					c.getString(6),
-					c.getString(7),
-					c.getString(8)
+					c.getString(1),//nafn
+					c.getString(2),//stod
+					c.getString(3),//salur
+					c.getString(4),//tjalfari
+					c.getString(5),//tegund
+					c.getString(6),//klukkan
+					c.getString(7),//timi, morgun, hadegi o.s.frv.
+					c.getString(8) //dagur
 			};
 			c.close();
 			return a;
@@ -336,14 +336,11 @@ public class DataSource {
 	 * @param isEinka, hvort timinn se buinn til af notenda eda ekki
 	 */
 	public void deleteNotendatimi(int uid, String htid, boolean isEinka){
-		if (isEinka) htid = htid.substring(0,htid.length()-1);
 		String isEinkatimi = String.valueOf(isEinka);
 		String userID = String.valueOf(uid);
-		
+
 		mSQLiteDatabase.delete(MySQLiteHelper.TABLE_NOTENDATIMAR, "uid = ? AND htid = ? AND isEinkatimi = ?",
 													new String[] {userID,		htid,		isEinkatimi});
-		
-		
 	}
 	
 	/**

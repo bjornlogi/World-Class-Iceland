@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import hbv.wci.world_class_iceland.Global;
 import hbv.wci.world_class_iceland.R;
+import hbv.wci.world_class_iceland.StartUpScreen;
 import hbv.wci.world_class_iceland.data.DataSource;
 import hbv.wci.world_class_iceland.data.StundatofluTimi;
 import android.app.Activity;
@@ -377,5 +378,16 @@ public class StundataflanMin extends Activity {
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, Global.determineListItems(mContext)));
 		return super.onPrepareOptionsMenu(menu);
+	}
+	
+	/**
+	 * Notandinn fer alltaf til baka i almenna stundatoflu ur minni stundatoflu.
+	 * Hugsunin a bak vid tetta er svo ad notandinn fari aldrei aftur a start up screen.
+	 * 
+	 */
+	@Override
+	public void onBackPressed() {
+		Intent i = new Intent(StundataflanMin.this, AlmennStundatafla.class);
+		startActivity(i);
 	}
 }

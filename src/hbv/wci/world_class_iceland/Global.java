@@ -28,6 +28,7 @@ public class Global {
 	public static String currentUser;
 	public static int currentUserID;
 	public static Editor editor;
+	public static int secondsInADay = 24*60*60;
 	//public Global mContext = this;
 	
 	/**

@@ -1,6 +1,7 @@
 package hbv.wci.world_class_iceland.stundatafla;
 
 import java.util.Calendar;
+import java.util.HashMap;
 
 import hbv.wci.world_class_iceland.Global;
 import hbv.wci.world_class_iceland.R;
@@ -96,125 +97,19 @@ public class StundataflanMin extends Activity {
 			 
 			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
 				
-				final String selected = (String) listAdapter.getChild(groupPosition, childPosition);
-				final int getMoney = selected.indexOf("$");
+				final String selectedUntrimmed = (String) listAdapter.getChild(groupPosition, childPosition);
+				final int getMoney = selectedUntrimmed.indexOf("$");
 				
-				final boolean einkatimi = isClickedEinka(selected);
-				String newS = selected;
+				final boolean einkatimi = isClickedEinka(selectedUntrimmed);
 				//erum buin ad finna ut hvort ad timi se einkatimi eda ekki, svo vid viljum ekki 'e' a endanum
 				//lengur
-				if (einkatimi) {
-					newS = newS.substring(0,selected.length()-1);
-				}
+				String selected;
+				if (einkatimi)
+					selected = selectedUntrimmed.substring(0,selectedUntrimmed.length()-1);
+				else
+					selected = selectedUntrimmed;
 				
-				createAminningDialog();
-
-				
-				final Dialog dialog = new Dialog(mContext);
-				dialog.setContentView(R.layout.dialog_min_stundatafla);
-				dialog.setCanceledOnTouchOutside(true);
-				
-				dialog.setTitle( selected.substring(0, getMoney) );
-			 
-				// set the custom dialog components - text, image and button
-				TextView text = (TextView) dialog.findViewById(R.id.text_eyda);
-				String info = "Viltu eyða tímanum úr þinni stundatöflu?";					
-				text.setText(info);
-				
-				TextView text2 = (TextView) dialog.findViewById(R.id.text_aminning);
-				String info2 = "Viltu áminningu?";					
-				text2.setText(info2);
-			
-				Button buttonLoka = (Button) dialog.findViewById(R.id.dialog_loka);
-				// if button is clicked, close the custom dialog
-				buttonLoka.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						dialog.dismiss();
-					}
-				});
-				
-				Button buttonEyda = (Button) dialog.findViewById(R.id.dialog_eyda);
-				
-				buttonEyda.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						int uid = Global.getUsersID(mContext);
-						data.deleteNotendatimi(uid, selected.substring(getMoney+3), einkatimi);
-						createTimetable();
-						dialog.dismiss();
-					}
-				});
-				
-				checkbox_aminning = (CheckBox) dialog.findViewById(R.id.checkbox_aminning);
-				
-				if(data.getAminning(newS.substring(getMoney+3)).equals("true")) {
-					checkbox_aminning.setChecked(true);
-				}
-				else {
-					checkbox_aminning.setChecked(false);
-				}
-				checkbox_aminning.setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						
-						Intent myIntent = new Intent(mContext, AminningService.class);
-						pendingIntent = PendingIntent.getService(mContext, 0, myIntent, 0);
-						AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Service.ALARM_SERVICE);
-
-						int getMoney2 = selected.indexOf("$");
-						//String id = selected.substring(getMoney2+1,selected.length());
-						//System.out.println(einkatimi);
-						//System.out.println(id);
-						//String info_time = st.infoChild.get(id);
-						//String[] s = info_time.split(" - ");
-						//String hour = s[0].split(":")[0];
-						//String min = s[0].split(":")[1];	
-						String justTheID;
-						if(einkatimi)
-							justTheID = selected.substring(getMoney2+3,selected.length()-1);
-						else
-							justTheID = selected.substring(getMoney2+3,selected.length());
-							
-						
-						String[] uppl = data.getHoptimarInfo(Integer.parseInt(justTheID));						
-						
-						int weekDay = Global.mapIS.get(uppl[7]);
-						weekDay += 2;
-						if (weekDay == 8) weekDay = 1;
-						
-						System.out.println(weekDay);
-						
-						Calendar calendar = Calendar.getInstance();
-						calendar.setTimeInMillis(System.currentTimeMillis());
-						
-						//calendar.set(Calendar.DAY_OF_WEEK, weekDay);
-						//calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour)-1);
-						//calendar.set(Calendar.MINUTE, Integer.parseInt(min));
-						//calendar.set(Calendar.MONTH, 11);
-						//calendar.set(Calendar.YEAR, 2013);				
-						//calendar.set(Calendar.DAY_OF_MONTH, 24);
-						//calendar.set(Calendar.HOUR_OF_DAY, 15);
-						//calendar.set(Calendar.MINUTE, 16);
-						//calendar.set(Calendar.SECOND, 0);
-						
-						calendar.add(Calendar.SECOND, 5);
-						
-						
-						
-						if (checkbox_aminning.isChecked()) {
-							data.updateAminning("true", justTheID);
-							alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
-							Toast.makeText(mContext, "Áminning hefur verið skráð", Toast.LENGTH_LONG).show();
-						}
-						else {
-							data.updateAminning("false", justTheID);
-							Toast.makeText(mContext, "Áminning hefur verið afskráð", Toast.LENGTH_LONG).show();
-						}
-
-					}
-				});
-				dialog.show();
+				createAminningDialog(selected,getMoney,einkatimi);
 			
 				return true;
 			}
@@ -223,8 +118,144 @@ public class StundataflanMin extends Activity {
 		});
 	}
 	
-	private void createAminningDialog(){
+	private void createAminningDialog(final String selected, final int getMoney, final boolean einkatimi){
+		final Dialog dialog = new Dialog(mContext);
+		dialog.setContentView(R.layout.dialog_min_stundatafla);
+		dialog.setCanceledOnTouchOutside(true);
+		final String justTheID = selected.substring(getMoney+3,selected.length());
+		dialog.setTitle( selected.substring(0, getMoney) );
+	 
+		// set the custom dialog components - text, image and button
+		TextView text = (TextView) dialog.findViewById(R.id.text_eyda);
+		String info = "Viltu eyða tímanum úr þinni stundatöflu?";					
+		text.setText(info);
 		
+		TextView text2 = (TextView) dialog.findViewById(R.id.text_aminning);
+		String info2 = "Viltu áminningu?";					
+		text2.setText(info2);
+	
+		Button buttonLoka = (Button) dialog.findViewById(R.id.dialog_loka);
+		// if button is clicked, close the custom dialog
+		buttonLoka.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				dialog.dismiss();
+			}
+		});
+		
+		Button buttonEyda = (Button) dialog.findViewById(R.id.dialog_eyda);
+		
+		buttonEyda.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				int uid = Global.getUsersID(mContext);
+				data.deleteNotendatimi(uid, justTheID, einkatimi);
+				data.updateAminning("false", justTheID);
+				createTimetable();
+				dialog.dismiss();
+			}
+		});
+		
+		onAminningClickListener(dialog, selected,getMoney);
+		dialog.show();		
+	}
+	
+	private void onAminningClickListener(final Dialog dialog, final String selected, final int getMoney){
+		checkbox_aminning = (CheckBox) dialog.findViewById(R.id.checkbox_aminning);
+		
+		if(data.getAminning(selected.substring(getMoney+3)).equals("true")) {
+			checkbox_aminning.setChecked(true);
+		}
+		else {
+			checkbox_aminning.setChecked(false);
+		}
+		checkbox_aminning.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				
+				Intent myIntent = new Intent(mContext, AminningService.class);
+				pendingIntent = PendingIntent.getService(mContext, 0, myIntent, 0);
+				AlarmManager alarmManager = (AlarmManager) mContext.getSystemService(Service.ALARM_SERVICE);
+
+				//int getMoney2 = selected.indexOf("$");
+				//String id = selected.substring(getMoney2+1,selected.length());
+				//System.out.println(einkatimi);
+				//System.out.println(id);
+				//String info_time = st.infoChild.get(id);
+				//String[] s = info_time.split(" - ");
+				//String hour = s[0].split(":")[0];
+				//String min = s[0].split(":")[1];	
+				String justTheID = selected.substring(getMoney+3,selected.length());
+					
+				
+				
+				Calendar calendar = Calendar.getInstance();
+				calendar.setTimeInMillis(System.currentTimeMillis());
+				
+				//calendar.set(Calendar.DAY_OF_WEEK, weekDay);
+				//calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour)-1);
+				//calendar.set(Calendar.MINUTE, Integer.parseInt(min));
+				//calendar.set(Calendar.MONTH, 11);
+				//calendar.set(Calendar.YEAR, 2013);				
+				//calendar.set(Calendar.DAY_OF_MONTH, 24);
+				//calendar.set(Calendar.HOUR_OF_DAY, 15);
+				//calendar.set(Calendar.MINUTE, 16);
+				//calendar.set(Calendar.SECOND, 0);
+				int sec = secondsTillNotification(justTheID);
+				calendar.add(Calendar.SECOND, sec);
+				
+				System.out.println(sec);
+				
+				if (checkbox_aminning.isChecked()) {
+					data.updateAminning("true", justTheID);
+					alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+					Toast.makeText(mContext, "Áminning hefur verið skráð", Toast.LENGTH_LONG).show();
+				}
+				else {
+					data.updateAminning("false", justTheID);
+					Toast.makeText(mContext, "Áminning hefur verið afskráð", Toast.LENGTH_LONG).show();
+				}
+				dialog.dismiss();
+			}
+		});
+	}
+	/**
+	 * Finnur ut hvad tad eru margar sekundur tangad til tad er klukkutimi i timann
+	 * @param justTheID - audkenni timans
+	 * @return sekundur tangad til tad er klukkutimi i ad timinn byrjar
+	 */
+	public int secondsTillNotification(String justTheID){
+		String[] uppl = data.getHoptimarInfo(Integer.parseInt(justTheID));
+		HashMap<String, Integer> map = Global.map;
+		int today = map.get(Global.dayOfWeek);
+		
+		int weekDay = Global.mapIS.get(uppl[7]);
+		//if (weekDay == 8) weekDay = 1;
+		
+		String klukkan = uppl[5];
+		String[] parts = klukkan.split(" - ");
+		String[] timi1 = parts[0].split(":");
+		String timi1klst = timi1[0];
+		String timi1min = timi1[1];
+		int secondsFromMidnight1 = (Integer.parseInt(timi1klst)-1)*60*60 + Integer.parseInt(timi1min)*60;
+		//System.out.println((Integer.parseInt(timi1klst)-1)*60*60 + Integer.parseInt(timi1min)*60);
+		
+		String klukkanNuna = Global.timeRightNow();
+		String[] parts2 = klukkanNuna.split(" - ");
+		String[] timi2 = parts2[0].split(":");
+		String timi2klst = timi2[0];
+		String timi2min = timi2[1];
+		int secondsFromMidnight2 = Integer.parseInt(timi2klst)*60*60 + Integer.parseInt(timi2min)*60;
+		
+		int secondsTillTakeOff =  secondsFromMidnight1 - secondsFromMidnight2;
+		if (today == weekDay && secondsTillTakeOff > 0)
+			return secondsTillTakeOff;
+		else if (today == weekDay && secondsTillTakeOff < 0)
+			return secondsTillTakeOff + Global.secondsInADay*7;
+		else if (today < weekDay)
+			return secondsTillTakeOff + Global.secondsInADay*(weekDay - today);
+		else
+			return secondsTillTakeOff + Global.secondsInADay*(7+(weekDay - today));
 	}
 	
 	private boolean isClickedEinka(String selected){

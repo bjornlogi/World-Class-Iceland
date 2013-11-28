@@ -64,8 +64,11 @@ public class AminningService extends Service {
 	 */
 	private void makeNotification() {
 		SharedPreferences pref = this.getApplicationContext().getSharedPreferences("notifications", 1);
-		String ht = pref.getString(Global.timeRightNow(), "Tíminn þinn");
-		System.out.println(Global.timeRightNow());
+		String ht = pref.getString(Global.timeRightNow(), "-1");
+		if (ht != "-1") prepareNotification(ht);
+	}
+	
+	private void prepareNotification(String ht){
 		NotificationCompat.Builder mBuilder =
 		        new NotificationCompat.Builder(this)
 		        .setSmallIcon(R.drawable.ic_launcher)

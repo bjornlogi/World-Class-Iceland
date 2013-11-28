@@ -50,6 +50,7 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 	 * Akvedur hvad a ad gera, ef gagnagrunnurinn er tomur og tetta er fyrsta kallid, ta hefur hun ekki hladist
 	 * i startUpScreen og tvi er notandinn liklegast ekki nettengdur. Tvi birtist toast um ad tengjast turfi netinu
 	 * Annars birta toflu
+	 * 
 	 */
 	private void determineNextAction(){
 		mDataSource.open();
@@ -169,7 +170,7 @@ public class StundataflaFragment extends Fragment implements StundatofluButur{
 	private void determineWhichAreExpanded(){
 		String klukkanNuna = Global.timeRightNow();
 		for (int position = 0; position < listAdapter.getGroupCount(); position++){
-			if(listAdapter.getGroup(position).equals("Morguntímar") && Global.isBetween("05:00", klukkanNuna, "11:59")){
+			if(listAdapter.getGroup(position).equals("Morguntímar") && Global.isBetween("00:00", klukkanNuna, "11:59")){
 				expListView.expandGroup(position);
 				break;
 			}

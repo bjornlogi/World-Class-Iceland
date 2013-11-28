@@ -401,6 +401,15 @@ public class DataSource {
 		return new StundatofluTimi(listHeader, listChild,infoChild);
 	}
 	
+	/**
+	 * Fall sem athugar hvort ad fjorir listar seu allir tomir
+	 * 
+	 * @param mt - listi 1
+	 * @param ht - listi 2
+	 * @param st - listi 3
+	 * @param kt - list 4
+	 * @return eru allir listarnir tomir?
+	 */
 	public boolean noHoptimar(List<String> mt, List<String> ht, List<String> st, List<String> kt)
 	{
 		return mt.isEmpty() && ht.isEmpty() && st.isEmpty() && kt.isEmpty();
@@ -437,6 +446,7 @@ public class DataSource {
 			Cursor c = mSQLiteDatabase.rawQuery(sql,  new String[] {netfang, lykilord});
 			if(c.moveToFirst())	
 				Global.setUser(ctx, (int)(long)c.getLong(0), c.getString(1));
+			else return false;
 		} catch (Exception e){
 			return false;
 		}

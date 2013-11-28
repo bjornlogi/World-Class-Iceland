@@ -29,7 +29,6 @@ public class Global {
 	public static int currentUserID;
 	public static Editor editor;
 	public static int secondsInADay = 24*60*60;
-	//public Global mContext = this;
 	
 	/**
 	 * Skilar thremur fyrstu stofum i teim vikudag sem er i dag a ensku
